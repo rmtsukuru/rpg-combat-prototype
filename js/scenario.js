@@ -26,7 +26,7 @@ CombatScene.prototype.update = function() {
     }
     else if (triggerKeyState.up) {
         this.menuY--;
-        this.menuY %= 3;
+        this.menuY = this.menuY < 0 ? 2 : this.menuY;
     }
     updateInput();
 };
