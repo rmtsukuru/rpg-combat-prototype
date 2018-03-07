@@ -1,0 +1,20 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    background: #000;
+}
+
+html {
+    height: calc(100% - 3px);
+}
+
+body > div:first-child {
+    height: 100%;
+}
+
+canvas {
+    position: relative;
+    top: 2px;
+    display: block;
+    margin: 0 auto;
+}
