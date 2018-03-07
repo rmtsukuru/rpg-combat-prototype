@@ -5,24 +5,32 @@ html, body {
 }
 
 html.pulse, body.pulse {
-    animation: pulse 10s infinite;
+    animation: pulse 10s infinite linear;
 }
 
 @keyframes pulse {
-    0% {
-        background-color: #f00;
+    0%, 100% {
+        background-color: red;
+    }
+
+    16% {
+        background-color: yellow;
     }
 
     33% {
-        background-color: #0f0;
+        background-color: limegreen;
+    }
+
+    50% {
+        background-color: cyan;
     }
 
     66% {
-        background-color: #00f;
+        background-color: blue;
     }
 
-    100% {
-        background-color: #f00;
+    83% {
+        background-color: magenta;
     }
 }
 
