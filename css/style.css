@@ -4,6 +4,28 @@ html, body {
     background: #000;
 }
 
+html.pulse, body.pulse {
+    animation: pulse 10s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        background-color: #f00;
+    }
+
+    33% {
+        background-color: #0f0;
+    }
+
+    66% {
+        background-color: #00f;
+    }
+
+    100% {
+        background-color: #f00;
+    }
+}
+
 html {
     height: calc(100% - 3px);
 }
