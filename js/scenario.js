@@ -8,7 +8,7 @@ Scene.prototype.update = function() {
 };
 
 Scene.prototype.draw = function() {
-    drawRect(0, 0, canvasWidth, canvasHeight, '#9ca');
+    drawRect(0, 0, canvasWidth, canvasHeight, '#000');
     drawText('DISPLAY DUMMY TEXT', BASE_HEIGHT * ASPECT_RATIO / 2 - 80, BASE_HEIGHT / 2 - 6);
 };
 
