@@ -15,6 +15,7 @@ Scene.prototype.draw = function() {
 function CombatScene() {
     Scene.call(this);
     this.menuY = 0;
+    this.menuOptions = ['Attack', 'Tactics', 'Magic', 'Item'];
 }
 
 CombatScene.prototype = Object.create(Scene.prototype);
@@ -22,20 +23,20 @@ CombatScene.prototype = Object.create(Scene.prototype);
 CombatScene.prototype.update = function() {
     if (triggerKeyState.down) {
         this.menuY++;
-        this.menuY %= 3;
+        this.menuY %= this.menuOptions.length;
     }
     else if (triggerKeyState.up) {
         this.menuY--;
-        this.menuY = this.menuY < 0 ? 2 : this.menuY;
+        this.menuY = this.menuY < 0 ? this.menuOptions.length - 1 : this.menuY;
     }
     updateInput();
 };
 
 CombatScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
-    drawText('Attack', 50, 100);
-    drawText('Tactics', 50, 120);
-    drawText('Magic', 50, 140);
+    for (var i = 0; i < this.menuOptions.length; i++) {
+        drawText(this.menuOptions[i], 50, 100 + 20 * i);
+    }
     drawRect(30, 88 + 20 * this.menuY, 10, 10, 'white');
 }
 
