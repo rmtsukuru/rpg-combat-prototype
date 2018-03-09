@@ -8,6 +8,8 @@ var keys = {
     control: 17,
     z: 90,
     x: 88,
+    c: 67,
+    esc: 27,
 };
 
 var keyState, triggerKeyState;

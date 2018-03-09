@@ -1,5 +1,7 @@
 var scene;
 
+var CombatScene, AttackScene, SkillScene, SpellScene, ItemScene;
+
 function Scene() {
 }
 
@@ -12,16 +14,26 @@ Scene.prototype.draw = function() {
     drawText('DISPLAY DUMMY TEXT', BASE_HEIGHT * ASPECT_RATIO / 2 - 80, BASE_HEIGHT / 2 - 6);
 };
 
-function CombatScene() {
+function MenuScene() {
     Scene.call(this);
     this.menuY = 0;
-    this.menuOptions = ['Attack', 'Tactics', 'Magic', 'Item'];
+    this.menuOptions = [];
 }
 
-CombatScene.prototype = Object.create(Scene.prototype);
+MenuScene.prototype = Object.create(Scene.prototype);
 
-CombatScene.prototype.update = function() {
-    if (triggerKeyState.down) {
+MenuScene.prototype.update = function() {
+    if (triggerKeyState.enter || triggerKeyState.z) {
+        if (this.menuOptions[this.menuY].scene) {
+            scene = new this.menuOptions[this.menuY].scene();
+        }
+    }
+    else if (triggerKeyState.shift || triggerKeyState.x || triggerKeyState.esc) {
+        if (this.previousScene) {
+            scene = new this.previousScene();
+        }
+    }
+    else if (triggerKeyState.down) {
         this.menuY++;
         this.menuY %= this.menuOptions.length;
     }
@@ -32,13 +44,71 @@ CombatScene.prototype.update = function() {
     updateInput();
 };
 
-CombatScene.prototype.draw = function() {
+MenuScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
     for (var i = 0; i < this.menuOptions.length; i++) {
-        drawText(this.menuOptions[i], 50, 100 + 20 * i);
+        drawText(this.menuOptions[i].display, 50, 100 + 20 * i);
     }
     drawRect(30, 88 + 20 * this.menuY, 10, 10, 'white');
 }
+
+CombatScene = function() {
+    MenuScene.call(this);
+    this.menuOptions = [
+        { display: 'Attack', scene: AttackScene },
+        { display: 'Tactics', scene: SkillScene },
+        { display: 'Magic', scene: SpellScene },
+        { display: 'Item', scene: ItemScene },
+    ];
+}
+
+CombatScene.prototype = Object.create(MenuScene.prototype);
+
+AttackScene = function() {
+    MenuScene.call(this);
+    this.menuOptions = [
+        { display: 'Straight Sword - 80/80 DUR' },
+        { display: 'Pistol - 1/1 AMMO' },
+    ];
+    this.previousScene = CombatScene;
+}
+
+AttackScene.prototype = Object.create(MenuScene.prototype);
+
+SkillScene = function() {
+    MenuScene.call(this);
+    this.menuOptions = [
+        { display: 'Trip' },
+        { display: 'Dodge' },
+        { display: 'Inspect' },
+    ];
+    this.previousScene = CombatScene;
+}
+
+SkillScene.prototype = Object.create(MenuScene.prototype);
+
+SpellScene = function() {
+    MenuScene.call(this);
+    this.menuOptions = [
+        { display: 'Flame Strike - 1 SOUL' },
+        { display: 'Spirit Blast - 1 SOUL' },
+    ];
+    this.previousScene = CombatScene;
+}
+
+SpellScene.prototype = Object.create(MenuScene.prototype);
+
+ItemScene = function() {
+    MenuScene.call(this);
+    this.menuOptions = [
+        { display: 'Ointment (1)' },
+        { display: 'Bullets (12)' },
+        { display: 'Cutlass' },
+    ];
+    this.previousScene = CombatScene;
+}
+
+ItemScene.prototype = Object.create(MenuScene.prototype);
 
 function configureScenario() {
     scene = new CombatScene();
