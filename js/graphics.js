@@ -3,6 +3,16 @@ var canvasWidth, canvasHeight;
 var baseWidth, baseHeight;
 var scalingFactor;
 
+function drawArrow(x, y, width, height, color) {
+    graphicsContext.fillColor = color;
+    graphicsContext.beginPath();
+    graphicsContext.moveTo(x * scalingFactor, y * scalingFactor);
+    graphicsContext.lineTo(x * scalingFactor, (y + height) * scalingFactor);
+    graphicsContext.lineTo((x + width) * scalingFactor, (y + height / 2) * scalingFactor);
+    graphicsContext.closePath();
+    graphicsContext.fill();
+}
+
 function drawRect(x, y, width, height, color, outline) {
     outline = outline || false;
     if (outline) {

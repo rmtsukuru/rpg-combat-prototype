@@ -51,7 +51,7 @@ MenuScene.prototype.draw = function() {
     for (var i = 0; i < this.menuOptions.length; i++) {
         drawText(this.menuOptions[i].display, 50, 100 + 20 * i);
     }
-    drawRect(30, 88 + 20 * this.menuY, 10, 10, 'white');
+    drawArrow(30, 88 + 20 * this.menuY, 10, 10, 'white');
 }
 
 CombatScene = function() {
