@@ -4,6 +4,7 @@ var initialConfigFrames = 1;
 window.onload = function() {
     configureGraphics();
     configureInput();
+    configureAudio();
     configureScenario();
 
     mainLoop = function() {

@@ -37,10 +37,12 @@ MenuScene.prototype.update = function() {
     else if (triggerKeyState.down) {
         this.menuY++;
         this.menuY %= this.menuOptions.length;
+        playSound('hit1', 0.2);
     }
     else if (triggerKeyState.up) {
         this.menuY--;
         this.menuY = this.menuY < 0 ? this.menuOptions.length - 1 : this.menuY;
+        playSound('hit1', 0.2);
     }
     updateInput();
 };
