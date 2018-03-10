@@ -16,7 +16,7 @@ function drawRect(x, y, width, height, color, outline) {
 }
 
 function drawText(text, x, y, color, fontSize, font) {
-    font = font || 'Cambria';
+    font = font || 'Courier';
     fontSize = (fontSize || 18) * scalingFactor + 'px';
     graphicsContext.font = fontSize + ' ' + font;
     graphicsContext.fillStyle = color || 'white';
