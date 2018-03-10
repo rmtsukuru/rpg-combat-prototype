@@ -3,9 +3,16 @@ var canvasWidth, canvasHeight;
 var baseWidth, baseHeight;
 var scalingFactor;
 
-function drawRect(x, y, width, height, color) {
-    graphicsContext.fillStyle = color;
-    graphicsContext.fillRect(x * scalingFactor, y * scalingFactor, width * scalingFactor, height * scalingFactor);
+function drawRect(x, y, width, height, color, outline) {
+    outline = outline || false;
+    if (outline) {
+        graphicsContext.strokeStyle = color;
+        graphicsContext.strokeRect(x * scalingFactor, y * scalingFactor, width * scalingFactor, height * scalingFactor);
+    }
+    else {
+        graphicsContext.fillStyle = color;
+        graphicsContext.fillRect(x * scalingFactor, y * scalingFactor, width * scalingFactor, height * scalingFactor);
+    }
 }
 
 function drawText(text, x, y, color, fontSize, font) {

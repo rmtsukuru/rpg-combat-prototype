@@ -17,6 +17,7 @@ Scene.prototype.draw = function() {
 function MenuScene() {
     Scene.call(this);
     this.menuY = 0;
+    this.menuWidth = 100;
     this.menuOptions = [];
 }
 
@@ -46,6 +47,7 @@ MenuScene.prototype.update = function() {
 
 MenuScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
+    drawRect(20, 80, this.menuWidth, 10 + 20 * this.menuOptions.length, 'white', true);
     for (var i = 0; i < this.menuOptions.length; i++) {
         drawText(this.menuOptions[i].display, 50, 100 + 20 * i);
     }
@@ -70,6 +72,7 @@ AttackScene = function() {
         { display: 'Straight Sword - 80/80 DUR' },
         { display: 'Pistol - 1/1 AMMO' },
     ];
+    this.menuWidth = 260;
     this.previousScene = CombatScene;
 }
 
@@ -93,6 +96,7 @@ SpellScene = function() {
         { display: 'Flame Strike - 1 SOUL' },
         { display: 'Spirit Blast - 1 SOUL' },
     ];
+    this.menuWidth = 210;
     this.previousScene = CombatScene;
 }
 
@@ -105,6 +109,7 @@ ItemScene = function() {
         { display: 'Bullets (12)' },
         { display: 'Cutlass' },
     ];
+    this.menuWidth = 145;
     this.previousScene = CombatScene;
 }
 
