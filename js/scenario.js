@@ -1,5 +1,18 @@
 var scene;
 
+var characterData = {
+    slayer: {
+        class: 'SLAYER',
+        health: 60,
+        maxHealth: 60,
+        resourceName: 'SOULS',
+        resource: 1,
+        resourceMax: 3,
+    },
+};
+
+var party = ['slayer'];
+
 var CombatScene, AttackScene, SkillScene, SpellScene, ItemScene;
 
 function Scene() {
@@ -11,7 +24,18 @@ Scene.prototype.update = function() {
 
 Scene.prototype.draw = function() {
     drawRect(0, 0, canvasWidth, canvasHeight, '#000');
-    drawText('DISPLAY DUMMY TEXT', BASE_HEIGHT * ASPECT_RATIO / 2 - 80, BASE_HEIGHT / 2 - 6);
+    for (var i = 0; i < party.length; i++) {
+        drawRect(8 * (i + 1) + 150 * i, 335, 150, 135, 'white', true);
+        var data = characterData[party[i]];
+        drawText(data.class, 20, 360);
+        drawText('HP: ' + data.health + '/' + data.maxHealth, 20, 385);
+        if (data.resourceMax) {
+            drawText(data.resourceName + ': ' + data.resource + '/' + data.resourceMax, 20, 410);
+        }
+        else {
+            drawText(data.resourceName + ': ' + data.resource, 20, 410);
+        }
+    }
 };
 
 function MenuScene() {
