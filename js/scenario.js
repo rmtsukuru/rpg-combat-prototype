@@ -73,11 +73,11 @@ MenuScene.prototype.update = function() {
 
 MenuScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
-    drawRect(20, 80, this.menuWidth, 10 + 20 * this.menuOptions.length, 'white', true);
+    drawRect(20, 230, this.menuWidth, 10 + 20 * this.menuOptions.length, 'white', true);
     for (var i = 0; i < this.menuOptions.length; i++) {
-        drawText(this.menuOptions[i].display, 50, 100 + 20 * i);
+        drawText(this.menuOptions[i].display, 50, 250 + 20 * i);
     }
-    drawArrow(30, 88 + 20 * this.menuY, 10, 10, 'white');
+    drawArrow(30, 238 + 20 * this.menuY, 10, 10, 'white');
 }
 
 CombatScene = function() {
