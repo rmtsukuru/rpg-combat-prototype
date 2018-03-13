@@ -50,7 +50,7 @@ MenuScene.prototype = Object.create(Scene.prototype);
 MenuScene.prototype.update = function() {
     if (triggerKeyState.enter || triggerKeyState.z) {
         if (this.menuOptions[this.menuY].scene) {
-            scene = new this.menuOptions[this.menuY].scene();
+            scene = new this.menuOptions[this.menuY].scene(this.menuOptions[this.menuY].action);
         }
     }
     else if (triggerKeyState.shift || triggerKeyState.x || triggerKeyState.esc) {
@@ -80,6 +80,41 @@ MenuScene.prototype.draw = function() {
     drawArrow(30, 238 + 20 * this.menuY, 10, 10, 'white');
 }
 
+ActionScene = function(action) {
+    Scene.call(this);
+    this.action = action;
+    this.actionTimer = FPS * 1.5;
+    this.actionText = this.getActionText();
+}
+
+ActionScene.prototype = Object.create(Scene.prototype);
+
+ActionScene.prototype.getActionText = function() {
+    switch (this.action) {
+        case 'melee':
+            return 'You swing the sword, dealing 12 damage.';
+        case 'ranged':
+            return 'You fire a shot, dealing 10 damage and stunning the target.';
+    }
+    return '';
+};
+
+ActionScene.prototype.update = function() {
+    Scene.prototype.update.call(this);
+    if (this.actionTimer <= 0) {
+        scene = new CombatScene();
+    }
+    else {
+        this.actionTimer--;
+    }
+};
+
+ActionScene.prototype.draw = function() {
+    Scene.prototype.draw.call(this);
+    drawRect(80, 100, 500, 120, 'white', true);
+    drawText(this.actionText, 95, 125);
+};
+
 CombatScene = function() {
     MenuScene.call(this);
     this.menuOptions = [
@@ -95,8 +130,8 @@ CombatScene.prototype = Object.create(MenuScene.prototype);
 AttackScene = function() {
     MenuScene.call(this);
     this.menuOptions = [
-        { display: 'Straight Sword - 80/80 DUR' },
-        { display: 'Pistol - 1/1 AMMO' },
+        { display: 'Straight Sword - 80/80 DUR', scene: ActionScene, action: 'melee' },
+        { display: 'Pistol - 1/1 AMMO', scene: ActionScene, action: 'ranged' },
     ];
     this.menuWidth = 325;
     this.previousScene = CombatScene;
