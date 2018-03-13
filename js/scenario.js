@@ -19,7 +19,7 @@ function Scene() {
 }
 
 Scene.prototype.update = function() {
-    // Do nothing, this is for inheritance.
+    updateInput();
 };
 
 Scene.prototype.draw = function() {
@@ -68,7 +68,7 @@ MenuScene.prototype.update = function() {
         this.menuY = this.menuY < 0 ? this.menuOptions.length - 1 : this.menuY;
         playSound('select0', 0.2);
     }
-    updateInput();
+    Scene.prototype.update.call(this);
 };
 
 MenuScene.prototype.draw = function() {
@@ -83,7 +83,7 @@ MenuScene.prototype.draw = function() {
 ActionScene = function(action) {
     Scene.call(this);
     this.action = action;
-    this.actionTimer = FPS * 1.5;
+    this.actionTimer = FPS * 0.5;
     this.actionText = this.getActionText();
 }
 
@@ -100,13 +100,13 @@ ActionScene.prototype.getActionText = function() {
 };
 
 ActionScene.prototype.update = function() {
-    Scene.prototype.update.call(this);
-    if (this.actionTimer <= 0) {
-        scene = new CombatScene();
-    }
-    else {
+    if (this.actionTimer > 0) {
         this.actionTimer--;
     }
+    else if (triggerKeyState.enter || triggerKeyState.z) {
+        scene = new CombatScene();
+    }
+    Scene.prototype.update.call(this);
 };
 
 ActionScene.prototype.draw = function() {
