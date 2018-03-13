@@ -94,7 +94,7 @@ ActionScene.prototype.getActionText = function() {
         case 'melee':
             return 'You swing the sword, dealing 12 damage.';
         case 'ranged':
-            return 'You fire a shot, dealing 10 damage and stunning the target.';
+            return 'You fire a shot, dealing 10 damage and \nstunning the target.';
     }
     return '';
 };
@@ -112,7 +112,7 @@ ActionScene.prototype.update = function() {
 ActionScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
     drawRect(80, 100, 500, 120, 'white', true);
-    drawText(this.actionText, 95, 125);
+    drawTextMultiline(this.actionText, 95, 125);
 };
 
 CombatScene = function() {

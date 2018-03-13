@@ -33,6 +33,14 @@ function drawText(text, x, y, color, fontSize, font) {
     graphicsContext.fillText(text, x * scalingFactor, y * scalingFactor);
 }
 
+function drawTextMultiline(text, x, y, color, fontSize, font) {
+    var lines = text.split("\n");
+    fontSize = (fontSize || 18);
+    lines.forEach(function(line, i) {
+        drawText(line, x, y + i * (fontSize + 7), color, fontSize, font);
+    });
+}
+
 function configureGraphics() {
     canvas = document.getElementById('gameCanvas');
     graphicsContext = canvas.getContext('2d');
