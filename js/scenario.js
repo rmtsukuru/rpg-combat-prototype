@@ -79,9 +79,6 @@ MenuScene.prototype.update = function() {
 
 MenuScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
-    if (monsterHealth <= 0) {
-        drawText('You are victorious!', 240, 75);
-    }
     drawRect(20, 230, this.menuWidth, 10 + 20 * this.menuOptions.length, 'white', true);
     for (var i = 0; i < this.menuOptions.length; i++) {
         drawText(this.menuOptions[i].display, 50, 250 + 20 * i);
@@ -114,7 +111,7 @@ ActionScene.prototype.update = function() {
         this.actionTimer--;
     }
     else if (triggerKeyState.enter || triggerKeyState.z) {
-        scene = new CombatScene();
+        scene = monsterHealth <= 0 ? new VictoryScene() : new CombatScene();
         playSound('beep0', 0.5);
     }
     Scene.prototype.update.call(this);
@@ -186,6 +183,17 @@ ItemScene = function() {
 }
 
 ItemScene.prototype = Object.create(MenuScene.prototype);
+
+VictoryScene = function() {
+    Scene.call(this);
+};
+
+VictoryScene.prototype = Object.create(Scene.prototype);
+
+VictoryScene.prototype.draw = function() {
+    Scene.prototype.draw.call(this);
+    drawText('You are victorious!', 240, 75);
+};
 
 function configureScenario() {
     scene = new CombatScene();
