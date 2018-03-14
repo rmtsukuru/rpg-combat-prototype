@@ -13,6 +13,9 @@ var characterData = {
 
 var party = ['slayer'];
 
+var monsterHealth, monsterMaxHealth;
+monsterHealth = monsterMaxHealth = 50;
+
 var CombatScene, AttackScene, SkillScene, SpellScene, ItemScene;
 
 function Scene() {
@@ -36,6 +39,7 @@ Scene.prototype.draw = function() {
             drawText(data.resourceName + ': ' + data.resource, 20, 410);
         }
     }
+    drawText('Monster HP: ' + Math.max(0, monsterHealth) + '/' + monsterMaxHealth, 240, 50);
 };
 
 function MenuScene() {
@@ -75,6 +79,9 @@ MenuScene.prototype.update = function() {
 
 MenuScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
+    if (monsterHealth <= 0) {
+        drawText('You are victorious!', 240, 75);
+    }
     drawRect(20, 230, this.menuWidth, 10 + 20 * this.menuOptions.length, 'white', true);
     for (var i = 0; i < this.menuOptions.length; i++) {
         drawText(this.menuOptions[i].display, 50, 250 + 20 * i);
@@ -86,17 +93,18 @@ ActionScene = function(action) {
     Scene.call(this);
     this.action = action;
     this.actionTimer = FPS * 0.5;
-    this.actionText = this.getActionText();
+    this.actionData = this.getActionData();
+    monsterHealth -= this.actionData.damage;
 }
 
 ActionScene.prototype = Object.create(Scene.prototype);
 
-ActionScene.prototype.getActionText = function() {
+ActionScene.prototype.getActionData = function() {
     switch (this.action) {
         case 'melee':
-            return 'You swing the sword, dealing 12 damage.';
+            return { text: 'You swing the sword, dealing 12 damage.', damage: 12 };
         case 'ranged':
-            return 'You fire a shot, dealing 10 damage and \nstunning the target.';
+            return { text: 'You fire a shot, dealing 10 damage and \nstunning the target.', damage: 10 };
     }
     return '';
 };
@@ -115,7 +123,7 @@ ActionScene.prototype.update = function() {
 ActionScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
     drawRect(80, 100, 500, 120, 'white', true);
-    drawTextMultiline(this.actionText, 95, 125);
+    drawTextMultiline(this.actionData.text, 95, 125);
 };
 
 CombatScene = function() {
