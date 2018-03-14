@@ -51,22 +51,24 @@ MenuScene.prototype.update = function() {
     if (triggerKeyState.enter || triggerKeyState.z) {
         if (this.menuOptions[this.menuY].scene) {
             scene = new this.menuOptions[this.menuY].scene(this.menuOptions[this.menuY].action);
+            playSound('beep0', 0.5);
         }
     }
     else if (triggerKeyState.shift || triggerKeyState.x || triggerKeyState.esc) {
         if (this.previousScene) {
             scene = new this.previousScene();
+            playSound('beep1', 0.5);
         }
     }
     else if (triggerKeyState.down) {
         this.menuY++;
         this.menuY %= this.menuOptions.length;
-        playSound('select0', 0.2);
+        playSound('select0', 0.3);
     }
     else if (triggerKeyState.up) {
         this.menuY--;
         this.menuY = this.menuY < 0 ? this.menuOptions.length - 1 : this.menuY;
-        playSound('select0', 0.2);
+        playSound('select0', 0.3);
     }
     Scene.prototype.update.call(this);
 };
@@ -105,6 +107,7 @@ ActionScene.prototype.update = function() {
     }
     else if (triggerKeyState.enter || triggerKeyState.z) {
         scene = new CombatScene();
+        playSound('beep0', 0.5);
     }
     Scene.prototype.update.call(this);
 };
