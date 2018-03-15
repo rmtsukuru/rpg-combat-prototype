@@ -8,6 +8,7 @@ var characterData = {
         resourceName: 'SOULS',
         resource: 1,
         resourceMax: 3,
+        accuracy: 0.8,
     },
 };
 
@@ -91,7 +92,10 @@ ActionScene = function(action) {
     this.action = action;
     this.actionTimer = FPS * 0.5;
     this.actionData = this.getActionData();
-    monsterHealth -= this.actionData.damage;
+    if (Math.random() < characterData[party[0]].accuracy) {
+        this.hit = true;
+        monsterHealth -= this.actionData.damage;
+    }
 }
 
 ActionScene.prototype = Object.create(Scene.prototype);
@@ -120,7 +124,12 @@ ActionScene.prototype.update = function() {
 ActionScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
     drawRect(80, 100, 500, 120, 'white', true);
-    drawTextMultiline(this.actionData.text, 95, 125);
+    if (this.hit) {
+        drawTextMultiline(this.actionData.text, 95, 125);
+    }
+    else {
+        drawTextMultiline('The attack missed!', 95, 125);
+    }
 };
 
 CombatScene = function() {
