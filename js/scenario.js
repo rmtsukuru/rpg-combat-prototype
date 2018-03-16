@@ -9,6 +9,7 @@ var playerCharacters = {
         resource: 1,
         resourceMax: 3,
         accuracy: 0.8,
+        critChance: 0.05,
     },
 };
 
@@ -96,7 +97,10 @@ MenuScene.prototype.draw = function() {
 ActionScene = function(action) {
     Scene.call(this);
     this.action = buildAction(action, party[0], enemies[0]);
-    this.hit = this.action.execute();
+    var results = this.action.execute();
+    this.hit = results.hit;
+    this.crit = results.crit;
+    this.damage = this.action.calculateDamage(this.crit);
     this.actionTimer = FPS * 0.5;
 }
 
@@ -118,7 +122,8 @@ ActionScene.prototype.draw = function() {
     drawRect(80, 100, 500, 120, 'white', true);
     drawTextMultiline(this.action.text, 95, 125);
     if (this.hit) {
-        drawTextMultiline('It dealt ' + this.action.damage + ' damage!', 95, 150);
+        var critText = this.crit ? ' A critical hit!!' : '';
+        drawTextMultiline('It dealt ' + this.damage + ' damage!' + critText, 95, 150);
     }
     else {
         drawTextMultiline('The attack missed!', 95, 150);
