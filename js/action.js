@@ -28,7 +28,7 @@ Action.prototype.execute = function() {
     var hit = this.hit();
     var crit = this.crit();
     if (hit) {
-        var newHealth = this.target.health - this.calculateDamage();
+        var newHealth = this.target.health - this.calculateDamage(crit);
         this.target.health = Math.max(0, Math.min(this.target.maxHealth, newHealth));
     }
     return { hit: hit, crit: crit };
