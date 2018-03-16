@@ -1,6 +1,6 @@
 var scene;
 
-var characterData = {
+var playerCharacters = {
     slayer: {
         class: 'SLAYER',
         health: 60,
@@ -12,10 +12,16 @@ var characterData = {
     },
 };
 
-var party = ['slayer'];
+var monsters = {
+    skeleton: {
+        health: 50,
+        maxHealth: 50,
+        evasion: 0.1,
+    }
+};
 
-var monsterHealth, monsterMaxHealth;
-monsterHealth = monsterMaxHealth = 50;
+var party = [playerCharacters.slayer];
+var enemies = [monsters.skeleton];
 
 var CombatScene, AttackScene, SkillScene, SpellScene, ItemScene;
 
@@ -30,7 +36,7 @@ Scene.prototype.draw = function() {
     drawRect(0, 0, canvasWidth, canvasHeight, '#000');
     for (var i = 0; i < party.length; i++) {
         drawRect(8 * (i + 1) + 150 * i, 335, 150, 135, 'white', true);
-        var data = characterData[party[i]];
+        var data = party[i];
         drawText(data.class, 20, 360);
         drawText('HP: ' + data.health + '/' + data.maxHealth, 20, 385);
         if (data.resourceMax) {
@@ -40,7 +46,7 @@ Scene.prototype.draw = function() {
             drawText(data.resourceName + ': ' + data.resource, 20, 410);
         }
     }
-    drawText('Monster HP: ' + Math.max(0, monsterHealth) + '/' + monsterMaxHealth, 240, 50);
+    drawText('Monster HP: ' + Math.max(0, enemies[0].health) + '/' + enemies[0].maxHealth, 240, 50);
 };
 
 function MenuScene() {
@@ -89,33 +95,19 @@ MenuScene.prototype.draw = function() {
 
 ActionScene = function(action) {
     Scene.call(this);
-    this.action = action;
+    this.action = buildAction(action, party[0], enemies[0]);
+    this.hit = this.action.execute();
     this.actionTimer = FPS * 0.5;
-    this.actionData = this.getActionData();
-    if (Math.random() < characterData[party[0]].accuracy) {
-        this.hit = true;
-        monsterHealth -= this.actionData.damage;
-    }
 }
 
 ActionScene.prototype = Object.create(Scene.prototype);
-
-ActionScene.prototype.getActionData = function() {
-    switch (this.action) {
-        case 'melee':
-            return { text: 'You swing the sword, dealing 12 damage.', damage: 12 };
-        case 'ranged':
-            return { text: 'You fire a shot, dealing 10 damage and \nstunning the target.', damage: 10 };
-    }
-    return '';
-};
 
 ActionScene.prototype.update = function() {
     if (this.actionTimer > 0) {
         this.actionTimer--;
     }
     else if (triggerKeyState.enter || triggerKeyState.z) {
-        scene = monsterHealth <= 0 ? new VictoryScene() : new CombatScene();
+        scene = enemies[0].health <= 0 ? new VictoryScene() : new CombatScene();
         playSound('beep0', 0.5);
     }
     Scene.prototype.update.call(this);
@@ -124,11 +116,12 @@ ActionScene.prototype.update = function() {
 ActionScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
     drawRect(80, 100, 500, 120, 'white', true);
+    drawTextMultiline(this.action.text, 95, 125);
     if (this.hit) {
-        drawTextMultiline(this.actionData.text, 95, 125);
+        drawTextMultiline('It dealt ' + this.action.damage + ' damage!', 95, 150);
     }
     else {
-        drawTextMultiline('The attack missed!', 95, 125);
+        drawTextMultiline('The attack missed!', 95, 150);
     }
 };
 
