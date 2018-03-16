@@ -16,9 +16,8 @@ function configureAudio() {
 
 function playSound(filename, volume, loop) {
     var sound = new Audio('audio/' + filename + audioFormat);
-    if (volume) {
-        sound.volume = volume;
-    }
+    sound.volume = volume || 1;
+    sound.volume *= MASTER_VOLUME || 1;
     if (loop) {
         sound.loop = true;
     }
