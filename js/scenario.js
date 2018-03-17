@@ -10,6 +10,8 @@ var playerCharacters = {
         resourceMax: 3,
         accuracy: 0.8,
         evasion: 0.3,
+        agility: 20,
+        time: 0,
         critChance: 0.05,
     },
 };
@@ -26,8 +28,6 @@ var monsters = {
 
 var party = [playerCharacters.slayer];
 var enemies = [monsters.skeleton];
-
-var CombatScene, AttackScene, SkillScene, SpellScene, ItemScene;
 
 function Scene() {
 }
@@ -97,7 +97,7 @@ MenuScene.prototype.draw = function() {
     drawArrow(30, 238 + 20 * this.menuY, 10, 10, 'white');
 }
 
-ActionScene = function(action) {
+function ActionScene(action) {
     Scene.call(this);
     this.action = buildAction(action, party[0], enemies[0]);
     var results = this.action.execute();
@@ -133,7 +133,7 @@ ActionScene.prototype.draw = function() {
     }
 };
 
-EnemyScene = function() {
+function EnemyScene() {
     Scene.call(this);
     this.action = buildAction('bone_claw', enemies[0], party[0]);
     var results = this.action.execute();
@@ -169,7 +169,7 @@ EnemyScene.prototype.draw = function() {
     }
 };
 
-CombatScene = function() {
+function CombatScene() {
     MenuScene.call(this);
     this.menuOptions = [
         { display: 'Attack', scene: AttackScene },
@@ -181,7 +181,7 @@ CombatScene = function() {
 
 CombatScene.prototype = Object.create(MenuScene.prototype);
 
-AttackScene = function() {
+function AttackScene() {
     MenuScene.call(this);
     this.menuOptions = [
         { display: 'Straight Sword - 80/80 DUR', scene: ActionScene, action: 'sword' },
@@ -193,7 +193,7 @@ AttackScene = function() {
 
 AttackScene.prototype = Object.create(MenuScene.prototype);
 
-SkillScene = function() {
+function SkillScene() {
     MenuScene.call(this);
     this.menuOptions = [
         { display: 'Trip' },
@@ -205,7 +205,7 @@ SkillScene = function() {
 
 SkillScene.prototype = Object.create(MenuScene.prototype);
 
-SpellScene = function() {
+function SpellScene() {
     MenuScene.call(this);
     this.menuOptions = [
         { display: 'Flame Strike - 1 SOUL' },
@@ -217,7 +217,7 @@ SpellScene = function() {
 
 SpellScene.prototype = Object.create(MenuScene.prototype);
 
-ItemScene = function() {
+function ItemScene() {
     MenuScene.call(this);
     this.menuOptions = [
         { display: 'Ointment (1)' },
@@ -230,7 +230,7 @@ ItemScene = function() {
 
 ItemScene.prototype = Object.create(MenuScene.prototype);
 
-VictoryScene = function() {
+function VictoryScene() {
     Scene.call(this);
 };
 
@@ -241,7 +241,7 @@ VictoryScene.prototype.draw = function() {
     drawText('You are victorious!', 240, 75);
 };
 
-DeathScene = function() {
+function DeathScene() {
     Scene.call(this);
 };
 
