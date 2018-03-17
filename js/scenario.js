@@ -9,6 +9,7 @@ var playerCharacters = {
         resource: 1,
         resourceMax: 3,
         accuracy: 0.8,
+        evasion: 0.3,
         critChance: 0.05,
     },
 };
@@ -18,7 +19,9 @@ var monsters = {
         health: 50,
         maxHealth: 50,
         evasion: 0.1,
-    }
+        accuracy: 0.8,
+        critChance: 0.05,
+    },
 };
 
 var party = [playerCharacters.slayer];
@@ -101,23 +104,59 @@ ActionScene = function(action) {
     this.hit = results.hit;
     this.crit = results.crit;
     this.damage = this.action.calculateDamage(this.crit);
-    this.actionTimer = FPS * 0.5;
+    this.messageTimer = FPS * 0.5;
 }
 
 ActionScene.prototype = Object.create(Scene.prototype);
 
 ActionScene.prototype.update = function() {
-    if (this.actionTimer > 0) {
-        this.actionTimer--;
+    if (this.messageTimer > 0) {
+        this.messageTimer--;
     }
     else if (triggerKeyState.enter || triggerKeyState.z) {
-        scene = enemies[0].health <= 0 ? new VictoryScene() : new CombatScene();
+        scene = enemies[0].health <= 0 ? new VictoryScene() : new EnemyScene();
         playSound('beep0', 0.5);
     }
     Scene.prototype.update.call(this);
 };
 
 ActionScene.prototype.draw = function() {
+    Scene.prototype.draw.call(this);
+    drawRect(80, 100, 500, 120, 'white', true);
+    drawTextMultiline(this.action.text, 95, 125);
+    if (this.hit) {
+        var critText = this.crit ? ' A critical hit!!' : '';
+        drawTextMultiline('It dealt ' + this.damage + ' damage!' + critText, 95, 150);
+    }
+    else {
+        drawTextMultiline('The attack missed!', 95, 150);
+    }
+};
+
+EnemyScene = function() {
+    Scene.call(this);
+    this.action = buildAction('bone_claw', enemies[0], party[0]);
+    var results = this.action.execute();
+    this.hit = results.hit;
+    this.crit = results.crit;
+    this.damage = this.action.calculateDamage(this.crit);
+    this.messageTimer = FPS * 0.5;
+}
+
+EnemyScene.prototype = Object.create(Scene.prototype);
+
+EnemyScene.prototype.update = function() {
+    if (this.messageTimer > 0) {
+        this.messageTimer--;
+    }
+    else if (triggerKeyState.enter || triggerKeyState.z) {
+        scene = party[0].health <= 0 ? new DeathScene() : new CombatScene();
+        playSound('beep0', 0.5);
+    }
+    Scene.prototype.update.call(this);
+};
+
+EnemyScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
     drawRect(80, 100, 500, 120, 'white', true);
     drawTextMultiline(this.action.text, 95, 125);
@@ -145,8 +184,8 @@ CombatScene.prototype = Object.create(MenuScene.prototype);
 AttackScene = function() {
     MenuScene.call(this);
     this.menuOptions = [
-        { display: 'Straight Sword - 80/80 DUR', scene: ActionScene, action: 'melee' },
-        { display: 'Pistol - 1/1 AMMO', scene: ActionScene, action: 'ranged' },
+        { display: 'Straight Sword - 80/80 DUR', scene: ActionScene, action: 'sword' },
+        { display: 'Pistol - 1/1 AMMO', scene: ActionScene, action: 'pistol' },
     ];
     this.menuWidth = 325;
     this.previousScene = CombatScene;
@@ -200,6 +239,17 @@ VictoryScene.prototype = Object.create(Scene.prototype);
 VictoryScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
     drawText('You are victorious!', 240, 75);
+};
+
+DeathScene = function() {
+    Scene.call(this);
+};
+
+DeathScene.prototype = Object.create(Scene.prototype);
+
+DeathScene.prototype.draw = function() {
+    Scene.prototype.draw.call(this);
+    drawText('You have been defeated!', 200, 75);
 };
 
 function configureScenario() {

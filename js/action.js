@@ -35,8 +35,9 @@ Action.prototype.execute = function() {
 };
 
 const actionData = {
-    melee: { text: 'You swing the sword.', damage: 12 },
-    ranged: { text: 'You fire a shot.', damage: 10, critChance: 0.2 },
+    sword: { text: 'You swing the sword.', damage: 12 },
+    pistol: { text: 'You fire a shot.', damage: 10, critChance: 0.2 },
+    bone_claw: { text: 'The fiend rakes you with its claw!', damage: 18 },
 };
 
 function buildAction(actionName, actor, target) {
