@@ -22,7 +22,7 @@ var monsters = {
         maxHealth: 50,
         evasion: 0.1,
         accuracy: 0.8,
-        critChance: 0.05,
+        critChance: 0.01,
     },
 };
 
