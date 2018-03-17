@@ -4,6 +4,7 @@ function Action(actor, target, stats) {
     stats = stats || {};
     this.actor = actor;
     this.target = target;
+    this.time = stats.time || 5;
     this.damage = stats.damage;
     hitChanceMod = stats.hitChance || 0;
     this.hitChance = this.actor.accuracy - this.target.evasion + hitChanceMod;
@@ -35,9 +36,9 @@ Action.prototype.execute = function() {
 };
 
 const actionData = {
-    sword: { text: 'You swing the sword.', damage: 12 },
-    pistol: { text: 'You fire a shot.', damage: 10, critChance: 0.2 },
-    bone_claw: { text: 'The fiend rakes you with its claw!', damage: 18 },
+    sword: { text: 'You swing the sword.', damage: 12, time: 3 },
+    pistol: { text: 'You fire a shot.', damage: 10, critChance: 0.2, time: 2 },
+    bone_claw: { text: 'The fiend rakes you with its claw!', damage: 18, time: 8 },
 };
 
 function buildAction(actionName, actor, target) {
