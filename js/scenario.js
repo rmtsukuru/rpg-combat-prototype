@@ -170,7 +170,13 @@ ActionScene.prototype.draw = function() {
 
 function EnemyScene() {
     Scene.call(this);
-    this.action = buildAction('bone_claw', enemies[0], party[0]);
+    if (Math.random() < 0.6) {
+        action = 'cutlass';
+    }
+    else {
+        action = 'bone_claw';
+    }
+    this.action = buildAction(action, enemies[0], party[0]);
     var results = this.action.execute();
     this.hit = results.hit;
     this.crit = results.crit;

@@ -39,6 +39,7 @@ const actionData = {
     sword: { text: 'You swing the sword.', damage: 12, time: 3 },
     pistol: { text: 'You fire a shot.', damage: 10, critChance: 0.2, time: 2 },
     bone_claw: { text: 'The fiend rakes you with its claw!', damage: 18, time: 8 },
+    cutlass: { text: 'The fiend swings its cutlass at you!', damage: 10, critChance: 0.1, time: 5 },
 };
 
 function buildAction(actionName, actor, target) {
