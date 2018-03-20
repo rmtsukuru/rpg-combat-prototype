@@ -13,6 +13,7 @@ var playerCharacters = {
         agility: 20,
         time: 0,
         critChance: 0.05,
+        conditions: [],
     },
 };
 
@@ -26,6 +27,7 @@ var monsters = {
         agility: 5,
         time: 0,
         critChance: 0.01,
+        conditions: [],
     },
 };
 
@@ -133,6 +135,7 @@ MenuScene.prototype.draw = function() {
 
 function ActionScene(action) {
     Scene.call(this);
+    this.updateConditions(party[0]);
     this.action = buildAction(action, party[0], enemies[0]);
     var results = this.action.execute();
     this.hit = results.hit;
@@ -143,6 +146,16 @@ function ActionScene(action) {
 }
 
 ActionScene.prototype = Object.create(Scene.prototype);
+
+ActionScene.prototype.updateConditions = function(target) {
+    target.conditions.forEach(function(condition, i) {
+        condition.time--;
+        if (condition.time <= 0) {
+            condition.end();
+            target.conditions.splice(i, 1);
+        }
+    });
+};
 
 ActionScene.prototype.update = function() {
     if (this.messageTimer > 0) {
@@ -159,17 +172,20 @@ ActionScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
     drawRect(80, 60, 500, 120, 'white', true);
     drawTextMultiline(this.action.text, 95, 85);
-    if (this.hit) {
-        var critText = this.crit ? ' A critical hit!!' : '';
-        drawTextMultiline('It dealt ' + this.damage + ' damage!' + critText, 95, 110);
-    }
-    else {
-        drawTextMultiline('The attack missed!', 95, 110);
+    if (Math.abs(this.damage) > 0) {
+        if (this.hit) {
+            var critText = this.crit ? ' A critical hit!!' : '';
+            drawTextMultiline('It dealt ' + this.damage + ' damage!' + critText, 95, 110);
+        }
+        else {
+            drawTextMultiline('The attack missed!', 95, 110);
+        }
     }
 };
 
 function EnemyScene() {
     Scene.call(this);
+    this.updateConditions(enemies[0]);
     if (Math.random() < 0.6) {
         action = 'cutlass';
     }
@@ -187,6 +203,16 @@ function EnemyScene() {
 
 EnemyScene.prototype = Object.create(Scene.prototype);
 
+EnemyScene.prototype.updateConditions = function(target) {
+    target.conditions.forEach(function(condition, i) {
+        condition.time--;
+        if (condition.time <= 0) {
+            condition.end();
+            target.conditions.splice(i, 1);
+        }
+    });
+};
+
 EnemyScene.prototype.update = function() {
     if (this.messageTimer > 0) {
         this.messageTimer--;
@@ -202,12 +228,14 @@ EnemyScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
     drawRect(80, 60, 500, 120, 'white', true);
     drawTextMultiline(this.action.text, 95, 85);
-    if (this.hit) {
-        var critText = this.crit ? ' A critical hit!!' : '';
-        drawTextMultiline('It dealt ' + this.damage + ' damage!' + critText, 95, 110);
-    }
-    else {
-        drawTextMultiline('The attack missed!', 95, 110);
+    if (Math.abs(this.damage) > 0) {
+        if (this.hit) {
+            var critText = this.crit ? ' A critical hit!!' : '';
+            drawTextMultiline('It dealt ' + this.damage + ' damage!' + critText, 95, 110);
+        }
+        else {
+            drawTextMultiline('The attack missed!', 95, 110);
+        }
     }
 };
 
@@ -239,7 +267,7 @@ function SkillScene() {
     MenuScene.call(this);
     this.menuOptions = [
         { display: 'Trip' },
-        { display: 'Dodge' },
+        { display: 'Dodge', scene: ActionScene, action: 'dodge' },
         { display: 'Inspect' },
     ];
     this.previousScene = CombatScene;
