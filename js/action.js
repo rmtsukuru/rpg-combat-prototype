@@ -12,6 +12,7 @@ function Action(actor, target, stats) {
     this.critChance = this.actor.critChance + critChanceMod;
     this.text = stats.text;
     this.selfCondition = stats.selfCondition;
+    this.targetCondition = stats.targetCondition;
 }
 
 Action.prototype.hit = function() {
@@ -38,6 +39,11 @@ Action.prototype.execute = function() {
         this.actor.conditions.push(condition);
         condition.start();
     }
+    if (this.targetCondition && hit) {
+        var condition = buildCondition(this.targetCondition, this.target);
+        this.target.conditions.push(condition);
+        condition.start();
+    }
     return { hit: hit, crit: crit };
 };
 
@@ -47,6 +53,7 @@ const actionData = {
     bone_claw: { text: 'The fiend rakes you with its claw!', damage: 18, time: 8 },
     cutlass: { text: 'The fiend swings its cutlass at you!', damage: 10, critChance: 0.1, time: 5 },
     dodge: { text: 'You attempt to dodge incoming attacks.', selfCondition: 'dodge', time: 5 },
+    trip: { text: 'You knock the enemy down, exposing it to\nattack.', targetCondition: 'prone', hitChance: 0.4, time: 3 },
 };
 
 function buildAction(actionName, actor, target) {

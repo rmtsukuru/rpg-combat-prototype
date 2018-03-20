@@ -17,6 +17,7 @@ Condition.prototype.end = function() {
 const conditionData = {
     dodge: { duration: 1, onStart: function(x) { x.evasion += 0.3; }, onEnd: function(x) { x.evasion -= 0.3; } },
     aim: { duration: 3, onStart: function(x) { x.critChance += 0.3; }, onEnd: function(x) { x.critChance -= 0.3; } },
+    prone: { duration: 3, onStart: function(x) { x.evasion -= 0.3; }, onEnd: function(x) { x.evasion += 0.3; } },
 };
 
 function buildCondition(conditionName, target) {

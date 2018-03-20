@@ -266,7 +266,7 @@ AttackScene.prototype = Object.create(MenuScene.prototype);
 function SkillScene() {
     MenuScene.call(this);
     this.menuOptions = [
-        { display: 'Trip' },
+        { display: 'Trip', scene: ActionScene, action: 'trip' },
         { display: 'Dodge', scene: ActionScene, action: 'dodge' },
         { display: 'Inspect' },
     ];
