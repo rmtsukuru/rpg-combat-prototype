@@ -31,6 +31,27 @@ var monsters = {
     },
 };
 
+var menu = [
+    { title: 'Attack', submenu: [
+        { title: 'Straight Sword - 80/80 DUR', action: 'sword' },
+        { action: 'pistol' }
+    ] },
+    { title: 'Tactics', submenu: [
+        { title: 'Trip', action: 'trip' },
+        { title: 'Dodge', action: 'dodge' },
+        { title: 'Inspect' },
+    ] },
+    { title: 'Magic', submenu: [
+        { title: 'Flame Strike - 1 SOUL' },
+        { title: 'Spirit Blast - 1 SOUL' },
+    ] },
+    { title: 'Item', submenu: [
+        { title: 'Ointment (1)' },
+        { title: 'Bullets (12)' },
+        { title: 'Cutlass' },
+    ] },
+];
+
 var party = [playerCharacters.slayer];
 var enemies = [monsters.skeleton];
 var queue = party.concat(enemies);
@@ -81,7 +102,7 @@ QueueScene.prototype = Object.create(Scene.prototype);
 QueueScene.prototype.update = function() {
     var next = queue[0];
     if (party.includes(next)) {
-        scene = new CombatScene();
+        scene = new MenuScene();
     }
     else if (enemies.includes(next)) {
         scene = new EnemyScene();
@@ -92,33 +113,56 @@ QueueScene.prototype.update = function() {
 function MenuScene() {
     Scene.call(this);
     this.menuY = 0;
-    this.menuWidth = 120;
-    this.menuOptions = [];
+    this.menu = menu;
+    this.parents = [];
+    this.calculateWidth();
 }
 
 MenuScene.prototype = Object.create(Scene.prototype);
 
+MenuScene.prototype.calculateWidth = function() {
+    var maxWidth = 0;
+    this.menu.forEach(function(item, i) {
+        var title = item.title;
+        if (item.action && actionData[item.action] && actionData[item.action].title) {
+            title = actionData[item.action].title;
+        }
+        maxWidth = Math.max(maxWidth, title.length * 11 + 43);
+    });
+    this.menuWidth = maxWidth;
+};
+
 MenuScene.prototype.update = function() {
     if (triggerKeyState.enter || triggerKeyState.z) {
-        if (this.menuOptions[this.menuY].scene) {
-            scene = new this.menuOptions[this.menuY].scene(this.menuOptions[this.menuY].action);
-            playSound('beep0', 0.5);
+        var menuItem = this.menu[this.menuY];
+        if (menuItem.submenu) {
+            this.parents.push(this.menu);
+            this.menu = menuItem.submenu;
+            this.menuY = 0;
+            this.calculateWidth();
         }
+        else if (menuItem.action) {
+            scene = new ActionScene(menuItem.action);
+        }
+        playSound('beep0', 0.5);
     }
     else if (triggerKeyState.shift || triggerKeyState.x || triggerKeyState.esc) {
-        if (this.previousScene) {
-            scene = new this.previousScene();
+        if (this.parents.length > 0) {
+            this.menu = this.parents[this.parents.length - 1];
+            this.parents.pop();
+            this.menuY = 0;
+            this.calculateWidth();
             playSound('beep1', 0.5);
         }
     }
     else if (triggerKeyState.down) {
         this.menuY++;
-        this.menuY %= this.menuOptions.length;
+        this.menuY %= this.menu.length;
         playSound('select0', 0.3);
     }
     else if (triggerKeyState.up) {
         this.menuY--;
-        this.menuY = this.menuY < 0 ? this.menuOptions.length - 1 : this.menuY;
+        this.menuY = this.menuY < 0 ? this.menu.length - 1 : this.menuY;
         playSound('select0', 0.3);
     }
     Scene.prototype.update.call(this);
@@ -126,10 +170,14 @@ MenuScene.prototype.update = function() {
 
 MenuScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
-    drawRect(20, 230, this.menuWidth, 10 + 20 * this.menuOptions.length, 'white', true);
-    for (var i = 0; i < this.menuOptions.length; i++) {
-        drawText(this.menuOptions[i].display, 50, 250 + 20 * i);
-    }
+    drawRect(20, 230, this.menuWidth, 10 + 20 * this.menu.length, 'white', true);
+    this.menu.forEach(function(item, i) {
+        var text = item.title;
+        if (item.action && actionData[item.action] && actionData[item.action].title) {
+            text = actionData[item.action].title;
+        }
+        drawText(text, 50, 250 + 20 * i);
+    });
     drawArrow(30, 238 + 20 * this.menuY, 10, 10, 'white');
 }
 
@@ -238,67 +286,6 @@ EnemyScene.prototype.draw = function() {
         }
     }
 };
-
-function CombatScene() {
-    MenuScene.call(this);
-    this.menuOptions = [
-        { display: 'Attack', scene: AttackScene },
-        { display: 'Tactics', scene: SkillScene },
-        { display: 'Magic', scene: SpellScene },
-        { display: 'Item', scene: ItemScene },
-    ];
-}
-
-CombatScene.prototype = Object.create(MenuScene.prototype);
-
-function AttackScene() {
-    MenuScene.call(this);
-    this.menuOptions = [
-        { display: 'Straight Sword - 80/80 DUR', scene: ActionScene, action: 'sword' },
-        { display: 'Pistol - 1/1 AMMO', scene: ActionScene, action: 'pistol' },
-    ];
-    this.menuWidth = 325;
-    this.previousScene = CombatScene;
-}
-
-AttackScene.prototype = Object.create(MenuScene.prototype);
-
-function SkillScene() {
-    MenuScene.call(this);
-    this.menuOptions = [
-        { display: 'Trip', scene: ActionScene, action: 'trip' },
-        { display: 'Dodge', scene: ActionScene, action: 'dodge' },
-        { display: 'Inspect' },
-    ];
-    this.previousScene = CombatScene;
-}
-
-SkillScene.prototype = Object.create(MenuScene.prototype);
-
-function SpellScene() {
-    MenuScene.call(this);
-    this.menuOptions = [
-        { display: 'Flame Strike - 1 SOUL' },
-        { display: 'Spirit Blast - 1 SOUL' },
-    ];
-    this.menuWidth = 270;
-    this.previousScene = CombatScene;
-}
-
-SpellScene.prototype = Object.create(MenuScene.prototype);
-
-function ItemScene() {
-    MenuScene.call(this);
-    this.menuOptions = [
-        { display: 'Ointment (1)' },
-        { display: 'Bullets (12)' },
-        { display: 'Cutlass' },
-    ];
-    this.menuWidth = 170;
-    this.previousScene = CombatScene;
-}
-
-ItemScene.prototype = Object.create(MenuScene.prototype);
 
 function VictoryScene() {
     Scene.call(this);
