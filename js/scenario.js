@@ -42,8 +42,8 @@ var menu = [
         { title: 'Inspect' },
     ] },
     { title: 'Magic', submenu: [
-        { title: 'Flame Strike - 1 SOUL' },
-        { title: 'Spirit Blast - 1 SOUL' },
+        { action: 'scalding_strike' },
+        { action: 'spirit_binding' },
     ] },
     { title: 'Item', submenu: [
         { title: 'Ointment (1)' },
@@ -120,13 +120,28 @@ function MenuScene() {
 
 MenuScene.prototype = Object.create(Scene.prototype);
 
+MenuScene.prototype.getTitle = function(menuItem) {
+    var cost = 0;
+    var title = menuItem.title;
+    if (menuItem.action && actionData[menuItem.action]) {
+        if (actionData[menuItem.action].cost) {
+            cost = actionData[menuItem.action].cost;
+        }
+        if (actionData[menuItem.action].title) {
+            title = actionData[menuItem.action].title;
+        }
+    }
+    if (cost > 0) {
+        return title + '- ' + cost + ' SOUL' + (cost > 1 ? 'S' : '');
+    }
+    return title;
+};
+
 MenuScene.prototype.calculateWidth = function() {
     var maxWidth = 0;
+    var self = this;
     this.menu.forEach(function(item, i) {
-        var title = item.title;
-        if (item.action && actionData[item.action] && actionData[item.action].title) {
-            title = actionData[item.action].title;
-        }
+        var title = self.getTitle(item);
         maxWidth = Math.max(maxWidth, title.length * 11 + 43);
     });
     this.menuWidth = maxWidth;
@@ -140,11 +155,18 @@ MenuScene.prototype.update = function() {
             this.menu = menuItem.submenu;
             this.menuY = 0;
             this.calculateWidth();
+            playSound('beep0', 0.5);
         }
         else if (menuItem.action) {
-            scene = new ActionScene(menuItem.action);
+            var cost = actionData[menuItem.action].cost || 0;
+            if (cost > 0 && party[0].resource <= 0) {
+                playSound('beep1', 0.5);
+            }
+            else {
+                scene = new ActionScene(menuItem.action);
+                playSound('beep0', 0.5);
+            }
         }
-        playSound('beep0', 0.5);
     }
     else if (triggerKeyState.shift || triggerKeyState.x || triggerKeyState.esc) {
         if (this.parents.length > 0) {
@@ -171,12 +193,10 @@ MenuScene.prototype.update = function() {
 MenuScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
     drawRect(20, 230, this.menuWidth, 10 + 20 * this.menu.length, 'white', true);
+    var self = this;
     this.menu.forEach(function(item, i) {
-        var text = item.title;
-        if (item.action && actionData[item.action] && actionData[item.action].title) {
-            text = actionData[item.action].title;
-        }
-        drawText(text, 50, 250 + 20 * i);
+        var title = self.getTitle(item);
+        drawText(title, 50, 250 + 20 * i);
     });
     drawArrow(30, 238 + 20 * this.menuY, 10, 10, 'white');
 }
@@ -190,6 +210,7 @@ function ActionScene(action) {
     this.crit = results.crit;
     this.damage = this.action.calculateDamage(this.crit);
     party[0].time += this.action.time;
+    party[0].resource -= this.action.cost;
     this.messageTimer = FPS * 0.5;
 }
 

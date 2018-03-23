@@ -5,6 +5,7 @@ function Action(actor, target, stats) {
     this.actor = actor;
     this.target = target;
     this.time = stats.time || 5;
+    this.cost = stats.cost || 0;
     this.damage = stats.damage || 0;
     hitChanceMod = stats.hitChance || 0;
     this.hitChance = this.actor.accuracy - this.target.evasion + hitChanceMod;
@@ -54,6 +55,8 @@ const actionData = {
     cutlass: { text: 'The fiend swings its cutlass at you!', damage: 10, critChance: 0.1, time: 5 },
     dodge: { text: 'You attempt to dodge incoming attacks.', selfCondition: 'dodge', time: 5 },
     trip: { text: 'You knock the enemy down, exposing it to\nattack.', targetCondition: 'prone', hitChance: 0.4, time: 3 },
+    scalding_strike: { title: 'Scalding Strike', text: 'You slash with a blade wreathed in flames.', cost: 1, damage: 20, hitChance: 0.2, critChance: 0.3, time: 10 },
+    spirit_binding: { title: 'Spirit Binding', text: 'You utter words of binding.', cost: 1, damage: 5, hitChance: 0.2, targetCondition: 'binding', time: 7 },
 };
 
 function buildAction(actionName, actor, target) {
