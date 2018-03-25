@@ -14,6 +14,10 @@ var playerCharacters = {
         time: 0,
         critChance: 0.05,
         conditions: [],
+        equipment: [
+            { title: 'Straight Sword', action: 'sword', durability: 80, maxDurability: 80 },
+            { title: 'Pistol', action: 'pistol', ammo: 1, maxAmmo: 1 },
+        ],
     },
 };
 
@@ -32,10 +36,9 @@ var monsters = {
 };
 
 var menu = [
-    { title: 'Attack', submenu: [
-        { title: 'Straight Sword - 80/80 DUR', action: 'sword' },
-        { action: 'pistol' }
-    ] },
+    { title: 'Attack', submenu: function() {
+        return party[0].equipment;
+    } },
     { title: 'Tactics', submenu: [
         { title: 'Trip', action: 'trip' },
         { title: 'Dodge', action: 'dodge' },
@@ -132,7 +135,13 @@ MenuScene.prototype.getTitle = function(menuItem) {
         }
     }
     if (cost > 0) {
-        return title + '- ' + cost + ' SOUL' + (cost > 1 ? 'S' : '');
+        return title + ' - ' + cost + ' SOUL' + (cost > 1 ? 'S' : '');
+    }
+    else if (menuItem.durability >= 0 && menuItem.maxDurability) {
+        return title + ' - ' + menuItem.durability + '/' + menuItem.maxDurability + ' DUR';
+    }
+    else if (menuItem.ammo >= 0 && menuItem.maxAmmo) {
+        return title + ' - ' + menuItem.ammo + '/' + menuItem.maxAmmo + ' AMMO';
     }
     return title;
 };
@@ -152,7 +161,12 @@ MenuScene.prototype.update = function() {
         var menuItem = this.menu[this.menuY];
         if (menuItem.submenu) {
             this.parents.push(this.menu);
-            this.menu = menuItem.submenu;
+            if (typeof menuItem.submenu == 'function') {
+                this.menu = menuItem.submenu();
+            }
+            else {
+                this.menu = menuItem.submenu;
+            }
             this.menuY = 0;
             this.calculateWidth();
             playSound('beep0', 0.5);
@@ -162,7 +176,19 @@ MenuScene.prototype.update = function() {
             if (cost > 0 && party[0].resource <= 0) {
                 playSound('beep1', 0.5);
             }
+            else if (menuItem.durability <= 0) {
+                playSound('beep1', 0.5);
+            }
+            else if (menuItem.ammo <= 0) {
+                playSound('beep1', 0.5);
+            }
             else {
+                if (menuItem.durability) {
+                    menuItem.durability--;
+                }
+                else if (menuItem.ammo) {
+                    menuItem.ammo--;
+                }
                 scene = new ActionScene(menuItem.action);
                 playSound('beep0', 0.5);
             }
