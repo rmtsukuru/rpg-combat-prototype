@@ -32,6 +32,7 @@ var monsters = {
         time: 0,
         critChance: 0.01,
         conditions: [],
+        inspectText: 'It is a skeleton, the clattering remains of\na dead human. Susceptible to concussive\nforce.',
     },
 };
 
@@ -42,7 +43,7 @@ var menu = [
     { title: 'Tactics', submenu: [
         { title: 'Trip', action: 'trip' },
         { title: 'Dodge', action: 'dodge' },
-        { title: 'Inspect' },
+        { action: 'inspect' },
     ] },
     { title: 'Magic', submenu: [
         { action: 'scalding_strike' },
@@ -275,6 +276,9 @@ ActionScene.prototype.draw = function() {
         else {
             drawTextMultiline('The attack missed!', 95, 110);
         }
+    }
+    else if (this.action.inspect) {
+        drawTextMultiline(enemies[0].inspectText, 95, 110);
     }
 };
 
