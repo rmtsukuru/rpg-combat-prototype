@@ -127,24 +127,29 @@ MenuScene.prototype = Object.create(Scene.prototype);
 MenuScene.prototype.getTitle = function(menuItem) {
     var cost = 0;
     var title = menuItem.title;
-    if (menuItem.action && actionData[menuItem.action]) {
-        if (actionData[menuItem.action].cost) {
-            cost = actionData[menuItem.action].cost;
+    var action = actionData[menuItem.action];
+    if (action) {
+        if (action.cost) {
+            cost = action.cost;
         }
-        if (actionData[menuItem.action].title) {
-            title = actionData[menuItem.action].title;
+        if (action.title) {
+            title = action.title;
         }
+    }
+    var timeDisplay = '';
+    if (!menuItem.submenu) {
+        timeDisplay = '   ' + ((action && action.time) ? action.time : 5) + 's';
     }
     if (cost > 0) {
-        return title + ' - ' + cost + ' SOUL' + (cost > 1 ? 'S' : '');
+        return title + ' - ' + cost + ' SOUL' + (cost > 1 ? 'S' : '') + timeDisplay;
     }
     else if (menuItem.durability >= 0 && menuItem.maxDurability) {
-        return title + ' - ' + menuItem.durability + '/' + menuItem.maxDurability + ' DUR';
+        return title + ' - ' + menuItem.durability + '/' + menuItem.maxDurability + ' DUR' + timeDisplay;
     }
     else if (menuItem.ammo >= 0 && menuItem.maxAmmo) {
-        return title + ' - ' + menuItem.ammo + '/' + menuItem.maxAmmo + ' AMMO';
+        return title + ' - ' + menuItem.ammo + '/' + menuItem.maxAmmo + ' AMMO' + timeDisplay;
     }
-    return title;
+    return title + timeDisplay;
 };
 
 MenuScene.prototype.calculateWidth = function() {
