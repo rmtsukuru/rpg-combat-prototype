@@ -18,6 +18,11 @@ var playerCharacters = {
             { title: 'Straight Sword', action: 'sword', durability: 80, maxDurability: 80 },
             { title: 'Pistol', action: 'pistol', ammo: 1, maxAmmo: 1 },
         ],
+        items: [
+            { title: 'Ointment', quantity: 1, action: 'ointment' },
+            { title: 'Bullets', quantity: 12 },
+            { title: 'Cutlass' },
+        ]
     },
 };
 
@@ -49,11 +54,9 @@ var menu = [
         { action: 'scalding_strike' },
         { action: 'spirit_binding' },
     ] },
-    { title: 'Item', submenu: [
-        { title: 'Ointment (1)' },
-        { title: 'Bullets (12)' },
-        { title: 'Cutlass' },
-    ] },
+    { title: 'Item', submenu: function() {
+        return party[0].items;
+    } },
 ];
 
 var party = [playerCharacters.slayer];
@@ -143,6 +146,9 @@ MenuScene.prototype.getTitle = function(menuItem) {
     if (cost > 0) {
         return title + ' - ' + cost + ' SOUL' + (cost > 1 ? 'S' : '') + timeDisplay;
     }
+    else if (menuItem.quantity >= 0) {
+        return title + ' (' + menuItem.quantity + ')' + timeDisplay;
+    }
     else if (menuItem.durability >= 0 && menuItem.maxDurability) {
         return title + ' - ' + menuItem.durability + '/' + menuItem.maxDurability + ' DUR' + timeDisplay;
     }
@@ -182,6 +188,9 @@ MenuScene.prototype.update = function() {
             if (cost > 0 && party[0].resource <= 0) {
                 playSound('beep1', 0.5);
             }
+            else if (menuItem.quantity <= 0) {
+                playSound('beep1', 0.5);
+            }
             else if (menuItem.durability <= 0) {
                 playSound('beep1', 0.5);
             }
@@ -189,7 +198,13 @@ MenuScene.prototype.update = function() {
                 playSound('beep1', 0.5);
             }
             else {
-                if (menuItem.durability) {
+                if (menuItem.quantity >= 0) {
+                    menuItem.quantity--;
+                    if (menuItem.quantity == 0) {
+                        party[0].items.splice(party[0].items.indexOf(menuItem), 1);
+                    }
+                }
+                else if (menuItem.durability) {
                     menuItem.durability--;
                 }
                 else if (menuItem.ammo) {
@@ -275,8 +290,13 @@ ActionScene.prototype.draw = function() {
     drawTextMultiline(this.action.text, 95, 85);
     if (Math.abs(this.damage) > 0) {
         if (this.hit) {
-            var critText = this.crit ? ' A critical hit!!' : '';
-            drawTextMultiline('It dealt ' + this.damage + ' damage!' + critText, 95, 110);
+            if (this.damage > 0) {
+                var critText = this.crit ? ' A critical hit!!' : '';
+                drawTextMultiline('It dealt ' + this.damage + ' damage!' + critText, 95, 110);
+            }
+            else {
+                drawTextMultiline('It healed ' + Math.abs(this.damage) + ' damage!', 95, 110);
+            }
         }
         else {
             drawTextMultiline('The attack missed!', 95, 110);

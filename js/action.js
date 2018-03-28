@@ -3,7 +3,7 @@ const CRIT_MULTIPLIER = 2;
 function Action(actor, target, stats) {
     stats = stats || {};
     this.actor = actor;
-    this.target = target;
+    this.target = stats.target == 'self' ? this.actor : target;
     this.time = stats.time || 5;
     this.cost = stats.cost || 0;
     this.damage = stats.damage || 0;
@@ -59,6 +59,7 @@ const actionData = {
     inspect: { title: 'Inspect', text: 'You inspect the enemy.', inspect: true, time: 3 },
     scalding_strike: { title: 'Scalding Strike', text: 'You slash with a blade wreathed in flames.', cost: 1, damage: 20, hitChance: 0.2, critChance: 0.3, time: 10 },
     spirit_binding: { title: 'Spirit Binding', text: 'You utter words of binding.', cost: 1, damage: 5, hitChance: 0.2, targetCondition: 'binding', time: 7 },
+    ointment: { title: 'Ointment', text: 'You apply the ointment to your wounds.', damage: -10, hitChance: 2, critChance: -2, target: 'self' },
 };
 
 function buildAction(actionName, actor, target) {
