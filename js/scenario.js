@@ -20,7 +20,7 @@ var playerCharacters = {
         ],
         items: [
             { title: 'Ointment', quantity: 1, action: 'ointment' },
-            { title: 'Bullets', quantity: 12 },
+            { title: 'Bullets', quantity: 12, action: 'bullet' },
             { title: 'Cutlass' },
         ]
     },
@@ -258,6 +258,13 @@ function ActionScene(action) {
     this.damage = this.action.calculateDamage(this.crit);
     party[0].time += this.action.time;
     party[0].resource -= this.action.cost;
+    if (this.action.reload) {
+        party[0].equipment.forEach(function(item) {
+            if (item.maxAmmo) {
+                item.ammo = item.maxAmmo;
+            }
+        });
+    }
     this.messageTimer = FPS * 0.5;
 }
 

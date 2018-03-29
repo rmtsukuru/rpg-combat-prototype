@@ -15,6 +15,7 @@ function Action(actor, target, stats) {
     this.selfCondition = stats.selfCondition;
     this.targetCondition = stats.targetCondition;
     this.inspect = stats.inspect;
+    this.reload = stats.reload;
 }
 
 Action.prototype.hit = function() {
@@ -60,6 +61,7 @@ const actionData = {
     scalding_strike: { title: 'Scalding Strike', text: 'You slash with a blade wreathed in flames.', cost: 1, damage: 20, hitChance: 0.2, critChance: 0.3, time: 10 },
     spirit_binding: { title: 'Spirit Binding', text: 'You utter words of binding.', cost: 1, damage: 5, hitChance: 0.2, targetCondition: 'binding', time: 7 },
     ointment: { title: 'Ointment', text: 'You apply the ointment to your wounds.', damage: -10, hitChance: 2, critChance: -2, target: 'self' },
+    bullet: { text: 'You reload the pistol.', time: 10, reload: true },
 };
 
 function buildAction(actionName, actor, target) {
