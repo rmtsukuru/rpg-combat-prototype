@@ -109,16 +109,17 @@ QueueScene.prototype = Object.create(Scene.prototype);
 QueueScene.prototype.update = function() {
     var next = queue[0];
     if (party.includes(next)) {
-        scene = new MenuScene();
+        scene = new MenuScene(queue[0]);
     }
     else if (enemies.includes(next)) {
-        scene = new EnemyScene();
+        scene = new EnemyScene(queue[0]);
     }
     Scene.prototype.update.call(this);
 };
 
-function MenuScene() {
+function MenuScene(combatant) {
     Scene.call(this);
+    this.combatant = combatant;
     this.menuY = 0;
     this.menu = menu;
     this.parents = [];
@@ -185,7 +186,7 @@ MenuScene.prototype.update = function() {
         }
         else if (menuItem.action) {
             var cost = actionData[menuItem.action].cost || 0;
-            if (cost > 0 && party[0].resource <= 0) {
+            if (cost > 0 && combatant.resource <= 0) {
                 playSound('beep1', 0.5);
             }
             else if (menuItem.quantity <= 0) {
@@ -201,7 +202,7 @@ MenuScene.prototype.update = function() {
                 if (menuItem.quantity >= 0) {
                     menuItem.quantity--;
                     if (menuItem.quantity == 0) {
-                        party[0].items.splice(party[0].items.indexOf(menuItem), 1);
+                        combatant.items.splice(combatant.items.indexOf(menuItem), 1);
                     }
                 }
                 else if (menuItem.durability) {
@@ -210,7 +211,7 @@ MenuScene.prototype.update = function() {
                 else if (menuItem.ammo) {
                     menuItem.ammo--;
                 }
-                scene = new ActionScene(menuItem.action);
+                scene = new ActionScene(this.combatant, menuItem.action);
                 playSound('beep0', 0.5);
             }
         }
@@ -248,18 +249,19 @@ MenuScene.prototype.draw = function() {
     drawArrow(30, 238 + 20 * this.menuY, 10, 10, 'white');
 }
 
-function ActionScene(action) {
+function ActionScene(combatant, action) {
     Scene.call(this);
-    this.updateConditions(party[0]);
-    this.action = buildAction(action, party[0], enemies[0]);
+    this.combatant = combatant;
+    this.updateConditions(this.combatant);
+    this.action = buildAction(action, this.combatant, enemies[0]);
     var results = this.action.execute();
     this.hit = results.hit;
     this.crit = results.crit;
     this.damage = this.action.calculateDamage(this.crit);
-    party[0].time += this.action.time;
-    party[0].resource -= this.action.cost;
+    this.combatant.time += this.action.time;
+    this.combatant.resource -= this.action.cost;
     if (this.action.reload) {
-        party[0].equipment.forEach(function(item) {
+        this.combatant.equipment.forEach(function(item) {
             if (item.maxAmmo) {
                 item.ammo = item.maxAmmo;
             }
@@ -314,21 +316,22 @@ ActionScene.prototype.draw = function() {
     }
 };
 
-function EnemyScene() {
+function EnemyScene(combatant) {
     Scene.call(this);
-    this.updateConditions(enemies[0]);
+    this.combatant = combatant
+    this.updateConditions(this.combatant);
     if (Math.random() < 0.6) {
         action = 'cutlass';
     }
     else {
         action = 'bone_claw';
     }
-    this.action = buildAction(action, enemies[0], party[0]);
+    this.action = buildAction(action, this.combatant, party[0]);
     var results = this.action.execute();
     this.hit = results.hit;
     this.crit = results.crit;
     this.damage = this.action.calculateDamage(this.crit);
-    enemies[0].time += this.action.time;
+    this.combatant.time += this.action.time;
     this.messageTimer = FPS * 0.5;
 }
 
