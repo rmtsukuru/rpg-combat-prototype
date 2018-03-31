@@ -14,11 +14,9 @@ var playerCharacters = {
         time: 0,
         critChance: 0.05,
         conditions: [],
-        equipment: [
-            { title: 'Straight Sword', action: 'sword', durability: 80, maxDurability: 80 },
-            { title: 'Pistol', action: 'pistol', ammo: 1, maxAmmo: 1 },
-        ],
         items: [
+            { title: 'Straight Sword', action: 'sword', durability: 80, maxDurability: 80, equipped: true },
+            { title: 'Pistol', action: 'pistol', ammo: 1, maxAmmo: 1, equipped: true },
             { title: 'Ointment', quantity: 1, action: 'ointment' },
             { title: 'Bullets', quantity: 12, action: 'bullet' },
             { title: 'Cutlass' },
@@ -43,7 +41,7 @@ var monsters = {
 
 var menu = [
     { title: 'Attack', submenu: function() {
-        return party[0].equipment;
+        return party[0].items.filter(function(item) { return item.equipped; });
     } },
     { title: 'Tactics', submenu: [
         { title: 'Trip', action: 'trip' },
@@ -55,7 +53,7 @@ var menu = [
         { action: 'spirit_binding' },
     ] },
     { title: 'Item', submenu: function() {
-        return party[0].items;
+        return party[0].items.filter(function(item) { return !item.equipped; });
     } },
 ];
 
@@ -186,7 +184,7 @@ MenuScene.prototype.update = function() {
         }
         else if (menuItem.action) {
             var cost = actionData[menuItem.action].cost || 0;
-            if (cost > 0 && combatant.resource <= 0) {
+            if (cost > 0 && this.combatant.resource <= 0) {
                 playSound('beep1', 0.5);
             }
             else if (menuItem.quantity <= 0) {
@@ -202,7 +200,7 @@ MenuScene.prototype.update = function() {
                 if (menuItem.quantity >= 0) {
                     menuItem.quantity--;
                     if (menuItem.quantity == 0) {
-                        combatant.items.splice(combatant.items.indexOf(menuItem), 1);
+                        this.combatant.items.splice(this.combatant.items.indexOf(menuItem), 1);
                     }
                 }
                 else if (menuItem.durability) {
