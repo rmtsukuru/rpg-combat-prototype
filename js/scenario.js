@@ -61,6 +61,8 @@ var party = [playerCharacters.slayer];
 var enemies = [monsters.skeleton];
 var queue = party.concat(enemies);
 
+party[0].items.forEach(function(item) { item.item = true; });
+
 function Scene() {
 }
 
@@ -209,7 +211,11 @@ MenuScene.prototype.update = function() {
                 else if (menuItem.ammo) {
                     menuItem.ammo--;
                 }
-                scene = new ActionScene(this.combatant, menuItem.action);
+                var options = {};
+                if (menuItem.item) {
+                    options.item = menuItem;
+                }
+                scene = new ActionScene(this.combatant, menuItem.action, options);
                 playSound('beep0', 0.5);
             }
         }
@@ -247,10 +253,13 @@ MenuScene.prototype.draw = function() {
     drawArrow(30, 238 + 20 * this.menuY, 10, 10, 'white');
 }
 
-function ActionScene(combatant, action) {
+function ActionScene(combatant, action, options) {
     Scene.call(this);
     this.combatant = combatant;
     this.updateConditions(this.combatant);
+    if (options.item) {
+        this.item = options.item;
+    }
     this.action = buildAction(action, this.combatant, enemies[0]);
     var results = this.action.execute();
     this.hit = results.hit;
@@ -259,7 +268,7 @@ function ActionScene(combatant, action) {
     this.combatant.time += this.action.time;
     this.combatant.resource -= this.action.cost;
     if (this.action.reload) {
-        this.combatant.equipment.forEach(function(item) {
+        this.combatant.items.filter(function(item) { return item.equipped; }).forEach(function(item) {
             if (item.maxAmmo) {
                 item.ammo = item.maxAmmo;
             }
