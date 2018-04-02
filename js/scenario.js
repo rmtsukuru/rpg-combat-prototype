@@ -15,11 +15,11 @@ var playerCharacters = {
         critChance: 0.05,
         conditions: [],
         items: [
-            { title: 'Straight Sword', action: 'sword', durability: 80, maxDurability: 80, equipped: true },
-            { title: 'Pistol', action: 'pistol', ammo: 1, maxAmmo: 1, equipped: true },
-            { title: 'Ointment', quantity: 1, action: 'ointment' },
-            { title: 'Bullets', quantity: 12, action: 'bullet' },
-            { title: 'Cutlass' },
+            { item: 'straight_sword', durability: 80, equipped: true },
+            { item: 'pistol', ammo: 1, equipped: true },
+            { item: 'ointment', quantity: 1 },
+            { item: 'bullets', quantity: 12 },
+            { item: 'cutlass' },
         ]
     },
 };
@@ -41,7 +41,11 @@ var monsters = {
 
 var menu = [
     { title: 'Attack', submenu: function() {
-        return party[0].items.filter(function(item) { return item.equipped; });
+        return party[0].items.filter(function(item) {
+            return item.equipped;
+        }).map(function(item) {
+            return buildItem(item);
+        });
     } },
     { title: 'Tactics', submenu: [
         { title: 'Trip', action: 'trip' },
@@ -53,7 +57,11 @@ var menu = [
         { action: 'spirit_binding' },
     ] },
     { title: 'Item', submenu: function() {
-        return party[0].items.filter(function(item) { return !item.equipped; });
+        return party[0].items.filter(function(item) {
+            return !item.equipped;
+        }).map(function(item) {
+            return buildItem(item);
+        });
     } },
 ];
 
@@ -61,7 +69,8 @@ var party = [playerCharacters.slayer];
 var enemies = [monsters.skeleton];
 var queue = party.concat(enemies);
 
-party[0].items.forEach(function(item) { item.item = true; });
+function configureItems() {
+}
 
 function Scene() {
 }
@@ -403,5 +412,6 @@ DeathScene.prototype.draw = function() {
 };
 
 function configureScenario() {
+    configureItems();
     scene = new QueueScene();
 }
