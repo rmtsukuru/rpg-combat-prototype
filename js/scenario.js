@@ -209,20 +209,20 @@ MenuScene.prototype.update = function() {
             }
             else {
                 if (menuItem.quantity >= 0) {
-                    menuItem.quantity--;
-                    if (menuItem.quantity == 0) {
-                        this.combatant.items.splice(this.combatant.items.indexOf(menuItem), 1);
+                    menuItem.item.quantity--;
+                    if (menuItem.item.quantity == 0) {
+                        this.combatant.items.splice(this.combatant.items.indexOf(menuItem.item), 1);
                     }
                 }
                 else if (menuItem.durability) {
-                    menuItem.durability--;
+                    menuItem.item.durability--;
                 }
                 else if (menuItem.ammo) {
-                    menuItem.ammo--;
+                    menuItem.item.ammo--;
                 }
                 var options = {};
                 if (menuItem.item) {
-                    options.item = menuItem;
+                    options.item = menuItem.item;
                 }
                 scene = new ActionScene(this.combatant, menuItem.action, options);
                 playSound('beep0', 0.5);
@@ -278,8 +278,8 @@ function ActionScene(combatant, action, options) {
     this.combatant.resource -= this.action.cost;
     if (this.action.reload) {
         this.combatant.items.filter(function(item) { return item.equipped; }).forEach(function(item) {
-            if (item.maxAmmo) {
-                item.ammo = item.maxAmmo;
+            if (itemData[item.item].maxAmmo) {
+                item.ammo = itemData[item.item].maxAmmo;
             }
         });
     }
