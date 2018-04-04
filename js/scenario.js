@@ -45,6 +45,8 @@ var menu = [
             return item.equipped;
         }).map(function(item) {
             return buildItem(item);
+        }).sort(function(a, b) {
+            return a.equipment.length - b.equipment.length;
         });
     } },
     { title: 'Tactics', submenu: [
