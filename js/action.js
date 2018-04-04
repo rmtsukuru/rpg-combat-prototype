@@ -16,6 +16,7 @@ function Action(actor, target, stats) {
     this.targetCondition = stats.targetCondition;
     this.inspect = stats.inspect;
     this.reload = stats.reload;
+    this.equip = stats.equip;
 }
 
 Action.prototype.hit = function() {
@@ -52,9 +53,10 @@ Action.prototype.execute = function() {
 
 const actionData = {
     sword: { title: 'Straight Sword', text: 'You swing the sword.', damage: 12, time: 3 },
+    cutlass: { title: 'Cutlass', text: 'You slice with the cutlass.', damage: 10, critChance: 0.1, time: 4 },
     pistol: { title: 'Pistol', text: 'You fire a shot.', damage: 10, critChance: 0.2, time: 2 },
     bone_claw: { text: 'The fiend rakes you with its claw!', damage: 18, time: 8 },
-    cutlass: { text: 'The fiend swings its cutlass at you!', damage: 10, critChance: 0.1, time: 5 },
+    enemy_cutlass: { text: 'The fiend swings its cutlass at you!', damage: 10, critChance: 0.1, time: 5 },
     dodge: { text: 'You attempt to dodge incoming attacks.', selfCondition: 'dodge', time: 5 },
     trip: { text: 'You knock the enemy down, exposing it to\nattack.', targetCondition: 'prone', hitChance: 0.4, time: 3 },
     inspect: { title: 'Inspect', text: 'You inspect the enemy.', inspect: true, time: 3 },
@@ -62,6 +64,7 @@ const actionData = {
     spirit_binding: { title: 'Spirit Binding', text: 'You utter words of binding.', cost: 1, damage: 5, hitChance: 0.2, targetCondition: 'binding', time: 7 },
     ointment: { title: 'Ointment', text: 'You apply the ointment to your wounds.', damage: -10, hitChance: 2, critChance: -2, target: 'self' },
     bullet: { text: 'You reload the pistol.', time: 10, reload: true },
+    equip: { text: 'You change gear.', time: 6, traget: 'self', equip: true },
 };
 
 function buildAction(actionName, actor, target) {

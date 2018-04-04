@@ -3,7 +3,7 @@ const itemData = {
     pistol: { title: 'Pistol', action: 'pistol', maxAmmo: 1, equipment: 'secondary_weapon' },
     ointment: { title: 'Ointment', action: 'ointment' },
     bullets: { title: 'Bullets', action: 'bullet' },
-    cutlass: { title: 'Cutlass', equipment: 'weapon' },
+    cutlass: { title: 'Cutlass', action: 'cutlass', maxDurability: 20, equipment: 'weapon' },
 };
 
 function buildItem(menuItem) {

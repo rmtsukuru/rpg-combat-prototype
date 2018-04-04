@@ -19,7 +19,7 @@ var playerCharacters = {
             { item: 'pistol', ammo: 1, equipped: true },
             { item: 'ointment', quantity: 1 },
             { item: 'bullets', quantity: 12 },
-            { item: 'cutlass' },
+            { item: 'cutlass', durability: 20 },
         ]
     },
 };
@@ -208,18 +208,6 @@ MenuScene.prototype.update = function() {
                 playSound('beep1', 0.5);
             }
             else {
-                if (menuItem.quantity >= 0) {
-                    menuItem.item.quantity--;
-                    if (menuItem.item.quantity == 0) {
-                        this.combatant.items.splice(this.combatant.items.indexOf(menuItem.item), 1);
-                    }
-                }
-                else if (menuItem.durability) {
-                    menuItem.item.durability--;
-                }
-                else if (menuItem.ammo) {
-                    menuItem.item.ammo--;
-                }
                 var options = {};
                 if (menuItem.item) {
                     options.item = menuItem.item;
@@ -276,12 +264,35 @@ function ActionScene(combatant, action, options) {
     this.damage = this.action.calculateDamage(this.crit);
     this.combatant.time += this.action.time;
     this.combatant.resource -= this.action.cost;
+    if (this.item.quantity >= 0) {
+        this.item.quantity--;
+        if (this.item.quantity == 0) {
+            this.combatant.items.splice(this.combatant.items.indexOf(item), 1);
+        }
+    }
+    if (action != 'equip') {
+        if (this.item.durability) {
+            this.item.durability--;
+        }
+        else if (this.item.ammo) {
+            this.item.ammo--;
+        }
+    }
     if (this.action.reload) {
         this.combatant.items.filter(function(item) { return item.equipped; }).forEach(function(item) {
             if (itemData[item.item].maxAmmo) {
                 item.ammo = itemData[item.item].maxAmmo;
             }
         });
+    }
+    if (this.action.equip) {
+        var slot = itemData[this.item.item].equipment;
+        this.combatant.items.forEach(function(item) {
+            if (itemData[item.item].equipment == slot) {
+                item.equipped = false;
+            }
+        });
+        this.item.equipped = true;
     }
     this.messageTimer = FPS * 0.5;
 }
@@ -337,7 +348,7 @@ function EnemyScene(combatant) {
     this.combatant = combatant
     this.updateConditions(this.combatant);
     if (Math.random() < 0.6) {
-        action = 'cutlass';
+        action = 'enemy_cutlass';
     }
     else {
         action = 'bone_claw';
