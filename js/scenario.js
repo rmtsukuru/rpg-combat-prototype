@@ -269,18 +269,20 @@ function ActionScene(combatant, action, options) {
     this.damage = this.action.calculateDamage(this.crit);
     this.combatant.time += this.action.time;
     this.combatant.resource -= this.action.cost;
-    if (this.item.quantity >= 0) {
-        this.item.quantity--;
-        if (this.item.quantity == 0) {
-            this.combatant.items.splice(this.combatant.items.indexOf(item), 1);
+    if (this.item) {
+        if (this.item.quantity >= 0) {
+            this.item.quantity--;
+            if (this.item.quantity == 0) {
+                this.combatant.items.splice(this.combatant.items.indexOf(item), 1);
+            }
         }
-    }
-    if (action != 'equip') {
-        if (this.item.durability) {
-            this.item.durability--;
-        }
-        else if (this.item.ammo) {
-            this.item.ammo--;
+        if (action != 'equip') {
+            if (this.item.durability) {
+                this.item.durability--;
+            }
+            else if (this.item.ammo) {
+                this.item.ammo--;
+            }
         }
     }
     if (this.action.reload) {
