@@ -7,6 +7,11 @@ function Action(actor, target, stats) {
     this.time = stats.time || 5;
     this.cost = stats.cost || 0;
     this.damage = stats.damage || 0;
+    if (this.damage > 0) {
+        var damageType = stats.damageType || 'pure';
+        var defense = this.target.defenses[damageType] || 0;
+        this.damage = Math.max(0, this.damage - defense);
+    }
     hitChanceMod = stats.hitChance || 0;
     this.hitChance = this.actor.accuracy - this.target.evasion + hitChanceMod;
     critChanceMod = stats.critChance || 0;
@@ -52,15 +57,16 @@ Action.prototype.execute = function() {
 };
 
 const actionData = {
-    sword: { title: 'Straight Sword', text: 'You swing the sword.', damage: 12, time: 3 },
-    cutlass: { title: 'Cutlass', text: 'You slice with the cutlass.', damage: 10, critChance: 0.1, time: 4 },
-    pistol: { title: 'Pistol', text: 'You fire a shot.', damage: 10, critChance: 0.2, time: 2 },
-    bone_claw: { text: 'The fiend rakes you with its claw!', damage: 18, time: 8 },
-    enemy_cutlass: { text: 'The fiend swings its cutlass at you!', damage: 10, critChance: 0.1, time: 5 },
+    sword: { title: 'Straight Sword', text: 'You swing the sword.', damage: 12, damageType: 'laceration', time: 3 },
+    hammer: { title: 'Warhammer', text: 'You pound with the hammer.', damage: 15, damageType: 'concussion', hitChance: -0.1, time: 6 },
+    cutlass: { title: 'Cutlass', text: 'You slice with the cutlass.', damage: 10, damageType: 'laceration', critChance: 0.1, time: 4 },
+    pistol: { title: 'Pistol', text: 'You fire a shot.', damage: 10, damageType: 'penetration', critChance: 0.2, time: 2 },
+    bone_claw: { text: 'The fiend rakes you with its claw!', damage: 18, damageType: 'laceration', time: 8 },
+    enemy_cutlass: { text: 'The fiend swings its cutlass at you!', damage: 10, damageType: 'laceration', critChance: 0.1, time: 5 },
     dodge: { text: 'You attempt to dodge incoming attacks.', selfCondition: 'dodge', time: 5 },
     trip: { text: 'You knock the enemy down, exposing it to\nattack.', targetCondition: 'prone', hitChance: 0.4, time: 3 },
     inspect: { title: 'Inspect', text: 'You inspect the enemy.', inspect: true, time: 3 },
-    scalding_strike: { title: 'Scalding Strike', text: 'You slash with a blade wreathed in flames.', cost: 1, damage: 20, hitChance: 0.2, critChance: 0.3, time: 10 },
+    scalding_strike: { title: 'Scalding Strike', text: 'You slash with a blade wreathed in flames.', cost: 1, damage: 20, damageType: 'incineration', hitChance: 0.2, critChance: 0.3, time: 10 },
     spirit_binding: { title: 'Spirit Binding', text: 'You utter words of binding.', cost: 1, damage: 5, hitChance: 0.2, targetCondition: 'binding', time: 7 },
     ointment: { title: 'Ointment', text: 'You apply the ointment to your wounds.', damage: -10, hitChance: 2, critChance: -2, target: 'self' },
     bullet: { text: 'You reload the pistol.', time: 10, reload: true },

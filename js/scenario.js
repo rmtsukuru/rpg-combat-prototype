@@ -3,22 +3,24 @@ var scene;
 var playerCharacters = {
     slayer: {
         name: 'SLAYER',
-        health: 60,
-        maxHealth: 60,
+        health: 50,
+        maxHealth: 50,
         resourceName: 'SOULS',
         resource: 1,
         resourceMax: 3,
         accuracy: 0.8,
+        defenses: { laceration: 5 },
         evasion: 0.3,
         agility: 20,
         time: 0,
         critChance: 0.05,
         conditions: [],
         items: [
-            { item: 'straight_sword', durability: 80, equipped: true },
+            { item: 'straight_sword', durability: 50, equipped: true },
             { item: 'pistol', ammo: 1, equipped: true },
             { item: 'ointment', quantity: 1 },
             { item: 'bullets', quantity: 12 },
+            { item: 'warhammer', durability: 80 },
             { item: 'cutlass', durability: 20 },
         ]
     },
@@ -27,9 +29,10 @@ var playerCharacters = {
 var monsters = {
     skeleton: {
         name: 'SKELETON',
-        health: 50,
-        maxHealth: 50,
+        health: 30,
+        maxHealth: 30,
         accuracy: 0.8,
+        defenses: { laceration: 6, penetration: 8, concussion: -1, incineration: 2 },
         evasion: 0.1,
         agility: 5,
         time: 0,
