@@ -4,6 +4,8 @@ function Condition(target, stats) {
     this.time = this.duration;
     this.onStart = stats.onStart || function() {};
     this.onEnd = stats.onEnd || function() {};
+    this.onTimeTick = stats.onTimeTick || function() {};
+    this.onTurnTick = stats.onTurnTick || function() {};
 }
 
 Condition.prototype.start = function() {
@@ -14,11 +16,21 @@ Condition.prototype.end = function() {
     this.onEnd(this.target);
 };
 
+Condition.prototype.timeTick = function() {
+    this.onTimeTick(this.target);
+}
+
+Condition.prototype.turnTick = function() {
+    this.onTurnTick(this.target);
+}
+
 const conditionData = {
     dodge: { duration: 1, onStart: function(x) { x.evasion += 0.3; }, onEnd: function(x) { x.evasion -= 0.3; } },
     aim: { duration: 3, onStart: function(x) { x.critChance += 0.3; }, onEnd: function(x) { x.critChance -= 0.3; } },
     prone: { duration: 3, onStart: function(x) { x.evasion -= 0.3; }, onEnd: function(x) { x.evasion += 0.3; } },
     binding: { duration: 2, onStart: function(x) { x.hitChance -= 0.5; }, onEnd: function(x) { x.hitChance += 0.5; } },
+    bleed: { duration: 5, onTurnTick: function(x) { x.health -= 5; } },
+    poison: { duration: 2, onTimeTick: function(x) { x.health -= 1; } },
 };
 
 function buildCondition(conditionName, target) {

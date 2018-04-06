@@ -59,7 +59,7 @@ Action.prototype.execute = function() {
 const actionData = {
     sword: { title: 'Straight Sword', text: 'You swing the sword.', damage: 12, damageType: 'laceration', time: 3 },
     hammer: { title: 'Warhammer', text: 'You pound with the hammer.', damage: 15, damageType: 'concussion', hitChance: -0.1, time: 6 },
-    cutlass: { title: 'Cutlass', text: 'You slice with the cutlass.', damage: 10, damageType: 'laceration', critChance: 0.1, time: 4 },
+    cutlass: { title: 'Cutlass', text: 'You slice with the cutlass.', damage: 10, damageType: 'laceration', critChance: 0.1, targetCondition: 'bleed', time: 4 },
     pistol: { title: 'Pistol', text: 'You fire a shot.', damage: 10, damageType: 'penetration', critChance: 0.2, time: 2 },
     bone_claw: { text: 'The fiend rakes you with its claw!', damage: 18, damageType: 'laceration', time: 8 },
     enemy_cutlass: { text: 'The fiend swings its cutlass at you!', damage: 10, damageType: 'laceration', critChance: 0.1, time: 5 },

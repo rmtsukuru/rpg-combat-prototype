@@ -114,7 +114,14 @@ function QueueScene() {
     });
     if (queue[0].time > 0) {
         var time = queue[0].time;
-        queue.forEach(function(x) { x.time -= time; });
+        queue.forEach(function(x) {
+            x.time -= time;
+            x.conditions.forEach(function(condition) {
+                for (var i = 0; i < time; i++) {
+                    condition.timeTick();
+                }
+            });
+        });
     }
 }
 
@@ -377,6 +384,9 @@ EnemyScene.prototype.updateConditions = function(target) {
         if (condition.time <= 0) {
             condition.end();
             target.conditions.splice(i, 1);
+        }
+        else {
+            condition.turnTick();
         }
     });
 };
