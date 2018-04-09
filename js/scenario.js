@@ -280,7 +280,7 @@ function ActionScene(combatant, action, options) {
         if (this.item.quantity >= 0) {
             this.item.quantity--;
             if (this.item.quantity == 0) {
-                this.combatant.items.splice(this.combatant.items.indexOf(item), 1);
+                this.combatant.items.splice(this.combatant.items.indexOf(this.item), 1);
             }
         }
         if (action != 'equip') {
