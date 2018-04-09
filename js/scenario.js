@@ -33,6 +33,7 @@ var monsters = {
         maxHealth: 30,
         accuracy: 0.8,
         defenses: { laceration: 6, penetration: 8, concussion: -1, incineration: 2 },
+        resistances: { physical: 0.8, mental: 0.05 },
         evasion: 0.1,
         agility: 5,
         time: 0,
@@ -346,6 +347,11 @@ ActionScene.prototype.draw = function() {
             }
             else {
                 drawTextMultiline('It healed ' + Math.abs(this.damage) + ' damage!', 95, 110);
+            }
+            if (this.action.inflictedCondition) {
+                var condition = conditionData[this.action.targetCondition];
+                var conditionText = condition.text ? conditionData[this.action.targetCondition].text : 'The target is inflicted with ' + this.action.targetCondition + '.';
+                drawTextMultiline(conditionText, 95, 135);
             }
         }
         else {
