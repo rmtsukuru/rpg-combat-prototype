@@ -57,9 +57,12 @@ Action.prototype.execute = function() {
         var condition = buildCondition(this.targetCondition, this.target, options);
         condition.execute();
         if (!condition.resisted) {
-            this.target.conditions.push(condition);
-            condition.start();
-            this.inflictedCondition = true;
+            var count = this.target.conditions.filter(function(x) { return x.name == condition.name; }).length;
+            if (count < condition.stackMax) {
+                this.target.conditions.push(condition);
+                condition.start();
+                this.inflictedCondition = true;
+            }
         }
     }
     return { hit: hit, crit: crit };

@@ -1,4 +1,5 @@
 function Condition(target, stats, options) {
+    this.name = options.name;
     this.target = target;
     this.resistance = options.resistance ? target.resistances[options.resistance] : null;
     this.duration = stats.duration || 1;
@@ -7,6 +8,7 @@ function Condition(target, stats, options) {
     this.onEnd = stats.onEnd || function() {};
     this.onTimeTick = stats.onTimeTick || function() {};
     this.onTurnTick = stats.onTurnTick || function() {};
+    this.stackMax = stats.stackMax || 1;
 }
 
 Condition.prototype.resist = function() {
@@ -47,5 +49,6 @@ const conditionData = {
 
 function buildCondition(conditionName, target, options) {
     options = options || {};
+    options.name = conditionName;
     return new Condition(target, conditionData[conditionName], options);
 }
