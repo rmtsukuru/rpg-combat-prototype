@@ -1,3 +1,5 @@
+const MENU_BLINK_TIMER_FRAMES = FPS * 3;
+
 var scene;
 
 var playerCharacters = {
@@ -146,6 +148,7 @@ function MenuScene(combatant) {
     this.menu = menu;
     this.parents = [];
     this.calculateWidth();
+    this.blinkTimer = MENU_BLINK_TIMER_FRAMES;
 }
 
 MenuScene.prototype = Object.create(Scene.prototype);
@@ -192,6 +195,12 @@ MenuScene.prototype.calculateWidth = function() {
 };
 
 MenuScene.prototype.update = function() {
+    if (this.blinkTimer <= 0) {
+        this.blinkTimer = MENU_BLINK_TIMER_FRAMES;
+    }
+    else {
+        this.blinkTimer--;
+    }
     if (triggerKeyState.enter || triggerKeyState.z) {
         var menuItem = this.menu[this.menuY];
         if (menuItem.submenu) {
@@ -254,6 +263,11 @@ MenuScene.prototype.update = function() {
 
 MenuScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
+    if (party.includes(this.combatant)) {
+        var i = party.indexOf(this.combatant);
+        var alpha = 1 - Math.abs(2 * this.blinkTimer / MENU_BLINK_TIMER_FRAMES - 1);
+        drawRect(8 * (i + 1) + 150 * i, 335, 150, 135, 'rgba(255, 0, 0, ' + 0.6 * alpha + ')');
+    }
     drawRect(20, 230, this.menuWidth, 10 + 20 * this.menu.length, 'white', true);
     var self = this;
     this.menu.forEach(function(item, i) {
