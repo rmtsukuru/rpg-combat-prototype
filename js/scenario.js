@@ -337,29 +337,29 @@ ActionScene.prototype.update = function() {
 
 ActionScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
-    drawRect(80, 60, 500, 120, 'white', true);
-    drawTextMultiline(this.action.text, 95, 85);
+    drawRect(10, 195, 475, 130, 'white', true);
+    drawTextMultiline(this.action.text, 25, 220);
     if (Math.abs(this.damage) > 0) {
         if (this.hit) {
             if (this.damage > 0) {
                 var critText = this.crit ? ' A critical hit!!' : '';
-                drawTextMultiline('It dealt ' + this.damage + ' damage!' + critText, 95, 110);
+                drawTextMultiline('It dealt ' + this.damage + ' damage!' + critText, 25, 245);
             }
             else {
-                drawTextMultiline('It healed ' + Math.abs(this.damage) + ' damage!', 95, 110);
+                drawTextMultiline('It healed ' + Math.abs(this.damage) + ' damage!', 25, 245);
             }
             if (this.action.inflictedCondition) {
                 var condition = conditionData[this.action.targetCondition];
                 var conditionText = condition.text ? conditionData[this.action.targetCondition].text : 'The target is inflicted with ' + this.action.targetCondition + '.';
-                drawTextMultiline(conditionText, 95, 135);
+                drawTextMultiline(conditionText, 25, 245);
             }
         }
         else {
-            drawTextMultiline('The attack missed!', 95, 110);
+            drawTextMultiline('The attack missed!', 25, 245);
         }
     }
     else if (this.action.inspect) {
-        drawTextMultiline(enemies[0].inspectText, 95, 110);
+        drawTextMultiline(enemies[0].inspectText, 25, 245);
     }
 };
 
@@ -410,15 +410,15 @@ EnemyScene.prototype.update = function() {
 
 EnemyScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
-    drawRect(80, 60, 500, 120, 'white', true);
-    drawTextMultiline(this.action.text, 95, 85);
+    drawRect(10, 195, 475, 130, 'white', true);
+    drawTextMultiline(this.action.text, 25, 220);
     if (Math.abs(this.damage) > 0) {
         if (this.hit) {
             var critText = this.crit ? ' A critical hit!!' : '';
-            drawTextMultiline('It dealt ' + this.damage + ' damage!' + critText, 95, 110);
+            drawTextMultiline('It dealt ' + this.damage + ' damage!' + critText, 25, 245);
         }
         else {
-            drawTextMultiline('The attack missed!', 95, 110);
+            drawTextMultiline('The attack missed!', 25, 245);
         }
     }
 };
