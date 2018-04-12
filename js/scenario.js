@@ -31,6 +31,7 @@ var playerCharacters = {
 var monsters = {
     skeleton: {
         name: 'SKELETON',
+        title: 'Skeleton',
         health: 30,
         maxHealth: 30,
         accuracy: 0.8,
@@ -41,7 +42,7 @@ var monsters = {
         time: 0,
         critChance: 0.01,
         conditions: [],
-        inspectText: 'It is a skeleton, the clattering remains of\na dead human. Susceptible to concussive\nforce.',
+        inspectText: 'It is a skeleton, the clattering remains \nof a dead human. Susceptible to \nconcussive force.',
     },
 };
 
@@ -147,6 +148,7 @@ function MenuScene(combatant) {
     this.menuY = 0;
     this.menu = menu;
     this.parents = [];
+    this.target = false;
     this.calculateWidth();
     this.blinkTimer = MENU_BLINK_TIMER_FRAMES;
 }
@@ -166,7 +168,7 @@ MenuScene.prototype.getTitle = function(menuItem) {
         }
     }
     var timeDisplay = '';
-    if (!menuItem.submenu) {
+    if (!menuItem.submenu && !this.target) {
         timeDisplay = '   ' + ((action && action.time) ? action.time : 5) + 's';
     }
     if (cost > 0) {
@@ -230,13 +232,34 @@ MenuScene.prototype.update = function() {
                 playSound('beep1', 0.5);
             }
             else {
-                var options = {};
-                if (menuItem.item) {
-                    options.item = menuItem.item;
+                this.action = menuItem.action;
+                if (actionData[this.action].target == 'self') {
+                    var options = {};
+                    if (menuItem.item) {
+                        options.item = menuItem.item;
+                    }
+                    scene = new ActionScene(this.combatant, this.combatant, menuItem.action, options);
                 }
-                scene = new ActionScene(this.combatant, menuItem.action, options);
+                else {
+                    this.target = true;
+                    if (menuItem.item) {
+                        this.item = menuItem.item;
+                    }
+                    this.parents.push(this.menu);
+                    this.menu = enemies;
+                    this.menuY = 0;
+                    this.calculateWidth();
+                }
                 playSound('beep0', 0.5);
             }
+        }
+        else if (this.target) {
+            var options = {};
+            if (this.item) {
+                options.item = this.item;
+            }
+            scene = new ActionScene(this.combatant, menuItem, this.action, options);
+            playSound('beep0', 0.5);
         }
     }
     else if (triggerKeyState.shift || triggerKeyState.x || triggerKeyState.esc) {
@@ -244,6 +267,7 @@ MenuScene.prototype.update = function() {
             this.menu = this.parents[this.parents.length - 1];
             this.parents.pop();
             this.menuY = 0;
+            this.target = false;
             this.calculateWidth();
             playSound('beep1', 0.5);
         }
@@ -277,14 +301,14 @@ MenuScene.prototype.draw = function() {
     drawArrow(30, 238 + 20 * this.menuY, 10, 10, 'white');
 }
 
-function ActionScene(combatant, action, options) {
+function ActionScene(combatant, target, action, options) {
     Scene.call(this);
     this.combatant = combatant;
     this.updateConditions(this.combatant);
     if (options.item) {
         this.item = options.item;
     }
-    this.action = buildAction(action, this.combatant, enemies[0]);
+    this.action = buildAction(action, this.combatant, target);
     var results = this.action.execute();
     this.hit = results.hit;
     this.crit = results.crit;
