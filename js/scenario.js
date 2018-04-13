@@ -75,7 +75,7 @@ var menu = [
 ];
 
 var party = [playerCharacters.slayer];
-var enemies = [monsters.skeleton];
+var enemies = [monsters.skeleton, Object.assign({}, monsters.skeleton)];
 var queue = party.concat(enemies);
 
 function configureItems() {
@@ -102,7 +102,15 @@ Scene.prototype.draw = function() {
             drawText(data.resourceName + ': ' + data.resource, 20, 410);
         }
     }
-    drawText('Monster HP: ' + Math.max(0, enemies[0].health) + '/' + enemies[0].maxHealth, 240, 50);
+    if (enemies.length > 1) {
+        enemies.forEach(function(enemy, i) {
+            var text = 'Monster ' + (i + 1) + ' HP: ' + Math.max(0, enemies[i].health) + '/' + enemies[i].maxHealth;
+            drawText(text, 50 + 330 * i, 50);
+        });
+    }
+    else {
+        drawText('Monster HP: ' + Math.max(0, enemies[0].health) + '/' + enemies[0].maxHealth, 240, 50);
+    }
     drawRect(495, 195, 135, 130, 'white', true);
     for (var i = 0; i < queue.length; i++) {
         var data = queue[i];
@@ -168,7 +176,10 @@ MenuScene.prototype.getTitle = function(menuItem) {
         }
     }
     var timeDisplay = '';
-    if (!menuItem.submenu && !this.target) {
+    if (this.target) {
+        return title + ' - ' + menuItem.health + '/' + menuItem.maxHealth;
+    }
+    else if (!menuItem.submenu) {
         timeDisplay = '   ' + ((action && action.time) ? action.time : 5) + 's';
     }
     if (cost > 0) {
@@ -367,7 +378,12 @@ ActionScene.prototype.update = function() {
         this.messageTimer--;
     }
     else if (triggerKeyState.enter || triggerKeyState.z) {
-        scene = enemies[0].health <= 0 ? new VictoryScene() : new QueueScene();
+        var enemiesRemaining = enemies.filter(function(enemy) { return enemy.health > 0; });
+        scene = enemiesRemaining.length <= 0 ? new VictoryScene() : new QueueScene();
+        if (this.action.target.health <= 0) {
+            enemies.splice(enemies.indexOf(this.action.target), 1);
+            queue.splice(queue.indexOf(this.action.target), 1);
+        }
         playSound('beep0', 0.5);
     }
     Scene.prototype.update.call(this);
