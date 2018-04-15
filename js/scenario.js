@@ -114,25 +114,34 @@ Scene.prototype.draw = function() {
     drawRect(495, 195, 135, 130, 'white', true);
     for (var i = 0; i < queue.length; i++) {
         var data = queue[i];
-        drawText(data.name, 500, 220 + 25 * i);
-        drawText(data.time, 610, 220 + 25 * i);
+        var color = queue[i].health > 0 ? 'white' : 'red';
+        drawText(data.name, 500, 220 + 25 * i, color);
+        drawText(data.time, 610, 220 + 25 * i, color);
     }
 };
 
 function QueueScene() {
     Scene.call(this);
     queue.sort(function(a, b) {
+        if (a.health <= 0) {
+            return 1;
+        }
+        if (b.health <= 0) {
+            return -1;
+        }
         return (a.time == b.time) ? b.agility - a.agility : a.time - b.time;
     });
     if (queue[0].time > 0) {
         var time = queue[0].time;
         queue.forEach(function(x) {
-            x.time -= time;
-            x.conditions.forEach(function(condition) {
-                for (var i = 0; i < time; i++) {
-                    condition.timeTick();
-                }
-            });
+            if (x.health > 0) {
+                x.time -= time;
+                x.conditions.forEach(function(condition) {
+                    for (var i = 0; i < time; i++) {
+                        condition.timeTick();
+                    }
+                });
+            }
         });
     }
 }
@@ -265,12 +274,17 @@ MenuScene.prototype.update = function() {
             }
         }
         else if (this.target) {
-            var options = {};
-            if (this.item) {
-                options.item = this.item;
+            if (menuItem.health > 0) {
+                var options = {};
+                if (this.item) {
+                    options.item = this.item;
+                }
+                scene = new ActionScene(this.combatant, menuItem, this.action, options);
+                playSound('beep0', 0.5);
             }
-            scene = new ActionScene(this.combatant, menuItem, this.action, options);
-            playSound('beep0', 0.5);
+            else {
+                playSound('beep1', 0.5);
+            }
         }
     }
     else if (triggerKeyState.shift || triggerKeyState.x || triggerKeyState.esc) {
@@ -380,10 +394,6 @@ ActionScene.prototype.update = function() {
     else if (triggerKeyState.enter || triggerKeyState.z) {
         var enemiesRemaining = enemies.filter(function(enemy) { return enemy.health > 0; });
         scene = enemiesRemaining.length <= 0 ? new VictoryScene() : new QueueScene();
-        if (this.action.target.health <= 0) {
-            enemies.splice(enemies.indexOf(this.action.target), 1);
-            queue.splice(queue.indexOf(this.action.target), 1);
-        }
         playSound('beep0', 0.5);
     }
     Scene.prototype.update.call(this);
