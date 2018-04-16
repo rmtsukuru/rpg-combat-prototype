@@ -105,7 +105,7 @@ Scene.prototype.draw = function() {
     if (enemies.length > 1) {
         enemies.forEach(function(enemy, i) {
             var text = 'Monster ' + (i + 1) + ' HP: ' + Math.max(0, enemies[i].health) + '/' + enemies[i].maxHealth;
-            drawText(text, 50 + 330 * i, 50);
+            drawText(text, 50 + 330 * (i % 2), 50 + 40 * Math.floor(i / 2));
         });
     }
     else {
@@ -495,7 +495,7 @@ VictoryScene.prototype = Object.create(Scene.prototype);
 
 VictoryScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
-    drawText('You are victorious!', 240, 75);
+    drawText('You are victorious!', 240, 150);
 };
 
 function DeathScene() {
@@ -506,7 +506,7 @@ DeathScene.prototype = Object.create(Scene.prototype);
 
 DeathScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
-    drawText('You have been defeated!', 200, 75);
+    drawText('You have been defeated!', 200, 150);
 };
 
 function configureScenario() {
