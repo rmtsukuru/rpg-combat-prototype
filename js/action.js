@@ -43,6 +43,9 @@ Action.prototype.execute = function() {
     if (hit) {
         var newHealth = this.target.health - this.calculateDamage(crit);
         this.target.health = Math.max(0, Math.min(this.target.maxHealth, newHealth));
+        if (this.target.health <= 0) {
+            this.target.time = 0;
+        }
     }
     if (this.selfCondition) {
         var condition = buildCondition(this.selfCondition, this.actor);
@@ -79,6 +82,7 @@ const actionData = {
     trip: { text: 'You knock the enemy down, exposing it to\nattack.', targetCondition: 'prone', hitChance: 0.4, time: 3 },
     inspect: { title: 'Inspect', text: 'You inspect the enemy.', inspect: true, time: 3 },
     scalding_strike: { title: 'Scalding Strike', text: 'You slash with a blade wreathed in flames.', cost: 1, damage: 20, damageType: 'incineration', hitChance: 0.2, critChance: 0.3, time: 10 },
+    smite: { title: 'Smite Evil', text: 'You unleash purifying light.', damage: 15, damageType: 'radiation', hitChance: 0.4, critChance: 0.1, time: 8 },
     spirit_binding: { title: 'Spirit Binding', text: 'You utter words of binding.', cost: 1, damage: 5, hitChance: 0.2, targetCondition: 'binding', conditionResistance: 'mental', time: 7 },
     ointment: { title: 'Ointment', text: 'You apply the ointment to your wounds.', damage: -10, hitChance: 2, critChance: -2, target: 'self' },
     bullet: { text: 'You reload the pistol.', time: 10, reload: true, target: 'self' },
