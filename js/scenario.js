@@ -74,36 +74,7 @@ var monsters = {
     },
 };
 
-var menu = [
-    { title: 'Attack', submenu: function() {
-        return party[0].items.filter(function(item) {
-            return item.equipped;
-        }).map(function(item) {
-            return buildItem(item);
-        }).sort(function(a, b) {
-            return a.equipment.length - b.equipment.length;
-        });
-    } },
-    { title: 'Tactics', submenu: function() {
-        return party[0].skills.filter(function(skill) {
-            return !skill.spell;
-        });
-    } },
-    { title: 'Magic', submenu: function() {
-        return party[0].skills.filter(function(skill) {
-            return skill.spell;
-        });
-    } },
-    { title: 'Item', submenu: function() {
-        return party[0].items.filter(function(item) {
-            return !item.equipped;
-        }).map(function(item) {
-            return buildItem(item);
-        });
-    } },
-];
-
-var party = [playerCharacters.knight];
+var party = [playerCharacters.slayer, playerCharacters.knight];
 var enemies = [monsters.skeleton, Object.assign({}, monsters.skeleton)];
 var queue = party.concat(enemies);
 
@@ -122,13 +93,13 @@ Scene.prototype.draw = function() {
     for (var i = 0; i < party.length; i++) {
         drawRect(8 * (i + 1) + 150 * i, 335, 150, 135, 'white', true);
         var data = party[i];
-        drawText(data.name, 20, 360);
-        drawText('HP: ' + data.health + '/' + data.maxHealth, 20, 385);
+        drawText(data.name, 20 + 160 * i, 360);
+        drawText('HP: ' + data.health + '/' + data.maxHealth, 20 + 160 * i, 385);
         if (data.resourceMax) {
-            drawText(data.resourceName + ': ' + data.resource + '/' + data.resourceMax, 20, 410);
+            drawText(data.resourceName + ': ' + data.resource + '/' + data.resourceMax, 20 + 160 * i, 410);
         }
         else {
-            drawText(data.resourceName + ': ' + data.resource, 20, 410);
+            drawText(data.resourceName + ': ' + data.resource, 20 + 160 * i, 410);
         }
     }
     if (enemies.length > 1) {
@@ -192,7 +163,7 @@ function MenuScene(combatant) {
     Scene.call(this);
     this.combatant = combatant;
     this.menuY = 0;
-    this.menu = menu;
+    this.menu = this.generateMenu();
     this.parents = [];
     this.target = false;
     this.calculateWidth();
@@ -233,6 +204,38 @@ MenuScene.prototype.getTitle = function(menuItem) {
         return title + ' - ' + menuItem.ammo + '/' + menuItem.maxAmmo + ' AMMO' + timeDisplay;
     }
     return title + timeDisplay;
+};
+
+MenuScene.prototype.generateMenu = function(combatant) {
+    combatant = combatant || this.combatant;
+    return [
+        { title: 'Attack', submenu: 
+            combatant.items.filter(function(item) {
+                return item.equipped;
+            }).map(function(item) {
+                return buildItem(item);
+            }).sort(function(a, b) {
+                return a.equipment.length - b.equipment.length;
+            })
+        },
+        { title: 'Tactics', submenu:
+            combatant.skills.filter(function(skill) {
+                return !skill.spell;
+            })
+        },
+        { title: 'Magic', submenu:
+            combatant.skills.filter(function(skill) {
+                return skill.spell;
+            })
+        },
+        { title: 'Item', submenu:
+            combatant.items.filter(function(item) {
+                return !item.equipped;
+            }).map(function(item) {
+                return buildItem(item);
+            })
+        },
+    ];
 };
 
 MenuScene.prototype.calculateWidth = function() {
@@ -282,7 +285,7 @@ MenuScene.prototype.update = function() {
             }
             else {
                 this.action = menuItem.action;
-                if (actionData[this.action].target == 'self') {
+                if (actionData[this.action].target == 'self' || actionData[this.action].selfCondition) {
                     var options = {};
                     if (menuItem.item) {
                         options.item = menuItem.item;
@@ -444,7 +447,7 @@ ActionScene.prototype.draw = function() {
             if (this.action.inflictedCondition) {
                 var condition = conditionData[this.action.targetCondition];
                 var conditionText = condition.text ? conditionData[this.action.targetCondition].text : 'The target is inflicted with ' + this.action.targetCondition + '.';
-                drawTextMultiline(conditionText, 25, 245);
+                drawTextMultiline(conditionText, 25, 270);
             }
         }
         else {
