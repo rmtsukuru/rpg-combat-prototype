@@ -148,13 +148,20 @@ function QueueScene() {
 
 QueueScene.prototype = Object.create(Scene.prototype);
 
+QueueScene.prototype.handleEnemy = function(enemy) {
+    var action = Math.random() < 0.6 ? 'enemy_cutlass' : 'bone_claw';
+    var target = party[Math.round(Math.random() * (party.length - 1))];
+    var options = {};
+    scene = new ActionScene(enemy, target, action, options);
+};
+
 QueueScene.prototype.update = function() {
     var next = queue[0];
     if (party.includes(next)) {
         scene = new MenuScene(queue[0]);
     }
     else if (enemies.includes(next)) {
-        scene = new EnemyScene(queue[0]);
+        this.handleEnemy(next);
     }
     Scene.prototype.update.call(this);
 };
@@ -425,7 +432,15 @@ ActionScene.prototype.update = function() {
     }
     else if (triggerKeyState.enter || triggerKeyState.z) {
         var enemiesRemaining = enemies.filter(function(enemy) { return enemy.health > 0; });
-        scene = enemiesRemaining.length <= 0 ? new VictoryScene() : new QueueScene();
+        if (party[0].health <= 0) {
+            scene = new DeathScene();
+        }
+        else if (enemiesRemaining.length <= 0) {
+            scene = new VictoryScene();
+        }
+        else {
+            scene = new QueueScene();
+        }
         playSound('beep0', 0.5);
     }
     Scene.prototype.update.call(this);
@@ -435,9 +450,9 @@ ActionScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
     drawRect(10, 195, 475, 130, 'white', true);
     drawTextMultiline(this.action.text, 25, 220);
-    if (Math.abs(this.damage) > 0) {
+    if (Math.abs(this.damage) > 0 || this.action.isAttack) {
         if (this.hit) {
-            if (this.damage > 0) {
+            if (this.damage >= 0) {
                 var critText = this.crit ? ' A critical hit!!' : '';
                 drawTextMultiline('It dealt ' + this.damage + ' damage!' + critText, 25, 245);
             }
@@ -456,66 +471,6 @@ ActionScene.prototype.draw = function() {
     }
     else if (this.action.inspect) {
         drawTextMultiline(enemies[0].inspectText, 25, 245);
-    }
-};
-
-function EnemyScene(combatant) {
-    Scene.call(this);
-    this.combatant = combatant
-    this.updateConditions(this.combatant);
-    if (Math.random() < 0.6) {
-        action = 'enemy_cutlass';
-    }
-    else {
-        action = 'bone_claw';
-    }
-    this.action = buildAction(action, this.combatant, party[0]);
-    var results = this.action.execute();
-    this.hit = results.hit;
-    this.crit = results.crit;
-    this.damage = this.action.calculateDamage(this.crit);
-    this.combatant.time += this.action.time;
-    this.messageTimer = FPS * 0.5;
-}
-
-EnemyScene.prototype = Object.create(Scene.prototype);
-
-EnemyScene.prototype.updateConditions = function(target) {
-    target.conditions.forEach(function(condition, i) {
-        condition.time--;
-        if (condition.time <= 0) {
-            condition.end();
-            target.conditions.splice(i, 1);
-        }
-        else {
-            condition.turnTick();
-        }
-    });
-};
-
-EnemyScene.prototype.update = function() {
-    if (this.messageTimer > 0) {
-        this.messageTimer--;
-    }
-    else if (triggerKeyState.enter || triggerKeyState.z) {
-        scene = party[0].health <= 0 ? new DeathScene() : new QueueScene();
-        playSound('beep0', 0.5);
-    }
-    Scene.prototype.update.call(this);
-};
-
-EnemyScene.prototype.draw = function() {
-    Scene.prototype.draw.call(this);
-    drawRect(10, 195, 475, 130, 'white', true);
-    drawTextMultiline(this.action.text, 25, 220);
-    if (Math.abs(this.damage) > 0) {
-        if (this.hit) {
-            var critText = this.crit ? ' A critical hit!!' : '';
-            drawTextMultiline('It dealt ' + this.damage + ' damage!' + critText, 25, 245);
-        }
-        else {
-            drawTextMultiline('The attack missed!', 25, 245);
-        }
     }
 };
 

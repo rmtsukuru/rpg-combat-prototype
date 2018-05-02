@@ -7,6 +7,7 @@ function Action(actor, target, stats) {
     this.time = stats.time || 5;
     this.cost = stats.cost || 0;
     this.damage = stats.damage || 0;
+    this.isAttack = stats.damage > 0;
     if (this.damage > 0) {
         var damageType = stats.damageType || 'pure';
         var defense = this.target.defenses[damageType] || 0;
