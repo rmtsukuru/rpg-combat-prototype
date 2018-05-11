@@ -15,3 +15,6 @@ function buildItem(menuItem) {
     }
     return item;
 }
+
+function configureItems() {
+}
