@@ -13,6 +13,8 @@ var heroes = {
         time: 0,
         critChance: 0.05,
         conditions: [],
+        skillName: 'Tactics',
+        magicName: 'Shamanism',
         skills: [
             { title: 'Trip', action: 'trip' },
             { title: 'Dodge', action: 'dodge' },
@@ -41,6 +43,8 @@ var heroes = {
         time: 0,
         critChance: 0.01,
         conditions: [],
+        skillName: 'Chivalry',
+        magicName: 'Theurgy',
         skills: [
             { action: 'inspect' },
             { action: 'smite', spell: true },
@@ -49,6 +53,30 @@ var heroes = {
             { item: 'warhammer', durability: 80, equipped: true },
             { item: 'ointment', quantity: 3 },
         ],
+    },
+    charlatan: {
+        name: 'CHARLATAN',
+        health: 30,
+        maxHealth: 30,
+        resourceName: 'KARMA',
+        resource: 8,
+        accuracy: 0.85,
+        defenses: { laceration: 2 },
+        evasion: 0.3,
+        agility: 25,
+        time: 0,
+        critChance: 0.08,
+        conditions: [],
+        skillName: 'Tricks',
+        magicName: 'Fortune',
+        skills: [
+            { action: 'dodge' },
+            { action: 'loaded_die', spell: true },
+        ],
+        items: [
+            { item: 'knife', durability: 15, equipped: true },
+            { item: 'ointment', quantity: 1 },
+        ]
     },
 };
 
@@ -70,5 +98,5 @@ var monsters = {
     },
 };
 
-var party = [heroes.slayer, heroes.knight];
+var party = [heroes.slayer, heroes.knight, heroes.charlatan];
 var enemies = [monsters.skeleton, Object.assign({}, monsters.skeleton)];

@@ -59,12 +59,12 @@ MenuScene.prototype.generateMenu = function(combatant) {
                 return a.equipment.length - b.equipment.length;
             })
         },
-        { title: 'Tactics', submenu:
+        { title: combatant.skillName || 'Skills', submenu:
             combatant.skills.filter(function(skill) {
                 return !skill.spell;
             })
         },
-        { title: 'Magic', submenu:
+        { title: combatant.magicName || 'Magic', submenu:
             combatant.skills.filter(function(skill) {
                 return skill.spell;
             })
