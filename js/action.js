@@ -86,7 +86,7 @@ const actionData = {
     scalding_strike: { title: 'Scalding Strike', text: 'You slash with a blade wreathed in flames.', cost: 1, damage: 20, damageType: 'incineration', hitChance: 0.2, critChance: 0.3, time: 10 },
     smite: { title: 'Smite Evil', text: 'You unleash purifying light.', damage: 15, damageType: 'radiation', hitChance: 0.4, critChance: 0.1, time: 8 },
     spirit_binding: { title: 'Spirit Binding', text: 'You utter words of binding.', cost: 1, damage: 5, hitChance: 0.2, targetCondition: 'binding', conditionResistance: 'mental', time: 7 },
-    loaded_die: { text: 'You improve your accuracy.', cost: 1, selfCondition: 'aim', time: 2 },
+    loaded_die: {title: 'Loaded Die', text: 'You improve your accuracy.', cost: 1, selfCondition: 'aim', time: 2 },
     ointment: { title: 'Ointment', text: 'You apply the ointment to your wounds.', damage: -10, hitChance: 2, critChance: -2, target: 'self' },
     bullet: { text: 'You reload the pistol.', time: 10, reload: true, target: 'self' },
     equip: { text: 'You change gear.', time: 6, target: 'self', equip: true },
