@@ -33,7 +33,7 @@ MenuScene.prototype.getTitle = function(menuItem) {
         timeDisplay = '   ' + ((action && action.time) ? action.time : 5) + 's';
     }
     if (cost > 0) {
-        return title + ' - ' + cost + ' SOUL' + (cost > 1 ? 'S' : '') + timeDisplay;
+        return title + ' - ' + pluralize(cost, queue[0].resourceName) + timeDisplay;
     }
     else if (menuItem.quantity >= 0) {
         return title + ' (' + menuItem.quantity + ')' + timeDisplay;
