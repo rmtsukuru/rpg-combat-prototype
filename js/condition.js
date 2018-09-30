@@ -43,6 +43,7 @@ const conditionData = {
     aim: { duration: 3, onStart: function(x) { x.critChance += 0.3; }, onEnd: function(x) { x.critChance -= 0.3; } },
     prone: { duration: 3, onStart: function(x) { x.evasion -= 0.3; }, onEnd: function(x) { x.evasion += 0.3; } },
     binding: { duration: 2, onStart: function(x) { x.hitChance -= 0.5; }, onEnd: function(x) { x.hitChance += 0.5; } },
+    pestilence: { duration: 4, onStart: function(x) { x.hitChance -= 0.3; x.evasion -= 0.3 }, onEnd: function(x) { x.hitChance += 0.3; x.evasion += 0.3; } },
     bleed: { text: 'The target is bleeding.', duration: 5, onTurnTick: function(x) { x.health -= 5; } },
     poison: { text: 'The target was poisoned.', duration: 2, onTimeTick: function(x) { x.health -= 1; } },
 };

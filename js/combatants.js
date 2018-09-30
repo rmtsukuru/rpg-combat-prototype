@@ -78,6 +78,31 @@ var heroes = {
             { item: 'ointment', quantity: 1 },
         ]
     },
+    mage: {
+        name: 'MAGE',
+        health: 20,
+        maxHealth: 20,
+        resourceName: 'ÆTHER',
+        resource: 64,
+        resourceMax: 64,
+        accuracy: 0.6,
+        defenses: { concussion: 2, laceration: 3 },
+        evasion: 0.2,
+        agility: 8,
+        time: 0,
+        critChance: 0.06,
+        conditions: [],
+        skillName: 'Gloss',
+        magicName: 'Arcana',
+        skills: [
+            { action: 'inspect' },
+            { action: 'pestilence', spell: true },
+        ],
+        items: [
+            { item: 'staff', durability: 30, equipped: true },
+            { item: 'ointment', quantity: 3 },
+        ]
+    },
 };
 
 var monsters = {
@@ -98,5 +123,5 @@ var monsters = {
     },
 };
 
-var party = [heroes.slayer, heroes.knight, heroes.charlatan];
+var party = [heroes.slayer, heroes.knight, heroes.charlatan, heroes.mage];
 var enemies = [monsters.skeleton, Object.assign({}, monsters.skeleton)];

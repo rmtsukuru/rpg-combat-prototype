@@ -3,9 +3,10 @@ const itemData = {
     knife: { title: 'Knife', action: 'knife', maxDurability: 15, equipment: 'weapon' },
     warhammer: { title: 'Warhammer', action: 'hammer', maxDurability: 80, equipment: 'weapon' },
     cutlass: { title: 'Cutlass', action: 'cutlass', maxDurability: 20, equipment: 'weapon' },
+    staff: { title: 'Quarterstaff', action: 'staff', maxDurability: 30, equipment: 'weapon' },
     pistol: { title: 'Pistol', action: 'pistol', maxAmmo: 1, equipment: 'secondary_weapon' },
-    ointment: { title: 'Ointment', action: 'ointment' },
     bullets: { title: 'Bullets', action: 'bullet' },
+    ointment: { title: 'Ointment', action: 'ointment' },
 };
 
 function buildItem(menuItem) {
