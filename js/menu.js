@@ -15,7 +15,7 @@ MenuScene.prototype = Object.create(Scene.prototype);
 
 MenuScene.prototype.getTitle = function(menuItem) {
     var cost = 0;
-    var title = menuItem.title;
+    var title = menuItem.name || menuItem.title;
     var action = actionData[menuItem.action];
     if (action) {
         if (action.cost) {
@@ -130,7 +130,12 @@ MenuScene.prototype.update = function() {
                         this.item = menuItem.item;
                     }
                     this.parents.push(this.menu);
-                    this.menu = enemies;
+                    if (actionData[this.action].target == 'ally') {
+                        this.menu = party;
+                    }
+                    else {
+                        this.menu = enemies;
+                    }
                     this.menuY = 0;
                     this.calculateWidth();
                 }

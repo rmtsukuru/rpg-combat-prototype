@@ -108,7 +108,6 @@ var heroes = {
 var monsters = {
     skeleton: {
         name: 'SKELETON',
-        title: 'Skeleton',
         health: 30,
         maxHealth: 30,
         accuracy: 0.8,

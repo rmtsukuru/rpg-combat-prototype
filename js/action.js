@@ -89,7 +89,7 @@ const actionData = {
     spirit_binding: { title: 'Spirit Binding', text: 'You utter words of binding.', cost: 1, damage: 5, hitChance: 0.2, targetCondition: 'binding', conditionResistance: 'mental', time: 7 },
     loaded_die: {title: 'Loaded Die', text: 'You improve your accuracy.', cost: 1, selfCondition: 'aim', time: 2 },
     pestilence: { title: 'Pestilence', text: 'You summon noxious vapors.', cost: 7, damage: 0, hitChance: 0.4, targetCondition: 'pestilence', conditionResistance: 'physical', time: 8 },
-    ointment: { title: 'Ointment', text: 'You apply the ointment to your wounds.', damage: -10, hitChance: 2, critChance: -2, target: 'self' },
+    ointment: { title: 'Ointment', text: 'You apply ointment to the wound.', damage: -10, hitChance: 2, critChance: -2, target: 'ally' },
     bullet: { text: 'You reload the pistol.', time: 10, reload: true, target: 'self' },
     equip: { text: 'You change gear.', time: 6, target: 'self', equip: true },
 };
