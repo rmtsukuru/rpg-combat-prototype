@@ -112,16 +112,7 @@ MenuScene.prototype.update = function() {
         }
         else if (menuItem.action) {
             var cost = actionData[menuItem.action].cost || 0;
-            if (cost > 0 && this.combatant.resource <= 0) {
-                playSound('beep1', 0.5);
-            }
-            else if (menuItem.quantity <= 0) {
-                playSound('beep1', 0.5);
-            }
-            else if (menuItem.durability <= 0) {
-                playSound('beep1', 0.5);
-            }
-            else if (menuItem.ammo <= 0) {
+            if ((cost > 0 && this.combatant.resource <= 0) || menuItem.quantity <= 0 || menuItem.durability <= 0 || menuItem.ammo <= 0) {
                 playSound('beep1', 0.5);
             }
             else {
