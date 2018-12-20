@@ -12,13 +12,14 @@ Scene.prototype.draw = function() {
     for (var i = 0; i < party.length; i++) {
         drawRect(8 * (i + 1) + 150 * i, 335, 150, 135, 'white', true);
         var data = party[i];
-        drawText(data.name, 20 + 160 * i, 360);
-        drawText('HP: ' + data.health + '/' + data.maxHealth, 20 + 160 * i, 385);
+        var x = 15 + 158 * i;
+        drawText(data.name, x, 360);
+        drawText('HP: ' + data.health + '/' + data.maxHealth, x, 385);
         if (data.resourceMax) {
-            drawText(data.resourceName + ': ' + data.resource + '/' + data.resourceMax, 20 + 160 * i, 410);
+            drawText(data.resourceName + ': ' + data.resource + '/' + data.resourceMax, x, 410);
         }
         else {
-            drawText(data.resourceName + ': ' + data.resource, 20 + 160 * i, 410);
+            drawText(data.resourceName + ': ' + data.resource, x, 410);
         }
     }
     if (enemies.length > 1) {
@@ -35,6 +36,6 @@ Scene.prototype.draw = function() {
         var data = queue[i];
         var color = queue[i].health > 0 ? 'white' : 'red';
         drawText(data.name, 500, 170 + 25 * i, color);
-        drawText(data.time, 610, 170 + 25 * i, color);
+        drawText(data.time, 605, 170 + 25 * i, color);
     }
 };
