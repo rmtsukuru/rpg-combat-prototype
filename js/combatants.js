@@ -95,7 +95,7 @@ var heroes = {
         skillName: 'Gloss',
         magicName: 'Arcana',
         skills: [
-            { action: 'inspect' },
+            { action: 'fulmination' },
             { action: 'pestilence', spell: true },
         ],
         items: [

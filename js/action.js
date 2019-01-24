@@ -88,6 +88,7 @@ const actionData = {
     smite: { title: 'Smite Evil', text: 'You unleash purifying light.', damage: 15, damageType: 'radiation', hitChance: 0.4, critChance: 0.1, time: 8 },
     spirit_binding: { title: 'Spirit Binding', text: 'You utter words of binding.', cost: 1, damage: 5, hitChance: 0.2, targetCondition: 'binding', conditionResistance: 'mental', time: 7 },
     loaded_die: {title: 'Loaded Die', text: 'You improve your accuracy.', cost: 1, selfCondition: 'aim', time: 2 },
+    fulmination: { title: 'Fulmination', text: 'You zap the enemy.', damage: 6, damageType: 'electrocution', hitChance: 0.3, critChance: 0.2, time: 3 },
     pestilence: { title: 'Pestilence', text: 'You summon noxious vapors.', cost: 7, damage: 0, hitChance: 0.4, targetCondition: 'pestilence', conditionResistance: 'physical', time: 8 },
     ointment: { title: 'Ointment', text: 'You apply ointment to the wound.', damage: -10, hitChance: 2, critChance: -2, target: 'ally' },
     bullet: { text: 'You reload the pistol.', time: 10, reload: true, target: 'self' },
