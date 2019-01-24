@@ -112,7 +112,7 @@ var monsters = {
         maxHealth: 30,
         accuracy: 0.8,
         defenses: { laceration: 6, penetration: 8, concussion: -1, incineration: 2, radiation: -8 },
-        resistances: { physical: 0.4, mental: 0.05 },
+        resistances: { physical: 0.4, mental: 0.05, silver: 0 },
         evasion: 0.1,
         agility: 5,
         time: 0,

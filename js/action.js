@@ -78,7 +78,7 @@ const actionData = {
     hammer: { title: 'Warhammer', text: 'You pound with the hammer.', damage: 15, damageType: 'concussion', hitChance: -0.1, time: 6 },
     cutlass: { title: 'Cutlass', text: 'You slice with the cutlass.', damage: 10, damageType: 'laceration', critChance: 0.1, targetCondition: 'bleed', conditionResistance: 'physical', time: 4 },
     staff: { title: 'Quarterstaff', text: 'You swing the staff.', damage: 8, damageType: 'concussion', hitChance: -0.1, time: 8 },
-    pistol: { title: 'Pistol', text: 'You fire a shot.', damage: 10, damageType: 'penetration', critChance: 0.2, time: 2 },
+    pistol: { title: 'Pistol', text: 'You fire a shot.', damage: 10, damageType: 'penetration', critChance: 0.2, targetCondition: 'silver', conditionResistance: 'silver', time: 2 },
     bone_claw: { text: 'The fiend rakes you with its claw!', damage: 18, damageType: 'laceration', time: 8 },
     enemy_cutlass: { text: 'The fiend swings its cutlass at you!', damage: 10, damageType: 'laceration', critChance: 0.1, time: 5 },
     dodge: { title: 'Dodge', text: 'You attempt to dodge incoming attacks.', selfCondition: 'dodge', time: 5 },
