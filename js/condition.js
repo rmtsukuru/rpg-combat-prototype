@@ -13,7 +13,7 @@ function Condition(target, stats, options) {
 
 Condition.prototype.resist = function() {
     if (this.resistance) {
-        return Math.random() < this.resistance;
+        return Math.random() > this.resistance;
     }
     return false;
 };
@@ -40,13 +40,13 @@ Condition.prototype.turnTick = function() {
 
 const conditionData = {
     dodge: { duration: 1, onStart: function(x) { x.evasion += 0.3; }, onEnd: function(x) { x.evasion -= 0.3; } },
+    silver: { text: 'The target\'s defense was lowered.', duration: 2, onStart: function(x) { x.defenses.laceration -= 8; x.defenses.penetration -= 8; }, onEnd: function(x) { x.defenses.laceration += 8; x.defenses.penetration += 8; } },
     aim: { duration: 3, onStart: function(x) { x.critChance += 0.3; }, onEnd: function(x) { x.critChance -= 0.3; } },
     prone: { duration: 3, onStart: function(x) { x.evasion -= 0.3; }, onEnd: function(x) { x.evasion += 0.3; } },
-    binding: { duration: 2, onStart: function(x) { x.hitChance -= 0.5; }, onEnd: function(x) { x.hitChance += 0.5; } },
     pestilence: { duration: 4, onStart: function(x) { x.hitChance -= 0.3; x.evasion -= 0.3 }, onEnd: function(x) { x.hitChance += 0.3; x.evasion += 0.3; } },
     bleed: { text: 'The target is bleeding.', duration: 5, onTurnTick: function(x) { x.health -= 5; } },
     poison: { text: 'The target was poisoned.', duration: 2, onTimeTick: function(x) { x.health -= 1; } },
-    silver: { text: 'The target\'s defense was lowered.', duration: 2, onStart: function(x) { x.defenses.laceration -= 8; x.defenses.penetration -= 8; }, onEnd: function(x) { x.defenses.laceration += 8; x.defenses.penetration += 8; } },
+    jaegerbrau: { duration: 5, onStart: function(x) { x.evasion += 0.2; x.hitChance += 0.1; x.critChance += 0.2; }, onEnd: function(x) { x.evasion -= 0.2; x.hitChance -= 0.1; x.critChance -= 0.2; } },
 };
 
 function buildCondition(conditionName, target, options) {

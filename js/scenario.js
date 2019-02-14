@@ -133,17 +133,23 @@ ActionScene.prototype.draw = function() {
     drawTextMultiline(this.action.text, 25, 220);
     if (Math.abs(this.damage) > 0 || this.action.isAttack) {
         if (this.hit) {
-            if (this.damage >= 0) {
-                var critText = this.crit ? ' A critical hit!!' : '';
-                drawTextMultiline('It dealt ' + this.damage + ' damage!' + critText, 25, 245);
-            }
-            else {
-                drawTextMultiline('It healed ' + Math.abs(this.damage) + ' damage!', 25, 245);
+            var conditionHeight = 245;
+            if (Math.abs(this.action.baseDamage) > 0) {
+                if (this.damage >= 0) {
+                    var critText = this.crit ? ' A critical hit!!' : '';
+                    drawTextMultiline('It dealt ' + this.damage + ' damage!' + critText, 25, 245);
+                }
+                else {
+                    drawTextMultiline('It healed ' + Math.abs(this.damage) + ' damage!', 25, 245);
+                }
+                conditionHeight += 25;
             }
             if (this.action.inflictedCondition) {
                 var condition = conditionData[this.action.targetCondition];
                 var conditionText = condition.text ? conditionData[this.action.targetCondition].text : 'The target is inflicted with ' + this.action.targetCondition + '.';
-                drawTextMultiline(conditionText, 25, 270);
+                drawTextMultiline(conditionText, 25, conditionHeight);
+            } else if (this.action.stunned) {
+                drawTextMultiline('The target is stunned.', 25, conditionHeight);
             }
         }
         else {

@@ -16,18 +16,16 @@ var heroes = {
         skillName: 'Tactics',
         magicName: 'Shamanism',
         skills: [
-            { title: 'Trip', action: 'trip' },
-            { title: 'Dodge', action: 'dodge' },
             { action: 'inspect' },
-            { action: 'scalding_strike', spell: true },
+            { action: 'vengeful_roast', spell: true },
             { action: 'spirit_binding', spell: true },
         ],
         items: [
             { item: 'straight_sword', durability: 50, equipped: true },
             { item: 'pistol', ammo: 1, equipped: true },
-            { item: 'ointment', quantity: 1 },
-            { item: 'bullets', quantity: 12 },
-            { item: 'cutlass', durability: 20 },
+            { item: 'ointment', quantity: 5 },
+            { item: 'bullets', quantity: 3 },
+            { item: 'jaegerbrau', quantity: 1 },
         ]
     },
     knight: {

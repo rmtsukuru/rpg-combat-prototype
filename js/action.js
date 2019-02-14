@@ -6,12 +6,15 @@ function Action(actor, target, stats) {
     this.target = stats.target == 'self' ? this.actor : target;
     this.time = stats.time || 5;
     this.cost = stats.cost || 0;
-    this.damage = stats.damage || 0;
-    this.isAttack = stats.damage > 0;
-    if (this.damage > 0) {
+    this.baseDamage = stats.damage || 0;
+    this.isAttack = stats.damage > 0 || stats.targetCondition || stats.stun;
+    if (this.baseDamage > 0) {
         var damageType = stats.damageType || 'pure';
         var defense = this.target.defenses[damageType] || 0;
-        this.damage = Math.max(0, this.damage - defense);
+        this.damage = Math.max(0, this.baseDamage - defense);
+    }
+    else {
+        this.damage = 0;
     }
     hitChanceMod = stats.hitChance || 0;
     this.hitChance = this.actor.accuracy - this.target.evasion + hitChanceMod;
@@ -19,6 +22,8 @@ function Action(actor, target, stats) {
     this.critChance = this.actor.critChance + critChanceMod;
     this.text = stats.text;
     this.selfCondition = stats.selfCondition;
+    this.stun = stats.stun;
+    this.stunResistance = stats.stunResistance || null;
     this.targetCondition = stats.targetCondition;
     this.conditionResistance = stats.conditionResistance || null;
     this.inspect = stats.inspect;
@@ -69,6 +74,16 @@ Action.prototype.execute = function() {
             }
         }
     }
+    if (this.stun && hit) {
+        var resistance = 0;
+        if (this.stunResistance) {
+            resistance = this.target.resistances[this.stunResistance];
+        }
+        if (Math.random() > resistance) {
+            this.stunned = true;
+            this.target.time += this.stun;
+        }
+    }
     return { hit: hit, crit: crit };
 };
 
@@ -84,15 +99,16 @@ const actionData = {
     dodge: { title: 'Dodge', text: 'You attempt to dodge incoming attacks.', selfCondition: 'dodge', time: 5 },
     trip: { text: 'You knock the enemy down, exposing it to\nattack.', targetCondition: 'prone', hitChance: 0.4, time: 3 },
     inspect: { title: 'Inspect', text: 'You inspect the enemy.', inspect: true, time: 3 },
-    scalding_strike: { title: 'Scalding Strike', text: 'You slash with a blade wreathed in flames.', cost: 1, damage: 20, damageType: 'incineration', hitChance: 0.2, critChance: 0.3, time: 10 },
+    vengeful_roast: { title: 'Vengeful Roast', text: 'You stab with a blade wreathed in flames.', cost: 1, damage: 20, damageType: 'incineration', hitChance: 0.2, critChance: 0.3, time: 4 },
+    spirit_binding: { title: 'Spirit Binding', text: 'You utter words of binding.', cost: 1, hitChance: 2, stun: 8, stunResistance: 'mental', time: 4 },
     smite: { title: 'Smite Evil', text: 'You unleash purifying light.', damage: 15, damageType: 'radiation', hitChance: 0.4, critChance: 0.1, time: 8 },
-    spirit_binding: { title: 'Spirit Binding', text: 'You utter words of binding.', cost: 1, damage: 5, hitChance: 0.2, targetCondition: 'binding', conditionResistance: 'mental', time: 7 },
     loaded_die: {title: 'Loaded Die', text: 'You improve your accuracy.', cost: 1, selfCondition: 'aim', time: 2 },
     fulmination: { title: 'Fulmination', text: 'You zap the enemy.', damage: 6, damageType: 'electrocution', hitChance: 0.3, critChance: 0.2, time: 3 },
     pestilence: { title: 'Pestilence', text: 'You summon noxious vapors.', cost: 7, damage: 0, hitChance: 0.4, targetCondition: 'pestilence', conditionResistance: 'physical', time: 8 },
-    ointment: { title: 'Ointment', text: 'You apply ointment to the wound.', damage: -10, hitChance: 2, critChance: -2, target: 'ally' },
+    ointment: { title: 'Ointment', text: 'You apply ointment to the wound.', damage: -10, hitChance: 2, critChance: -2, target: 'ally', time: 5 },
     bullet: { text: 'You reload the pistol.', time: 10, reload: true, target: 'self' },
     equip: { text: 'You change gear.', time: 6, target: 'self', equip: true },
+    jaegerbrau: { text: 'You drink the hunter\'s brew.', target: 'self', damage: 3, hitChance: 2, selfCondition: 'jaegerbrau', time: 5 },
 };
 
 function buildAction(actionName, actor, target) {
