@@ -58,7 +58,7 @@ Action.prototype.execute = function() {
         this.actor.conditions.push(condition);
         condition.start();
     }
-    if (this.targetCondition && this.isAttack && hit) {
+    if (this.targetCondition && (hit || !this.isAttack)) {
         var options = {};
         if (this.conditionResistance) {
             options.resistance = this.conditionResistance;
