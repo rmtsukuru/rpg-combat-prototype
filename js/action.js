@@ -7,7 +7,7 @@ function Action(actor, target, stats) {
     this.time = stats.time || 5;
     this.cost = stats.cost || 0;
     this.baseDamage = stats.damage || 0;
-    this.isAttack = stats.damage > 0 || (stats.target != 'ally' && this.target != this.actor) || stats.stun;
+    this.isAttack = stats.damage > 0 || (stats.targetCondition && stats.target != 'ally' && this.target != this.actor) || stats.stun;
     if (this.baseDamage > 0) {
         var damageType = stats.damageType || 'pure';
         var defense = this.target.defenses[damageType] || 0;
