@@ -1,3 +1,9 @@
+function buildCombatant(data) {
+    var combatant = Object.assign({}, data);
+    combatant.conditions = [];
+    return combatant;
+}
+
 var heroes = {
     slayer: {
         name: 'SLAYER',
@@ -115,10 +121,9 @@ var monsters = {
         agility: 5,
         time: 0,
         critChance: 0.01,
-        conditions: [],
         inspectText: 'It is a skeleton, the clattering remains \nof a dead human. Susceptible to \nconcussive force.',
     },
 };
 
 var party = [heroes.slayer, heroes.knight, heroes.charlatan, heroes.mage];
-var enemies = [monsters.skeleton, Object.assign({}, monsters.skeleton)];
+var enemies = [buildCombatant(monsters.skeleton), buildCombatant(monsters.skeleton)];
