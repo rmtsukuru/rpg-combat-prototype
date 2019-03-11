@@ -8,18 +8,25 @@ function Action(actor, target, stats) {
     this.cost = stats.cost || 0;
     this.baseDamage = stats.damage || 0;
     this.isAttack = stats.damage > 0 || (stats.targetCondition && stats.target != 'ally' && this.target != this.actor) || stats.stun;
-    if (this.baseDamage > 0) {
-        var damageType = stats.damageType || 'pure';
-        var defense = this.target.defenses[damageType] || 0;
-        this.damage = Math.max(0, this.baseDamage - defense);
+    if (this.baseDamage < 0) {
+        this.damage = this.baseDamage;
+        this.hitChance = 1;
+        this.critChance = 0;
     }
     else {
-        this.damage = 0;
+        if (this.baseDamage > 0) {
+            var damageType = stats.damageType || 'pure';
+            var defense = this.target.defenses[damageType] || 0;
+            this.damage = Math.max(0, this.baseDamage - defense);
+        }
+        else {
+            this.damage = 0;
+        }
+        hitChanceMod = stats.hitChance || 0;
+        this.hitChance = this.actor.accuracy - this.target.evasion + hitChanceMod;
+        critChanceMod = stats.critChance || 0;
+        this.critChance = this.actor.critChance + critChanceMod;
     }
-    hitChanceMod = stats.hitChance || 0;
-    this.hitChance = this.actor.accuracy - this.target.evasion + hitChanceMod;
-    critChanceMod = stats.critChance || 0;
-    this.critChance = this.actor.critChance + critChanceMod;
     this.text = stats.text;
     this.selfCondition = stats.selfCondition;
     this.stun = stats.stun;
@@ -106,7 +113,7 @@ const actionData = {
     loaded_die: {title: 'Loaded Die', text: 'You improve your accuracy.', cost: 1, selfCondition: 'aim', time: 2 },
     fulmination: { title: 'Fulmination', text: 'You zap the enemy.', damage: 6, damageType: 'electrocution', hitChance: 0.3, critChance: 0.2, time: 3 },
     pestilence: { title: 'Pestilence', text: 'You summon noxious vapors.', cost: 7, damage: 0, hitChance: 0.4, targetCondition: 'pestilence', conditionResistance: 'physical', time: 8 },
-    ointment: { title: 'Ointment', text: 'You apply ointment to the wound.', damage: -10, hitChance: 2, critChance: -2, target: 'ally', time: 5 },
+    ointment: { title: 'Ointment', text: 'You apply ointment to the wound.', damage: -10, target: 'ally', time: 5 },
     bullet: { text: 'You reload the pistol.', time: 10, reload: true, target: 'self' },
     equip: { text: 'You change gear.', time: 6, target: 'self', equip: true },
     jaegerbrau: { text: 'You drink the hunter\'s brew.', target: 'self', damage: 3, hitChance: 2, selfCondition: 'jaegerbrau', time: 5 },
