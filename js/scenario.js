@@ -30,7 +30,7 @@ QueueScene.prototype = Object.create(Scene.prototype);
 
 QueueScene.prototype.handleEnemy = function(enemy) {
     var action = Math.random() < 0.6 ? 'enemy_cutlass' : 'bone_claw';
-    var target = party[Math.round(Math.random() * (party.length - 1))];
+    var target = pickRandomTarget(party);
     var options = {};
     scene = new ActionScene(enemy, target, action, options);
 };

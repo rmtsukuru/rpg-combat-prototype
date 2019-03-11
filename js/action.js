@@ -101,6 +101,7 @@ const actionData = {
     inspect: { title: 'Inspect', text: 'You inspect the enemy.', inspect: true, time: 3 },
     vengeful_roast: { title: 'Vengeful Roast', text: 'You stab with a blade wreathed in flames.', cost: 1, damage: 20, damageType: 'incineration', hitChance: 0.2, critChance: 0.3, time: 4 },
     spirit_binding: { title: 'Spirit Binding', text: 'You utter words of binding.', cost: 1, hitChance: 2, stun: 8, stunResistance: 'mental', time: 4 },
+    protect: { title: 'Protect', text: 'You defend an ally with your shield.', target: 'ally', targetCondition: 'protected', time: 4 },
     smite: { title: 'Smite Evil', text: 'You unleash purifying light.', damage: 15, damageType: 'radiation', hitChance: 0.4, critChance: 0.1, time: 8 },
     loaded_die: {title: 'Loaded Die', text: 'You improve your accuracy.', cost: 1, selfCondition: 'aim', time: 2 },
     fulmination: { title: 'Fulmination', text: 'You zap the enemy.', damage: 6, damageType: 'electrocution', hitChance: 0.3, critChance: 0.2, time: 3 },

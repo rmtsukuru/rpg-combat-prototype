@@ -47,6 +47,7 @@ const conditionData = {
     bleed: { text: 'The target is bleeding.', duration: 5, onTurnTick: function(x) { x.health -= 5; } },
     poison: { text: 'The target was poisoned.', duration: 2, onTimeTick: function(x) { x.health -= 1; } },
     jaegerbrau: { duration: 5, onStart: function(x) { x.evasion += 0.2; x.hitChance += 0.1; x.critChance += 0.2; }, onEnd: function(x) { x.evasion -= 0.2; x.hitChance -= 0.1; x.critChance -= 0.2; } },
+    protected: { duration: 3 },
 };
 
 function buildCondition(conditionName, target, options) {

@@ -44,7 +44,7 @@ var heroes = {
         skillName: 'Chivalry',
         magicName: 'Theurgy',
         skills: [
-            { action: 'inspect' },
+            { action: 'protect' },
             { action: 'smite', spell: true },
         ],
         items: [
