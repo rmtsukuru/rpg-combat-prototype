@@ -143,7 +143,7 @@ MenuScene.prototype.update = function() {
             }
         }
         else if (this.target) {
-            if (menuItem.health > 0) {
+            if (menuItem.health > 0 && !(actionData[this.action].damage < 0 && menuItem.health >= menuItem.maxHealth)) {
                 var options = {};
                 if (this.item) {
                     options.item = this.item;
