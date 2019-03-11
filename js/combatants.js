@@ -55,7 +55,7 @@ var heroes = {
         ],
         items: [
             { item: 'warhammer', durability: 80, equipped: true },
-            { item: 'ointment', quantity: 3 },
+            { item: 'bandage', quantity: 5 },
         ],
     },
     charlatan: {

@@ -7,6 +7,7 @@ const itemData = {
     pistol: { title: 'Pistol', action: 'pistol', maxAmmo: 1, equipment: 'secondary_weapon' },
     bullets: { title: 'Silver Bullets', action: 'bullet' },
     ointment: { title: 'Ointment', action: 'ointment' },
+    bandage: { title: 'Bandage', action: 'bandage' },
     jaegerbrau: { title: 'Jägerbrau', action: 'jaegerbrau' },
 };
 
