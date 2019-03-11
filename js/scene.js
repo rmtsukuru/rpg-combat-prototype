@@ -21,16 +21,18 @@ Scene.prototype.draw = function() {
         else {
             drawText(data.resourceName + ': ' + data.resource, x, 410);
         }
+        drawText('EVA: ' + formatPercent(data.evasion), x, 435);
         if (SHOW_CONDITIONS) {
-            drawText(data.conditions.map(x => x.name.charAt(0)).join('').toUpperCase(), x, 435);
+            drawText(data.conditions.map(x => x.name.charAt(0)).join('').toUpperCase(), x, 460);
         }
     }
     if (enemies.length > 1) {
         enemies.forEach(function(enemy, i) {
             var text = 'Monster ' + (i + 1) + ' HP: ' + Math.max(0, enemy.health) + '/' + enemy.maxHealth;
-            drawText(text, 50 + 330 * (i % 2), 50 + 40 * Math.floor(i / 2));
+            drawText(text, 50 + 330 * (i % 2), 50 + 60 * Math.floor(i / 2));
+            drawText('ACC: ' + formatPercent(enemy.accuracy), 65 + 330 * (i % 2), 70 + 60 * Math.floor(i / 2));
             if (SHOW_CONDITIONS) {
-                drawText(enemy.conditions.map(x => x.name.charAt(0)).join('').toUpperCase(), 80 + 330 * (i % 2), 90 + 40 * Math.floor(i / 2));
+                drawText(enemy.conditions.map(x => x.name.charAt(0)).join('').toUpperCase(), 165 + 330 * (i % 2), 70 + 60 * Math.floor(i / 2));
             }
         });
     }

@@ -7,6 +7,10 @@ function pluralize(number, word) {
     return number + ' ' + displayWord;
 }
 
+function formatPercent(number) {
+    return (number * 100) + '%';
+}
+
 function hasCondition(target, condition) {
     if (!target.conditions) {
         return false;

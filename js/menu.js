@@ -27,7 +27,12 @@ MenuScene.prototype.getTitle = function(menuItem) {
     }
     var timeDisplay = '';
     if (this.target) {
-        return title + ' - ' + menuItem.health + '/' + menuItem.maxHealth;
+        hitText = '';
+        if (actionData[this.action].target != 'ally') {
+            hitChanceMod = actionData[this.action].hitChance || 0;
+            hitText = '  HIT: ' + formatPercent(this.combatant.accuracy - menuItem.evasion + hitChanceMod);
+        }
+        return title + ' - ' + menuItem.health + '/' + menuItem.maxHealth + hitText;
     }
     else if (!menuItem.submenu) {
         timeDisplay = '   ' + ((action && action.time) ? action.time : 5) + 's';
