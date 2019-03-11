@@ -51,6 +51,7 @@ var heroes = {
         magicName: 'Theurgy',
         skills: [
             { action: 'protect' },
+            { action: 'blessed_restoration', spell: true },
             { action: 'renounce_evil', spell: true },
             { action: 'smite', spell: true },
         ],

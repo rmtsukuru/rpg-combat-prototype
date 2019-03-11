@@ -109,6 +109,7 @@ const actionData = {
     vengeful_roast: { title: 'Vengeful Roast', text: 'You stab with a blade wreathed in flames.', cost: 1, damage: 20, damageType: 'incineration', hitChance: 0.2, critChance: 0.3, time: 4 },
     spirit_binding: { title: 'Spirit Binding', text: 'You utter words of binding.', cost: 1, hitChance: 2, stun: 8, stunResistance: 'mental', time: 4 },
     protect: { title: 'Protect', text: 'You defend an ally with your shield.', target: 'ally', targetCondition: 'protected', time: 4 },
+    blessed_restoration: { title: 'Blessed Restoration', text: 'You restore an ally\'s wounds.', damage: -30, target: 'ally', restriction: x => x.health / x.maxHealth <= 0.25, time: 14 },
     renounce_evil: { title: 'Renounce Evil', text: 'You utter a solumn oath.', hitChance: 2, stun: 5, stunResistance: 'mental', time: 2 },
     smite: { title: 'Smite', text: 'You unleash purifying light.', damage: 15, damageType: 'radiation', hitChance: 0.4, critChance: 0.1, time: 8 },
     loaded_die: {title: 'Loaded Die', text: 'You improve your accuracy.', cost: 1, selfCondition: 'aim', time: 2 },
