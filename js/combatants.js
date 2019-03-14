@@ -78,6 +78,7 @@ var heroes = {
         skills: [
             { action: 'dodge' },
             { action: 'loaded_die', spell: true },
+            { action: 'four_winds', spell: true },
         ],
         items: [
             { item: 'knife', durability: 15, equipped: true },
