@@ -77,6 +77,7 @@ var heroes = {
             { action: 'dodge' },
             { action: 'loaded_die', spell: true },
             { action: 'four_winds', spell: true },
+            { action: 'red_dragon', spell: true },
         ],
         items: [
             { item: 'knife', durability: 15, equipped: true },

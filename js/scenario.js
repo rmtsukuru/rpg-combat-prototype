@@ -49,7 +49,6 @@ QueueScene.prototype.update = function() {
 function ActionScene(combatant, target, action, options) {
     Scene.call(this);
     this.combatant = combatant;
-    this.updateConditions(this.combatant);
     if (options.item) {
         this.item = options.item;
     }
@@ -60,6 +59,7 @@ function ActionScene(combatant, target, action, options) {
     this.damage = this.action.calculateDamage(this.crit);
     this.combatant.time += this.action.time;
     this.combatant.resource -= this.action.cost;
+    this.updateConditions(this.combatant);
     if (this.item) {
         if (this.item.quantity >= 0) {
             this.item.quantity--;

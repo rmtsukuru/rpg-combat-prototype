@@ -115,6 +115,7 @@ const actionData = {
     dodge: { title: 'Dodge', text: 'You attempt to dodge incoming attacks.', selfCondition: 'dodge', time: 5 },
     loaded_die: {title: 'Loaded Die', text: 'You improve an ally\'s accuracy.', cost: 1, target: 'ally', targetCondition: 'aim', time: 3 },
     four_winds: {title: 'Four Winds', text: 'You slightly improve an ally\'s evasion.', cost: 5, target: 'ally', targetCondition: 'four_winds', time: 2 },
+    red_dragon: {title: 'Red Dragon', text: 'You empower an ally\'s attacks.', cost: 3, target: 'ally', targetCondition: 'red_dragon', time: 8 },
     fulmination: { title: 'Fulmination', text: 'You zap the enemy.', damage: 6, damageType: 'electrocution', hitChance: 0.3, critChance: 0.2, time: 3 },
     pestilence: { title: 'Pestilence', text: 'You summon noxious vapors.', cost: 7, damage: 0, hitChance: 0.4, targetCondition: 'pestilence', conditionResistance: 'physical', time: 8 },
     ointment: { title: 'Ointment', text: 'You apply ointment to the wound.', damage: -10, target: 'ally', time: 5 },
