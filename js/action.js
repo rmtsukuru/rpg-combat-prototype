@@ -15,9 +15,10 @@ function Action(actor, target, stats) {
     }
     else {
         if (this.baseDamage > 0) {
-            var damageType = stats.damageType || 'pure';
-            var defense = this.target.defenses[damageType] || 0;
-            this.damage = Math.max(0, this.baseDamage - defense);
+            damageMod = this.actor.damageMod || 0;
+            damageType = stats.damageType || 'pure';
+            defense = this.target.defenses[damageType] || 0;
+            this.damage = Math.max(0, this.baseDamage + damageMod - defense);
         }
         else {
             this.damage = 0;

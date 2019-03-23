@@ -1,5 +1,6 @@
 function buildCombatant(data) {
     var combatant = Object.assign({}, data);
+    combatant.damageMod = combatant.damageMod || 0;
     combatant.conditions = [];
     return combatant;
 }
