@@ -18,7 +18,6 @@ var heroes = {
         agility: 20,
         time: 0,
         critChance: 0.05,
-        conditions: [],
         skillName: 'Tactics',
         magicName: 'Shamanism',
         skills: [
@@ -46,7 +45,6 @@ var heroes = {
         agility: 10,
         time: 0,
         critChance: 0.01,
-        conditions: [],
         skillName: 'Chivalry',
         magicName: 'Theurgy',
         skills: [
@@ -72,7 +70,6 @@ var heroes = {
         agility: 25,
         time: 0,
         critChance: 0.08,
-        conditions: [],
         skillName: 'Tricks',
         magicName: 'Fortune',
         skills: [
@@ -98,7 +95,6 @@ var heroes = {
         agility: 8,
         time: 0,
         critChance: 0.06,
-        conditions: [],
         skillName: 'Gloss',
         magicName: 'Arcana',
         skills: [
@@ -128,5 +124,8 @@ var monsters = {
     },
 };
 
-var party = [heroes.slayer, heroes.knight, heroes.charlatan, heroes.mage];
-var enemies = [buildCombatant(monsters.skeleton), buildCombatant(monsters.skeleton)];
+var currentHeroes = [heroes.slayer, heroes.knight, heroes.charlatan, heroes.mage];
+var currentEnemies = [monsters.skeleton, monsters.skeleton];
+
+var party = currentHeroes.map(x => buildCombatant(x));
+var enemies = currentEnemies.map(x => buildCombatant(x));
