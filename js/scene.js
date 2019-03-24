@@ -9,6 +9,9 @@ Scene.prototype.update = function() {
 
 Scene.prototype.draw = function() {
     drawRect(0, 0, canvasWidth, canvasHeight, '#000');
+    if (TRUE_HIT) {
+        drawText('TRUE HIT', 545, 18, '#36f');
+    }
     for (var i = 0; i < party.length; i++) {
         drawRect(8 * (i + 1) + 150 * i, 335, 150, 135, 'white', true);
         var data = party[i];

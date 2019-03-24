@@ -40,7 +40,7 @@ function Action(actor, target, stats) {
 }
 
 Action.prototype.hit = function() {
-    return Math.random() < this.hitChance;
+    return TRUE_HIT ? trueHit(this.hitChance) : (Math.random() < this.hitChance);
 };
 
 Action.prototype.crit = function() {

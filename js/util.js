@@ -22,3 +22,7 @@ function pickRandomTarget(targets) {
     var validTargets = targets.filter(member => !hasCondition(member, 'protected'));
     return validTargets[Math.round(Math.random() * (validTargets.length - 1))];
 }
+
+function trueHit(hitChance) {
+    return (Math.random() + Math.random()) / 2 < hitChance;
+}
