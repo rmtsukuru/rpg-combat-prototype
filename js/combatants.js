@@ -74,6 +74,7 @@ var heroes = {
         skillName: 'Tricks',
         magicName: 'Fortune',
         skills: [
+            { action: 'gambit' },
             { action: 'dodge' },
             { action: 'loaded_die', spell: true },
             { action: 'four_winds', spell: true },
