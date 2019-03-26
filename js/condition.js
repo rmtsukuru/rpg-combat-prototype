@@ -43,7 +43,7 @@ const conditionData = {
     silver: { text: 'The target\'s defense was lowered.', duration: 2, onStart: x => { x.defenses.laceration -= 8; x.defenses.penetration -= 8; }, onEnd: x => { x.defenses.laceration += 8; x.defenses.penetration += 8; } },
     prone: { duration: 3, onStart: x => { x.evasion -= 0.3; }, onEnd: x => { x.evasion += 0.3; } },
     bleed: { text: 'The target is bleeding.', duration: 5, onTurnTick: x => { x.health -= 5; } },
-    poison: { text: 'The target was poisoned.', duration: 2, onTimeTick: x => { x.health -= 1; } },
+    poison: { text: 'The target was poisoned.', duration: 2, onTimeTick: x => { x.health -= 2; } },
     jaegerbrau: { duration: 5, onStart: x => { x.evasion += 0.2; x.hitChance += 0.1; x.critChance += 0.2; }, onEnd: x => { x.evasion -= 0.2; x.hitChance -= 0.1; x.critChance -= 0.2; } },
     protected: { duration: 3 },
     aim: { duration: 3, onStart: x => { x.critChance += 0.3; }, onEnd: x => { x.critChance -= 0.3; } },

@@ -82,6 +82,7 @@ var heroes = {
         ],
         items: [
             { item: 'knife', durability: 15, equipped: true },
+            { item: 'venom_cask', quantity: 3 },
             { item: 'ointment', quantity: 1 },
         ]
     },

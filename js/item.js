@@ -9,6 +9,7 @@ const itemData = {
     ointment: { title: 'Ointment', action: 'ointment' },
     bandage: { title: 'Bandage', action: 'bandage' },
     jaegerbrau: { title: 'Jägerbrau', action: 'jaegerbrau' },
+    venom_cask: { title: 'Venom Cask', action: 'venom_cask' },
 };
 
 function buildItem(menuItem) {

@@ -155,6 +155,7 @@ const actionData = {
     bullet: { text: 'You reload the pistol.', time: 10, reload: true, target: 'self' },
     equip: { text: 'You change gear.', time: 6, target: 'self', equip: true },
     jaegerbrau: { text: 'You drink the hunter\'s brew.', target: 'self', damage: 3, hitChance: 2, selfCondition: 'jaegerbrau', time: 5 },
+    venom_cask: { text: 'You throw a toxic mixture at the enemy.', damage: 0, hitChance: 0.1, targetCondition: 'poison', conditionResistance: 'physical', time: 4 },
 };
 
 function buildAction(actionName, actor, target) {
