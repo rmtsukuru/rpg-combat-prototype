@@ -103,6 +103,8 @@ ActionScene.prototype.updateConditions = function(target) {
         if (condition.time <= 0) {
             condition.end();
             target.conditions.splice(i, 1);
+        } else {
+            condition.turnTick();
         }
     });
 };
