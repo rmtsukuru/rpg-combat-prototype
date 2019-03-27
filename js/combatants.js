@@ -104,6 +104,7 @@ var heroes = {
         skills: [
             { action: 'fulmination' },
             { action: 'pestilence', spell: true },
+            { action: 'abjuration', spell: true },
         ],
         items: [
             { item: 'staff', durability: 30, equipped: true },
