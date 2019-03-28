@@ -50,6 +50,7 @@ const conditionData = {
     four_winds: { duration: 2, onStart: x => { x.evasion += 0.1; }, onEnd: x => { x.evasion -= 0.1; }, stackMax: 4 },
     red_dragon: { duration: 1, onStart: x => { x.damageMod += 5; }, onEnd: x => { x.damageMod -= 5; }, stackMax: 4 },
     pestilence: { duration: 4, onStart: x => { x.hitChance -= 0.3; x.evasion -= 0.3 }, onEnd: x => { x.hitChance += 0.3; x.evasion += 0.3; } },
+    vim: { duration: 5, onStart: x => { x.hitChance += 0.3; x.evasion += 0.2; }, onEnd: x => { x.hitChance -= 0.3; x.evasion -= 0.2; } },
 };
 
 function buildCondition(conditionName, target, options) {

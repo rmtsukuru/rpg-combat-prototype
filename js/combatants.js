@@ -105,6 +105,7 @@ var heroes = {
             { action: 'fulmination' },
             { action: 'pestilence', spell: true },
             { action: 'abjuration', spell: true },
+            { action: 'vim', spell: true },
         ],
         items: [
             { item: 'staff', durability: 30, equipped: true },
