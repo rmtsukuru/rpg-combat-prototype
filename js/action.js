@@ -152,6 +152,7 @@ const actionData = {
     pestilence: { title: 'Pestilence', text: 'You summon noxious vapors.', cost: 7, damage: 0, hitChance: 0.4, targetCondition: 'pestilence', conditionResistance: 'physical', time: 8 },
     abjuration: { title: 'Abjuration', text: 'You dazzle the enemy with blinding light.', cost: 12, hitChance: 2, stun: 15, stunResistance: 'physical', time: 7 },
     vim: {title: 'Vim', text: 'You improve an ally\'s accuracy.', cost: 10, target: 'ally', targetCondition: 'vim', time: 4 },
+    vigor: { title: 'Vigor', text: 'You restore an ally\'s health.', cost: 18, damage: -20, target: 'ally', time: 15 },
     ointment: { title: 'Ointment', text: 'You apply ointment to the wound.', damage: -10, target: 'ally', time: 5 },
     bandage: { title: 'Bandage', text: 'You apply a bandage to the wound.', damage: -50, target: 'ally', time: 10 },
     bullet: { text: 'You reload the pistol.', time: 10, reload: true, target: 'self' },
