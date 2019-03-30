@@ -7,8 +7,9 @@ function pluralize(number, word) {
     return number + ' ' + displayWord;
 }
 
-function formatPercent(number) {
-    return (number * 100) + '%';
+function formatPercent(number, digits) {
+    digits = digits || 0;
+    return (number * 100).toFixed(digits) + '%';
 }
 
 function hasCondition(target, condition) {
