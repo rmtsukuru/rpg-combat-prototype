@@ -10,6 +10,7 @@ const itemData = {
     bandage: { title: 'Bandage', action: 'bandage' },
     jaegerbrau: { title: 'Jägerbrau', action: 'jaegerbrau' },
     venom_cask: { title: 'Venom Cask', action: 'venom_cask' },
+    healing_tincture: { title: 'Healing Tincture', action: 'healing_tincture' },
 };
 
 function buildItem(menuItem) {
@@ -17,6 +18,9 @@ function buildItem(menuItem) {
     item.item = menuItem;
     if (item.equipment && !item.equipped) {
         item.action = 'equip';
+    }
+    else if (!item.action) {
+        item.action = item.item;
     }
     return item;
 }
