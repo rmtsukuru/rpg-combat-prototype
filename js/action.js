@@ -143,7 +143,7 @@ const actionData = {
     blessed_restoration: { title: 'Blessed Restoration', text: 'You restore an ally\'s wounds.', damage: -30, target: 'ally', restriction: x => x.health / x.maxHealth <= 0.25, time: 14 },
     renounce_evil: { title: 'Renounce Evil', text: 'You utter a solumn oath.', hitChance: 2, stun: 5, stunResistance: 'mental', time: 2 },
     smite: { title: 'Smite', text: 'You unleash purifying light.', damage: 15, damageType: 'radiation', hitChance: 0.4, critChance: 0.1, time: 8 },
-    gambit: { title: 'Gambit', text: 'You trigger a random effect: ', cost: -5, hitChance: 2, target: 'self', dynamic: handleGambit, time: 2 },
+    gambit: { title: 'Gambit', text: 'You trigger a random effect: ', cost: -5, hitChance: 2, critChance: -1, target: 'self', dynamic: handleGambit, time: 2 },
     dodge: { title: 'Dodge', text: 'You attempt to dodge incoming attacks.', selfCondition: 'dodge', time: 5 },
     loaded_die: {title: 'Loaded Die', text: 'You improve an ally\'s accuracy.', cost: 1, target: 'ally', targetCondition: 'aim', time: 3 },
     four_winds: {title: 'Four Winds', text: 'You slightly improve an ally\'s evasion.', cost: 5, target: 'ally', targetCondition: 'four_winds', time: 2 },
