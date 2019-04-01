@@ -3,7 +3,7 @@ const CRIT_MULTIPLIER = 2;
 function Action(actor, target, stats) {
     stats = stats || {};
     if (stats.dynamic) {
-        stats = stats.dynamic(actor, target, stats);
+        stats = stats.dynamic(actor, target, { ...stats });
     }
     this.actor = actor;
     this.target = stats.target == 'self' ? this.actor : target;
