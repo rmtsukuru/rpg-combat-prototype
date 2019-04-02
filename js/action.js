@@ -160,6 +160,7 @@ const actionData = {
     jaegerbrau: { text: 'You drink the hunter\'s brew.', target: 'self', damage: 3, hitChance: 2, selfCondition: 'jaegerbrau', time: 5 },
     venom_cask: { text: 'You throw a toxic mixture at the enemy.', damage: 0, hitChance: 0.1, targetCondition: 'poison', conditionResistance: 'physical', time: 4 },
     healing_tincture: { title: 'Healing Tincture', text: 'You apply a healing tincture to an ally.', damage: -3, target: 'ally', targetCondition: 'healing_tincture', time: 6 },
+    disappearing_draught: { title: 'Disappearing Draught', text: 'You become nearly invisible.', selfCondition: 'disappear', time: 5 },
 };
 
 function buildAction(actionName, actor, target) {

@@ -111,6 +111,7 @@ var heroes = {
         items: [
             { item: 'staff', durability: 30, equipped: true },
             { item: 'healing_tincture', quantity: 3 },
+            { item: 'disappearing_draught', quantity: 1 },
         ]
     },
 };

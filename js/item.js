@@ -11,6 +11,7 @@ const itemData = {
     jaegerbrau: { title: 'Jägerbrau', action: 'jaegerbrau' },
     venom_cask: { title: 'Venom Cask', action: 'venom_cask' },
     healing_tincture: { title: 'Healing Tincture', action: 'healing_tincture' },
+    disappearing_draught: { title: 'Disappearing Draught', action: 'disappearing_draught' },
 };
 
 function buildItem(menuItem) {
