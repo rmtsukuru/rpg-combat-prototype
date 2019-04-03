@@ -130,6 +130,7 @@ ActionScene.prototype.update = function() {
 };
 
 ActionScene.prototype.draw = function() {
+    name = this.action.target.name;
     Scene.prototype.draw.call(this);
     drawRect(10, 195, 475, 130, 'white', true);
     drawTextMultiline(this.action.text, 25, 220);
@@ -139,10 +140,10 @@ ActionScene.prototype.draw = function() {
             if (Math.abs(this.action.baseDamage) > 0) {
                 if (this.damage >= 0) {
                     var critText = this.crit ? ' A critical hit!!' : '';
-                    drawTextMultiline('It dealt ' + this.damage + ' damage!' + critText, 25, 245);
+                    drawTextMultiline(name + ' takes ' + this.damage + ' damage!' + critText, 25, 245);
                 }
                 else {
-                    drawTextMultiline('It healed ' + Math.abs(this.damage) + ' damage!', 25, 245);
+                    drawTextMultiline(name + ' is healed for ' + Math.abs(this.damage) + ' damage!', 25, 245);
                 }
                 conditionHeight += 25;
             }
