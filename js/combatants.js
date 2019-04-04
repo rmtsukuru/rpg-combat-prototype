@@ -6,7 +6,7 @@ function buildCombatant(data) {
     combatant.conditions = [];
     if (combatantNames[combatant.name]) {
         combatantNames[combatant.name]++;
-        combatant.name += ' ' + combatantNames[combatant.name];
+        combatant.name += ' ' + numToAlpha(combatantNames[combatant.name] - 1);
     }
     else {
         combatantNames[combatant.name] = 1;

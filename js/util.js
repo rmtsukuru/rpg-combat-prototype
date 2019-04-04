@@ -27,3 +27,7 @@ function pickRandomTarget(targets) {
 function trueHit(hitChance) {
     return (Math.random() + Math.random()) / 2 < hitChance;
 }
+
+function numToAlpha(x) {
+    return String.fromCharCode('A'.charCodeAt(0) + x);
+}
