@@ -42,11 +42,11 @@ Scene.prototype.draw = function() {
     else {
         drawText('Monster HP: ' + Math.max(0, enemies[0].health) + '/' + enemies[0].maxHealth, 240, 50);
     }
-    drawRect(495, 145, 135, 180, 'white', true);
+    drawRect(480, 145, 150, 180, 'white', true);
     for (var i = 0; i < queue.length; i++) {
         var data = queue[i];
         var color = queue[i].health > 0 ? 'white' : 'red';
-        drawText(data.name, 500, 170 + 25 * i, color);
+        drawText(data.name, 485, 170 + 25 * i, color);
         drawText(data.time, 605, 170 + 25 * i, color);
     }
 };
