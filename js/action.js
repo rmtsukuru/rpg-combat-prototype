@@ -151,7 +151,7 @@ const actionData = {
     fulmination: { title: 'Fulmination', text: 'You zap the enemy.', damage: 6, damageType: 'electrocution', hitChance: 0.3, critChance: 0.2, time: 3 },
     pestilence: { title: 'Pestilence', text: 'You summon noxious vapors.', cost: 7, damage: 0, hitChance: 0.4, targetCondition: 'pestilence', conditionResistance: 'physical', time: 8 },
     abjuration: { title: 'Abjuration', text: 'You dazzle the enemy with blinding light.', cost: 12, hitChance: 2, stun: 15, stunResistance: 'physical', time: 7 },
-    incineration: { title: 'Incineration', text: 'You produce a burst of fire.', cost: 18, damage: 12, damageType: 'incineration', hitChance: 0.2, time: 9 },
+    combustion: { title: 'Combustion', text: 'You produce a burst of fire.', cost: 18, damage: 12, damageType: 'incineration', hitChance: 0.2, time: 9 },
     vim: {title: 'Vim', text: 'You improve an ally\'s accuracy.', cost: 10, target: 'ally', targetCondition: 'vim', time: 4 },
     vigor: { title: 'Vigor', text: 'You restore an ally\'s health.', cost: 18, damage: -20, target: 'ally', time: 15 },
     ointment: { title: 'Ointment', text: 'You apply ointment to the wound.', damage: -10, target: 'ally', time: 5 },
