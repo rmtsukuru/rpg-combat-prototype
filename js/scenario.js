@@ -52,6 +52,7 @@ function ActionScene(combatant, target, action, options) {
     if (options.item) {
         this.item = options.item;
     }
+    this.remainingTargets = options.remainingTargets || [];
     this.action = buildAction(action, this.combatant, target);
     var results = this.action.execute();
     this.hit = results.hit;
@@ -114,15 +115,22 @@ ActionScene.prototype.update = function() {
         this.messageTimer--;
     }
     else if (triggerKeyState.enter || triggerKeyState.z) {
-        var enemiesRemaining = enemies.filter(function(enemy) { return enemy.health > 0; });
-        if (party[0].health <= 0) {
-            scene = new DeathScene();
-        }
-        else if (enemiesRemaining.length <= 0) {
-            scene = new VictoryScene();
+        if (this.remainingTargets.length > 0) {
+            nextTarget = this.remainingTargets.splice(0, 1)[0];
+            options = { remainingTargets, item: this.item };
+            scene = new ActionScene(this.combatant, nextTarget, this.action, options);
         }
         else {
-            scene = new QueueScene();
+            var enemiesRemaining = enemies.filter(function(enemy) { return enemy.health > 0; });
+            if (party[0].health <= 0) {
+                scene = new DeathScene();
+            }
+            else if (enemiesRemaining.length <= 0) {
+                scene = new VictoryScene();
+            }
+            else {
+                scene = new QueueScene();
+            }
         }
         playSound('beep0', 0.5);
     }

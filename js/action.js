@@ -1,10 +1,11 @@
 const CRIT_MULTIPLIER = 2;
 
-function Action(actor, target, stats) {
+function Action(actor, target, stats, name) {
     stats = stats || {};
     if (stats.dynamic) {
         stats = stats.dynamic(actor, target, { ...stats });
     }
+    this.name = name;
     this.actor = actor;
     this.target = stats.target == 'self' ? this.actor : target;
     this.time = stats.time || 5;
@@ -165,5 +166,5 @@ const actionData = {
 };
 
 function buildAction(actionName, actor, target) {
-    return new Action(actor, target, actionData[actionName]);
+    return new Action(actor, target, actionData[actionName], actionName);
 }
