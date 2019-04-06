@@ -31,7 +31,7 @@ Scene.prototype.draw = function() {
     }
     if (enemies.length > 1) {
         enemies.forEach(function(enemy, i) {
-            var text = 'Monster ' + (i + 1) + ' HP: ' + Math.max(0, enemy.health) + '/' + enemy.maxHealth;
+            var text = enemy.name + ' HP: ' + Math.max(0, enemy.health) + '/' + enemy.maxHealth;
             drawText(text, 50 + 330 * (i % 2), 50 + 60 * Math.floor(i / 2));
             drawText('ACC: ' + formatPercent(enemy.accuracy), 65 + 330 * (i % 2), 70 + 60 * Math.floor(i / 2));
             if (SHOW_CONDITIONS && DEBUG) {
