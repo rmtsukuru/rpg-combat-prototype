@@ -5,11 +5,15 @@ function buildCombatant(data) {
     combatant.damageMod = combatant.damageMod || 0;
     combatant.conditions = [];
     if (combatantNames[combatant.name]) {
+        if (typeof combatantNames[combatant.name] == 'object') {
+            combatantNames[combatant.name].name += ' A';
+            combatantNames[combatant.name] = 1;
+        }
         combatantNames[combatant.name]++;
         combatant.name += ' ' + numToAlpha(combatantNames[combatant.name] - 1);
     }
     else {
-        combatantNames[combatant.name] = 1;
+        combatantNames[combatant.name] = combatant;
     }
     return combatant;
 }
