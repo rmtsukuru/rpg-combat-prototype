@@ -148,7 +148,7 @@ ActionScene.prototype.update = function() {
 ActionScene.prototype.draw = function() {
     name = this.action.target.name;
     Scene.prototype.draw.call(this);
-    drawRect(10, 195, 475, 130, 'white', true);
+    drawRect(10, 195, 460, 130, 'white', true);
     drawTextMultiline(this.action.text, 25, 220);
     if (Math.abs(this.damage) > 0 || this.action.isAttack) {
         if (this.hit) {

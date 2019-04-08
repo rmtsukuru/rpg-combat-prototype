@@ -207,11 +207,12 @@ MenuScene.prototype.draw = function() {
         var alpha = 1 - Math.abs(2 * this.blinkTimer / MENU_BLINK_TIMER_FRAMES - 1);
         drawRect(8 * (i + 1) + 150 * i, 335, 150, 135, 'rgba(255, 0, 0, ' + 0.6 * alpha + ')');
     }
-    drawRect(20, 230, this.menuWidth, 10 + 20 * this.menu.length, 'white', true);
+    baseY = this.menu.length > 4 ? 200 : 230;
+    drawRect(20, baseY, this.menuWidth, 10 + 20 * this.menu.length, 'white', true);
     var self = this;
     this.menu.forEach(function(item, i) {
         var title = self.getTitle(item);
-        drawText(title, 50, 250 + 20 * i);
+        drawText(title, 50, baseY + 20 + 20 * i);
     });
-    drawArrow(30, 238 + 20 * this.menuY, 10, 10, 'white');
+    drawArrow(30, baseY + 8 + 20 * this.menuY, 10, 10, 'white');
 }
