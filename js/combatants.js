@@ -116,6 +116,7 @@ var heroes = {
         magicName: 'Arcana',
         skills: [
             { action: 'fulmination' },
+            { action: 'combustion', spell: true },
             { action: 'pestilence', spell: true },
             { action: 'abjuration', spell: true },
             { action: 'vim', spell: true },

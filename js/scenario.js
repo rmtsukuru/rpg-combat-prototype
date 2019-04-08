@@ -58,40 +58,44 @@ function ActionScene(combatant, target, action, options) {
     this.hit = results.hit;
     this.crit = results.crit;
     this.damage = this.action.calculateDamage(this.crit);
-    this.combatant.time += this.action.time;
-    this.combatant.resource -= this.action.cost;
-    this.updateConditions(this.combatant);
-    if (this.item) {
-        if (this.item.quantity >= 0) {
-            this.item.quantity--;
-            if (this.item.quantity == 0) {
-                this.combatant.items.splice(this.combatant.items.indexOf(this.item), 1);
+
+    // For handling multi-target actions; don't apply costs multiple times for the same action.
+    if (!options.secondaryTarget) {
+        this.combatant.time += this.action.time;
+        this.combatant.resource -= this.action.cost;
+        this.updateConditions(this.combatant);
+        if (this.item) {
+            if (this.item.quantity >= 0) {
+                this.item.quantity--;
+                if (this.item.quantity == 0) {
+                    this.combatant.items.splice(this.combatant.items.indexOf(this.item), 1);
+                }
+            }
+            if (action != 'equip') {
+                if (this.item.durability) {
+                    this.item.durability--;
+                }
+                else if (this.item.ammo) {
+                    this.item.ammo--;
+                }
             }
         }
-        if (action != 'equip') {
-            if (this.item.durability) {
-                this.item.durability--;
-            }
-            else if (this.item.ammo) {
-                this.item.ammo--;
-            }
+        if (this.action.reload) {
+            this.combatant.items.filter(function(item) { return item.equipped; }).forEach(function(item) {
+                if (itemData[item.item].maxAmmo) {
+                    item.ammo = itemData[item.item].maxAmmo;
+                }
+            });
         }
-    }
-    if (this.action.reload) {
-        this.combatant.items.filter(function(item) { return item.equipped; }).forEach(function(item) {
-            if (itemData[item.item].maxAmmo) {
-                item.ammo = itemData[item.item].maxAmmo;
-            }
-        });
-    }
-    if (this.action.equip) {
-        var slot = itemData[this.item.item].equipment;
-        this.combatant.items.forEach(function(item) {
-            if (itemData[item.item].equipment == slot) {
-                item.equipped = false;
-            }
-        });
-        this.item.equipped = true;
+        if (this.action.equip) {
+            var slot = itemData[this.item.item].equipment;
+            this.combatant.items.forEach(function(item) {
+                if (itemData[item.item].equipment == slot) {
+                    item.equipped = false;
+                }
+            });
+            this.item.equipped = true;
+        }
     }
     this.messageTimer = FPS * 0.5;
 }
@@ -117,8 +121,12 @@ ActionScene.prototype.update = function() {
     else if (triggerKeyState.enter || triggerKeyState.z) {
         if (this.remainingTargets.length > 0) {
             nextTarget = this.remainingTargets.splice(0, 1)[0];
-            options = { remainingTargets, item: this.item };
-            scene = new ActionScene(this.combatant, nextTarget, this.action, options);
+            options = {
+                secondaryTarget: true,
+                remainingTargets: this.remainingTargets,
+                item: this.item,
+            };
+            scene = new ActionScene(this.combatant, nextTarget, this.action.name, options);
         }
         else {
             var enemiesRemaining = enemies.filter(function(enemy) { return enemy.health > 0; });

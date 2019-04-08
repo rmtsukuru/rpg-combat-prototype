@@ -122,8 +122,17 @@ MenuScene.prototype.update = function() {
             }
             else {
                 this.action = menuItem.action;
-                if (actionData[this.action].target == 'self' || actionData[this.action].selfCondition) {
-                    var options = {};
+                if (actionData[this.action].all) {
+                    targets = [...(actionData[this.action].target == 'ally' ? party : enemies)];
+                    firstTarget = targets.splice(0, 1)[0];
+                    options = { remainingTargets: targets };
+                    if (menuItem.item) {
+                        options.item = menuItem.item;
+                    }
+                    scene = new ActionScene(this.combatant, firstTarget, menuItem.action, options);
+                }
+                else if (actionData[this.action].target == 'self' || actionData[this.action].selfCondition) {
+                    options = {};
                     if (menuItem.item) {
                         options.item = menuItem.item;
                     }
