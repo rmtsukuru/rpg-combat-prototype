@@ -121,6 +121,7 @@ var heroes = {
             { action: 'abjuration', spell: true },
             { action: 'vim', spell: true },
             { action: 'vigor', spell: true },
+            { action: 'psychic_abyss', spell: true },
         ],
         items: [
             { item: 'staff', durability: 30, equipped: true },

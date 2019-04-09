@@ -207,7 +207,7 @@ MenuScene.prototype.draw = function() {
         var alpha = 1 - Math.abs(2 * this.blinkTimer / MENU_BLINK_TIMER_FRAMES - 1);
         drawRect(8 * (i + 1) + 150 * i, 335, 150, 135, 'rgba(255, 0, 0, ' + 0.6 * alpha + ')');
     }
-    baseY = this.menu.length > 4 ? 200 : 230;
+    baseY = this.menu.length > 4 ? 195 : 230;
     drawRect(20, baseY, this.menuWidth, 10 + 20 * this.menu.length, 'white', true);
     var self = this;
     this.menu.forEach(function(item, i) {
