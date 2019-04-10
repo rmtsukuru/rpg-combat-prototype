@@ -40,10 +40,10 @@ Condition.prototype.turnTick = function() {
 
 const conditionData = {
     dodge: { duration: 1, onStart: x => { x.evasion += 0.3; }, onEnd: x => { x.evasion -= 0.3; } },
-    silver: { text: 'The target\'s defense was lowered.', duration: 2, onStart: x => { x.defenses.laceration -= 8; x.defenses.penetration -= 8; }, onEnd: x => { x.defenses.laceration += 8; x.defenses.penetration += 8; } },
+    silver: { text: '\'s defense was lowered.', duration: 2, onStart: x => { x.defenses.laceration -= 8; x.defenses.penetration -= 8; }, onEnd: x => { x.defenses.laceration += 8; x.defenses.penetration += 8; } },
     prone: { duration: 3, onStart: x => { x.evasion -= 0.3; }, onEnd: x => { x.evasion += 0.3; } },
-    bleed: { text: 'The target is bleeding.', duration: 5, onTurnTick: x => { x.health -= 5; } },
-    poison: { text: 'The target was poisoned.', duration: 2, onTimeTick: x => { x.health -= 2; } },
+    bleed: { text: ' is bleeding.', duration: 5, onTurnTick: x => { x.health -= 5; } },
+    poison: { text: ' was poisoned.', duration: 2, onTimeTick: x => { x.health -= 2; } },
     jaegerbrau: { duration: 5, onStart: x => { x.evasion += 0.2; x.hitChance += 0.1; x.critChance += 0.2; }, onEnd: x => { x.evasion -= 0.2; x.hitChance -= 0.1; x.critChance -= 0.2; } },
     protected: { duration: 3 },
     aim: { duration: 3, onStart: x => { x.critChance += 0.3; }, onEnd: x => { x.critChance -= 0.3; } },
@@ -51,7 +51,7 @@ const conditionData = {
     red_dragon: { duration: 1, onStart: x => { x.damageMod += 5; }, onEnd: x => { x.damageMod -= 5; }, stackMax: 4 },
     pestilence: { duration: 4, onStart: x => { x.hitChance -= 0.3; x.evasion -= 0.3 }, onEnd: x => { x.hitChance += 0.3; x.evasion += 0.3; } },
     vim: { duration: 5, onStart: x => { x.hitChance += 0.3; x.evasion += 0.2; }, onEnd: x => { x.hitChance -= 0.3; x.evasion -= 0.2; } },
-    psychic_abyss: { duration: 4, text: 'The target is frozen in fear.', onStart: x => { x.hitChance -= 0.4; x.evasion -= 0.4 }, onEnd: x => { x.hitChance += 0.4; x.evasion += 0.4; } },
+    psychic_abyss: { duration: 4, text: ' is frozen in fear.', onStart: x => { x.hitChance -= 0.4; x.evasion -= 0.4 }, onEnd: x => { x.hitChance += 0.4; x.evasion += 0.4; } },
     healing_tincture: { duration: 5, text: 'The target is being healed over time.', onTurnTick: x => { x.health += 3; } },
     disappear: { duration: 4, onStart: x => { x.evasion += 0.3; }, onEnd: x => { x.evasion -= 0.3; } },
 };

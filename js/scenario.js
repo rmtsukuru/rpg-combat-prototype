@@ -165,14 +165,14 @@ ActionScene.prototype.draw = function() {
             }
             if (this.action.inflictedCondition) {
                 var condition = conditionData[this.action.targetCondition];
-                var conditionText = condition.text ? conditionData[this.action.targetCondition].text : 'The target is inflicted with ' + this.action.targetCondition + '.';
-                drawTextMultiline(conditionText, 25, conditionHeight);
+                var conditionText = condition.text ? conditionData[this.action.targetCondition].text : ' is inflicted with ' + this.action.targetCondition + '.';
+                drawTextMultiline(name + conditionText, 25, conditionHeight);
             } else if (this.action.stunned) {
-                drawTextMultiline('The target is stunned.', 25, conditionHeight);
+                drawTextMultiline(name + ' is stunned.', 25, conditionHeight);
             }
         }
         else {
-            drawTextMultiline('The attack missed!', 25, 245);
+            drawTextMultiline('The attack missed ' + name + '!', 25, 245);
         }
     }
     else if (this.action.inspect) {
