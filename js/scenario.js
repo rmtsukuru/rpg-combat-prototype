@@ -155,7 +155,7 @@ ActionScene.prototype.draw = function() {
             var conditionHeight = 245;
             if (Math.abs(this.action.baseDamage) > 0) {
                 if (this.damage >= 0) {
-                    var critText = this.crit ? ' A critical hit!!' : '';
+                    var critText = this.crit ? ' Critical hit!!' : '';
                     drawTextMultiline(name + ' takes ' + this.damage + ' damage!' + critText, 25, 245);
                 }
                 else {
