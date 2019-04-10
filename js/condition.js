@@ -13,7 +13,7 @@ function Condition(target, stats, options) {
 
 Condition.prototype.resist = function() {
     if (this.resistance) {
-        return Math.random() > this.resistance;
+        return Math.random() < this.resistance;
     }
     return false;
 };
