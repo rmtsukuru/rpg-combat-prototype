@@ -164,7 +164,7 @@ MenuScene.prototype.update = function() {
             else if (actionData[this.action].damage < 0) {
                 restriction = x => x.health > 0 && x.health < x.maxHealth;
             }
-            if (restriction(menuItem)) {
+            if (restriction(menuItem, this.combatant)) {
                 var options = {};
                 if (this.item) {
                     options.item = this.item;
