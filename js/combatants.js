@@ -143,6 +143,10 @@ var monsters = {
         agility: 5,
         time: 0,
         critChance: 0.01,
+        actions: [
+            'enemy_cutlass',
+            'bone_claw',
+        ],
         inspectText: 'It is a skeleton, the clattering remains \nof a dead human. Susceptible to \nconcussive force.',
     },
 };
