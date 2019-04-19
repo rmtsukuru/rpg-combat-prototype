@@ -176,7 +176,7 @@ ActionScene.prototype.draw = function() {
         }
     }
     else if (this.action.inspect) {
-        drawTextMultiline(enemies[0].inspectText, 25, 245);
+        drawTextMultiline(this.action.target.inspectText, 25, 245);
     }
 };
 
