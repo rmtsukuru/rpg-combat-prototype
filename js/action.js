@@ -136,6 +136,7 @@ const actionData = {
     pistol: { title: 'Pistol', text: 'You fire a shot.', damage: 10, damageType: 'penetration', critChance: 0.2, targetCondition: 'silver', conditionResistance: 'silver', time: 2 },
     bone_claw: { text: 'The fiend rakes you with its claw!', damage: 18, damageType: 'laceration', time: 8 },
     enemy_cutlass: { text: 'The fiend swings its cutlass at you!', damage: 10, damageType: 'laceration', critChance: 0.1, time: 5 },
+    crushing_blow: { text: 'The fiend strikes down with crushing force!', damage: 20, damageType: 'concussion', stun: 10, stunResistance: 'physical', time: 16 },
     trip: { text: 'You knock the enemy down, exposing it to\nattack.', targetCondition: 'prone', hitChance: 0.4, time: 3 },
     inspect: { title: 'Inspect', text: 'You inspect the enemy.', inspect: true, time: 3 },
     vengeful_roast: { title: 'Vengeful Roast', text: 'You stab with a blade wreathed in flames.', cost: 1, damage: 20, damageType: 'incineration', hitChance: 0.2, critChance: 0.3, time: 4 },

@@ -4,6 +4,7 @@ function buildCombatant(data) {
     var combatant = Object.assign({}, data);
     combatant.damageMod = combatant.damageMod || 0;
     combatant.conditions = [];
+    combatant.time = 0;
     if (combatantNames[combatant.name]) {
         if (typeof combatantNames[combatant.name] == 'object') {
             combatantNames[combatant.name].name += ' A';
@@ -30,7 +31,6 @@ var heroes = {
         defenses: { laceration: 5 },
         evasion: 0.3,
         agility: 20,
-        time: 0,
         critChance: 0.05,
         skillName: 'Tactics',
         magicName: 'Shamanism',
@@ -57,7 +57,6 @@ var heroes = {
         defenses: { concussion: 5, laceration: 10, penetration: 2 },
         evasion: 0.1,
         agility: 10,
-        time: 0,
         critChance: 0.01,
         skillName: 'Chivalry',
         magicName: 'Theurgy',
@@ -82,7 +81,6 @@ var heroes = {
         defenses: { laceration: 2 },
         evasion: 0.3,
         agility: 25,
-        time: 0,
         critChance: 0.08,
         skillName: 'Tricks',
         magicName: 'Fortune',
@@ -110,7 +108,6 @@ var heroes = {
         defenses: { concussion: 2, laceration: 3 },
         evasion: 0.2,
         agility: 8,
-        time: 0,
         critChance: 0.06,
         skillName: 'Gloss',
         magicName: 'Arcana',
@@ -141,7 +138,6 @@ var monsters = {
         resistances: { physical: 0.4, mental: 0.05, silver: 0 },
         evasion: 0.05,
         agility: 5,
-        time: 0,
         critChance: 0.01,
         actions: [
             'enemy_cutlass',
@@ -149,10 +145,26 @@ var monsters = {
         ],
         inspectText: 'It is a skeleton, the clattering remains \nof a dead human. Susceptible to \nconcussive force.',
     },
+    bone_warden: {
+        name: 'BONE WARDEN',
+        health: 50,
+        maxHealth: 50,
+        accuracy: 0.7,
+        defenses: { laceration: 7, penetration: 8, incineration: 2, radiation: -8 },
+        resistances: { physical: 0.6, mental: 0.05, silver: 0 },
+        evasion: 0.1,
+        agility: 4,
+        critChance: 0.05,
+        actions: [
+            'bone_claw',
+            'crushing_blow',
+        ],
+        inspectText: 'It is an armored skeleton. Durable and \nhard to hit.',
+    },
 };
 
 var currentHeroes = [heroes.slayer, heroes.knight, heroes.charlatan, heroes.mage];
-var currentEnemies = [monsters.skeleton, monsters.skeleton];
+var currentEnemies = [monsters.skeleton, monsters.skeleton, monsters.bone_warden];
 
 var party = currentHeroes.map(x => buildCombatant(x));
 var enemies = currentEnemies.map(x => buildCombatant(x));
