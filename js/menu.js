@@ -124,6 +124,14 @@ MenuScene.prototype.update = function() {
                 this.action = menuItem.action;
                 if (actionData[this.action].all) {
                     targets = [...(actionData[this.action].target == 'ally' ? party : enemies)];
+                    var restriction = x => x.health > 0;
+                    if (actionData[this.action].restriction) {
+                        restriction = actionData[this.action].restriction;
+                    }
+                    else if (actionData[this.action].damage < 0) {
+                        restriction = x => x.health > 0 && x.health < x.maxHealth;
+                    }
+                    targets = targets.filter(restriction);
                     firstTarget = targets.splice(0, 1)[0];
                     options = { remainingTargets: targets };
                     if (menuItem.item) {
