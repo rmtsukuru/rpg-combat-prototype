@@ -63,6 +63,7 @@ Action.prototype.execute = function() {
         this.target.health = Math.max(0, Math.min(this.target.maxHealth, newHealth));
         if (this.target.health <= 0) {
             this.target.time = 0;
+            this.actor.traits.forEach(x => x.onKill(this.actor, this.target));
         }
     }
     if (this.selfCondition) {

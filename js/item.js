@@ -15,7 +15,7 @@ const itemData = {
 };
 
 function buildItem(menuItem) {
-    var item = Object.assign({}, itemData[menuItem.item], menuItem);
+    var item = { ...itemData[menuItem.item], ...menuItem };
     item.item = menuItem;
     if (item.equipment && !item.equipped) {
         item.action = 'equip';

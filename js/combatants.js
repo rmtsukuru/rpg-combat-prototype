@@ -3,6 +3,8 @@ const combatantNames = {};
 function buildCombatant(data) {
     var combatant = Object.assign({}, data);
     combatant.damageMod = combatant.damageMod || 0;
+    combatant.traits = combatant.traits || [];
+    combatant.traits = combatant.traits.map(x => buildTrait(x));
     combatant.conditions = [];
     combatant.time = 0;
     if (combatantNames[combatant.name]) {
@@ -34,6 +36,9 @@ var heroes = {
         critChance: 0.05,
         skillName: 'Tactics',
         magicName: 'Shamanism',
+        traits: [
+            'soul_harvest',
+        ],
         skills: [
             { action: 'inspect' },
             { action: 'vengeful_roast', spell: true },
