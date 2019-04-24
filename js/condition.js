@@ -52,7 +52,7 @@ const conditionData = {
     pestilence: { duration: 4, onStart: x => { x.hitChance -= 0.3; x.evasion -= 0.3 }, onEnd: x => { x.hitChance += 0.3; x.evasion += 0.3; } },
     vim: { duration: 5, onStart: x => { x.hitChance += 0.3; x.evasion += 0.2; }, onEnd: x => { x.hitChance -= 0.3; x.evasion -= 0.2; } },
     psychic_abyss: { duration: 4, text: ' is frozen in fear.', onStart: x => { x.hitChance -= 0.4; x.evasion -= 0.4 }, onEnd: x => { x.hitChance += 0.4; x.evasion += 0.4; } },
-    healing_tincture: { duration: 5, text: 'The target is being healed over time.', onTurnTick: x => { x.health += 3; } },
+    healing_tincture: { duration: 5, text: ' is being healed over time.', onTurnTick: x => { x.health += 3; } },
     disappear: { duration: 4, onStart: x => { x.evasion += 0.3; }, onEnd: x => { x.evasion -= 0.3; } },
 };
 
