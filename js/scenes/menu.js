@@ -1,7 +1,7 @@
 const MENU_BLINK_TIMER_FRAMES = FPS * 3;
 
 function MenuScene(combatant) {
-    Scene.call(this);
+    CombatScene.call(this);
     this.combatant = combatant;
     this.menuY = 0;
     this.menu = this.generateMenu();
@@ -11,7 +11,7 @@ function MenuScene(combatant) {
     this.blinkTimer = MENU_BLINK_TIMER_FRAMES;
 }
 
-MenuScene.prototype = Object.create(Scene.prototype);
+MenuScene.prototype = Object.create(CombatScene.prototype);
 
 MenuScene.prototype.getTitle = function(menuItem) {
     var cost = 0;
@@ -205,11 +205,11 @@ MenuScene.prototype.update = function() {
         this.menuY = this.menuY < 0 ? this.menu.length - 1 : this.menuY;
         playSound('select0', 0.3);
     }
-    Scene.prototype.update.call(this);
+    CombatScene.prototype.update.call(this);
 };
 
 MenuScene.prototype.draw = function() {
-    Scene.prototype.draw.call(this);
+    CombatScene.prototype.draw.call(this);
     if (party.includes(this.combatant)) {
         var i = party.indexOf(this.combatant);
         var alpha = 1 - Math.abs(2 * this.blinkTimer / MENU_BLINK_TIMER_FRAMES - 1);

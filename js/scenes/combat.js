@@ -1,7 +1,7 @@
 var queue = party.concat(enemies);
 
 function QueueScene() {
-    Scene.call(this);
+    CombatScene.call(this);
     queue.sort(function(a, b) {
         if (a.health <= 0) {
             return 1;
@@ -26,7 +26,7 @@ function QueueScene() {
     }
 }
 
-QueueScene.prototype = Object.create(Scene.prototype);
+QueueScene.prototype = Object.create(CombatScene.prototype);
 
 QueueScene.prototype.handleEnemy = function(enemy) {
     var action = enemy.actions[Math.floor(enemy.actions.length * Math.random())];
@@ -43,11 +43,11 @@ QueueScene.prototype.update = function() {
     else if (enemies.includes(next)) {
         this.handleEnemy(next);
     }
-    Scene.prototype.update.call(this);
+    CombatScene.prototype.update.call(this);
 };
 
 function ActionScene(combatant, target, action, options) {
-    Scene.call(this);
+    CombatScene.call(this);
     this.combatant = combatant;
     if (options.item) {
         this.item = options.item;
@@ -100,7 +100,7 @@ function ActionScene(combatant, target, action, options) {
     this.messageTimer = FPS * 0.5;
 }
 
-ActionScene.prototype = Object.create(Scene.prototype);
+ActionScene.prototype = Object.create(CombatScene.prototype);
 
 ActionScene.prototype.updateConditions = function(target) {
     target.conditions.forEach(function(condition, i) {
@@ -142,12 +142,12 @@ ActionScene.prototype.update = function() {
         }
         playSound('beep0', 0.5);
     }
-    Scene.prototype.update.call(this);
+    CombatScene.prototype.update.call(this);
 };
 
 ActionScene.prototype.draw = function() {
     name = this.action.target.name;
-    Scene.prototype.draw.call(this);
+    CombatScene.prototype.draw.call(this);
     drawRect(10, 195, 460, 130, 'white', true);
     drawTextMultiline(this.action.text, 25, 220);
     if (Math.abs(this.damage) > 0 || this.action.isAttack) {
@@ -181,24 +181,24 @@ ActionScene.prototype.draw = function() {
 };
 
 function VictoryScene() {
-    Scene.call(this);
+    CombatScene.call(this);
 };
 
-VictoryScene.prototype = Object.create(Scene.prototype);
+VictoryScene.prototype = Object.create(CombatScene.prototype);
 
 VictoryScene.prototype.draw = function() {
-    Scene.prototype.draw.call(this);
+    CombatScene.prototype.draw.call(this);
     drawText('You are victorious!', 240, 150);
 };
 
 function DeathScene() {
-    Scene.call(this);
+    CombatScene.call(this);
 };
 
-DeathScene.prototype = Object.create(Scene.prototype);
+DeathScene.prototype = Object.create(CombatScene.prototype);
 
 DeathScene.prototype.draw = function() {
-    Scene.prototype.draw.call(this);
+    CombatScene.prototype.draw.call(this);
     drawText('You have been defeated!', 200, 150);
 };
 

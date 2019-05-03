@@ -9,6 +9,20 @@ Scene.prototype.update = function() {
 
 Scene.prototype.draw = function() {
     drawRect(0, 0, canvasWidth, canvasHeight, '#000');
+}
+
+function CombatScene() {
+    Scene.call(this);
+}
+
+CombatScene.prototype = Object.create(Scene.prototype);
+
+CombatScene.prototype.update = function() {
+    updateInput();
+};
+
+CombatScene.prototype.draw = function() {
+    Scene.prototype.draw.call(this);
     if (TRUE_HIT && DEBUG) {
         drawText('TRUE HIT', 545, 18, '#36f');
     }
