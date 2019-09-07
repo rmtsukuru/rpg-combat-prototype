@@ -2,6 +2,7 @@ var canvas, graphicsContext;
 var canvasWidth, canvasHeight;
 var baseWidth, baseHeight;
 var scalingFactor;
+var flashTimer, flashColor;
 
 function drawArrow(x, y, width, height, color) {
     graphicsContext.fillColor = color;
@@ -54,4 +55,24 @@ function configureGraphics() {
     canvas.width = baseWidth * scalingFactor;
     canvasWidth = canvas.width;
     canvasHeight = canvas.height;
+    flashTimer = 0;
+}
+
+function updateGraphics() {
+    if (flashTimer > 0) {
+        flashTimer--;
+    }
+}
+
+function drawFlash() {
+    if (flashTimer > 0) {
+        const alpha = 1 - Math.abs(2 * flashTimer / FLASH_TIMER_FRAMES - 1)
+        const alphaHex = percentToHex(alpha, 1);
+        drawRect(0, 0, canvasWidth, canvasHeight, flashColor + alphaHex);
+    }
+}
+
+function flashScreen(color) {
+    flashTimer = FLASH_TIMER_FRAMES;
+    flashColor = color;
 }

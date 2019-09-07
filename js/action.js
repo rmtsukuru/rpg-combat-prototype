@@ -57,8 +57,8 @@ Action.prototype.calculateDamage = function(crit) {
 
 Action.prototype.execute = function() {
     var hit = this.hit();
-    var crit = this.crit();
     if (hit) {
+        var crit = this.crit();
         var newHealth = this.target.health - this.calculateDamage(crit);
         this.target.health = Math.max(0, Math.min(this.target.maxHealth, newHealth));
         if (this.target.health <= 0) {

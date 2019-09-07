@@ -5,3 +5,4 @@ const MASTER_VOLUME = 1;
 const DEBUG = true;
 const SHOW_CONDITIONS = true;
 const TRUE_HIT = true;
+const FLASH_TIMER_FRAMES = FPS / 10;

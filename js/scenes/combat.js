@@ -58,6 +58,9 @@ function ActionScene(combatant, target, action, options) {
     this.hit = results.hit;
     this.crit = results.crit;
     this.damage = this.action.calculateDamage(this.crit);
+    if (this.crit) {
+        flashScreen('#fff');
+    }
 
     // For handling multi-target actions; don't apply costs multiple times for the same action.
     if (!options.secondaryTarget) {

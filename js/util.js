@@ -31,3 +31,9 @@ function trueHit(hitChance) {
 function numToAlpha(x) {
     return String.fromCharCode('A'.charCodeAt(0) + x);
 }
+
+function percentToHex(x, digits) {
+    digits = digits || 2;
+    const hexValue = 16 ** digits - 1;
+    return Math.round(x * hexValue).toString(16);
+}

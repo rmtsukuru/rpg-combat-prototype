@@ -5,6 +5,7 @@ function Scene() {
 
 Scene.prototype.update = function() {
     updateInput();
+    updateGraphics();
 };
 
 Scene.prototype.draw = function() {
@@ -18,7 +19,7 @@ function CombatScene() {
 CombatScene.prototype = Object.create(Scene.prototype);
 
 CombatScene.prototype.update = function() {
-    updateInput();
+    Scene.prototype.update.call(this);
 };
 
 CombatScene.prototype.draw = function() {
@@ -63,4 +64,5 @@ CombatScene.prototype.draw = function() {
         drawText(data.name, 485, 170 + 25 * i, color);
         drawText(data.time, 605, 170 + 25 * i, color);
     }
+    drawFlash();
 };
