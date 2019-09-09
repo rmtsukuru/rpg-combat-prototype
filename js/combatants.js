@@ -1,12 +1,15 @@
 const combatantNames = {};
 
+function Combatant(data) {
+    Object.assign(this, data);
+    this.damageMod = this.damageMod || 0;
+    this.traits = (this.traits || []).map(x => buildTrait(x));
+    this.conditions = [];
+    this.time = 0;
+}
+
 function buildCombatant(data) {
-    var combatant = Object.assign({}, data);
-    combatant.damageMod = combatant.damageMod || 0;
-    combatant.traits = combatant.traits || [];
-    combatant.traits = combatant.traits.map(x => buildTrait(x));
-    combatant.conditions = [];
-    combatant.time = 0;
+    var combatant = new Combatant(data);
     if (combatantNames[combatant.name]) {
         if (typeof combatantNames[combatant.name] == 'object') {
             combatantNames[combatant.name].name += ' A';
