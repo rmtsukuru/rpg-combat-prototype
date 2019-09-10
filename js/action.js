@@ -11,7 +11,7 @@ function Action(actor, target, stats, name) {
     this.time = stats.time || 5;
     this.cost = stats.cost || 0;
     this.baseDamage = stats.damage || 0;
-    this.isAttack = stats.damage > 0 || (stats.targetCondition && stats.target != 'ally' && this.target != this.actor) || stats.stun;
+    this.isAttack = (stats.damage > 0 || stats.stun) && (stats.targetCondition && stats.target != 'ally' && this.target != this.actor);
     if (this.baseDamage < 0) {
         this.damage = this.baseDamage;
         this.hitChance = 1;
