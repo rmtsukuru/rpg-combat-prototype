@@ -6,3 +6,5 @@ const DEBUG = true;
 const SHOW_CONDITIONS = true;
 const TRUE_HIT = true;
 const FLASH_TIMER_FRAMES = FPS / 10;
+const SHAKE_TIMER_FRAMES = FPS / 3;
+const SHAKE_WIDTH = 8;

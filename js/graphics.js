@@ -3,13 +3,14 @@ var canvasWidth, canvasHeight;
 var baseWidth, baseHeight;
 var scalingFactor;
 var flashTimer, flashColor;
+var shakeTimer, shakeXOffset;
 
 function drawArrow(x, y, width, height, color) {
     graphicsContext.fillColor = color;
     graphicsContext.beginPath();
-    graphicsContext.moveTo(x * scalingFactor, y * scalingFactor);
-    graphicsContext.lineTo(x * scalingFactor, (y + height) * scalingFactor);
-    graphicsContext.lineTo((x + width) * scalingFactor, (y + height / 2) * scalingFactor);
+    graphicsContext.moveTo((x + shakeXOffset) * scalingFactor, y * scalingFactor);
+    graphicsContext.lineTo((x + shakeXOffset) * scalingFactor, (y + height) * scalingFactor);
+    graphicsContext.lineTo((x + shakeXOffset + width) * scalingFactor, (y + height / 2) * scalingFactor);
     graphicsContext.closePath();
     graphicsContext.fill();
 }
@@ -18,11 +19,11 @@ function drawRect(x, y, width, height, color, outline) {
     outline = outline || false;
     if (outline) {
         graphicsContext.strokeStyle = color;
-        graphicsContext.strokeRect(x * scalingFactor, y * scalingFactor, width * scalingFactor, height * scalingFactor);
+        graphicsContext.strokeRect((x + shakeXOffset) * scalingFactor, y * scalingFactor, width * scalingFactor, height * scalingFactor);
     }
     else {
         graphicsContext.fillStyle = color;
-        graphicsContext.fillRect(x * scalingFactor, y * scalingFactor, width * scalingFactor, height * scalingFactor);
+        graphicsContext.fillRect((x + shakeXOffset) * scalingFactor, y * scalingFactor, width * scalingFactor, height * scalingFactor);
     }
 }
 
@@ -31,14 +32,14 @@ function drawText(text, x, y, color, fontSize, font) {
     fontSize = (fontSize || 18) * scalingFactor + 'px';
     graphicsContext.font = fontSize + ' ' + font;
     graphicsContext.fillStyle = color || 'white';
-    graphicsContext.fillText(text, x * scalingFactor, y * scalingFactor);
+    graphicsContext.fillText(text, (x + shakeXOffset) * scalingFactor, y * scalingFactor);
 }
 
 function drawTextMultiline(text, x, y, color, fontSize, font) {
     var lines = text.split("\n");
     fontSize = (fontSize || 18);
     lines.forEach(function(line, i) {
-        drawText(line, x, y + i * (fontSize + 7), color, fontSize, font);
+        drawText(line, (x + shakeXOffset), y + i * (fontSize + 7), color, fontSize, font);
     });
 }
 
@@ -56,11 +57,17 @@ function configureGraphics() {
     canvasWidth = canvas.width;
     canvasHeight = canvas.height;
     flashTimer = 0;
+    shakeTimer = 0;
+    shakeXOffset = 0;
 }
 
 function updateGraphics() {
     if (flashTimer > 0) {
         flashTimer--;
+    }
+    if (shakeTimer > 0) {
+        shakeTimer--;
+        shakeXOffset = SHAKE_WIDTH * Math.sin(shakeTimer * SHAKE_TIMER_FRAMES / (2 * Math.PI) );
     }
 }
 
@@ -75,4 +82,8 @@ function drawFlash() {
 function flashScreen(color) {
     flashTimer = FLASH_TIMER_FRAMES;
     flashColor = color;
+}
+
+function shakeScreen() {
+    shakeTimer = SHAKE_TIMER_FRAMES;
 }

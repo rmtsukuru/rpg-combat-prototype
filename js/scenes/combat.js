@@ -58,6 +58,9 @@ function ActionScene(combatant, target, action, options) {
     this.hit = results.hit;
     this.crit = results.crit;
     this.damage = this.action.calculateDamage(this.crit);
+    if (action === 'pistol') {
+        shakeScreen();
+    }
     if (this.crit) {
         flashScreen('#fff');
     }
@@ -204,8 +207,3 @@ DeathScene.prototype.draw = function() {
     CombatScene.prototype.draw.call(this);
     drawText('You have been defeated!', 200, 150);
 };
-
-function configureScenario() {
-    configureItems();
-    scene = new QueueScene();
-}

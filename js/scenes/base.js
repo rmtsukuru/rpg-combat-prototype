@@ -4,6 +4,9 @@ function Scene() {
 }
 
 Scene.prototype.update = function() {
+    if (DEBUG && triggerKeyState.y) {
+        shakeScreen();
+    }
     updateInput();
     updateGraphics();
 };
@@ -66,3 +69,8 @@ CombatScene.prototype.draw = function() {
     }
     drawFlash();
 };
+
+function configureScenario() {
+    configureItems();
+    scene = new QueueScene();
+}
