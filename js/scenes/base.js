@@ -21,11 +21,11 @@ function CombatScene() {
 
 CombatScene.prototype = Object.create(Scene.prototype);
 
-CombatScene.prototype.update = () => {
+CombatScene.prototype.update = function() {
     Scene.prototype.update.call(this);
 };
 
-CombatScene.prototype.draw = () => {
+CombatScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
     if (TRUE_HIT && DEBUG) {
         drawText('TRUE HIT', 545, 18, '#36f');
