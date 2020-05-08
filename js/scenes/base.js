@@ -46,9 +46,6 @@ CombatScene.prototype.draw = function() {
     if (TRUE_HIT && DEBUG) {
         drawText('TRUE HIT', 545, 18, '#36f');
     }
-    for (var i = 0; i < party.length; i++) {
-        this.drawPartyMemberStatus(party[i], 8 * (i + 1) + 150 * i, 335);
-    }
     if (enemies.length > 1) {
         enemies.forEach(function(enemy, i) {
             var text = enemy.name + ' HP: ' + Math.max(0, enemy.health) + '/' + enemy.maxHealth;
