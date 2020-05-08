@@ -151,39 +151,43 @@ ActionScene.prototype.update = function() {
     CombatScene.prototype.update.call(this);
 };
 
-ActionScene.prototype.draw = function() {
+ActionScene.prototype.drawMessageWindow = function(x, y, width, height) {
     name = this.action.target.name;
-    CombatScene.prototype.draw.call(this);
-    drawRect(10, 195, 460, 130, 'white', true);
-    drawTextMultiline(this.action.text, 25, 220);
+    drawRect(x, y, width, height, 'white', true);
+    drawTextMultiline(this.action.text, x + 15, y + 25);
     if (Math.abs(this.damage) > 0 || this.action.isAttack) {
         if (this.hit) {
-            var conditionHeight = 245;
+            var conditionHeight = y + 50;
             if (Math.abs(this.action.baseDamage) > 0) {
                 if (this.damage >= 0) {
                     var critText = this.crit ? ' Critical hit!!' : '';
-                    drawTextMultiline(name + ' takes ' + this.damage + ' damage!' + critText, 25, 245);
+                    drawTextMultiline(name + ' takes ' + this.damage + ' damage!' + critText, x + 15, y + 50);
                 }
                 else {
-                    drawTextMultiline(name + ' is healed for ' + Math.abs(this.damage) + ' damage!', 25, 245);
+                    drawTextMultiline(name + ' is healed for ' + Math.abs(this.damage) + ' damage!', x + 15, y + 50);
                 }
                 conditionHeight += 25;
             }
             if (this.action.inflictedCondition) {
                 var condition = conditionData[this.action.targetCondition];
                 var conditionText = condition.text ? conditionData[this.action.targetCondition].text : ' is inflicted with ' + this.action.targetCondition + '.';
-                drawTextMultiline(name + conditionText, 25, conditionHeight);
+                drawTextMultiline(name + conditionText, x + 15, conditionHeight);
             } else if (this.action.stunned) {
-                drawTextMultiline(name + ' is stunned.', 25, conditionHeight);
+                drawTextMultiline(name + ' is stunned.', x + 15, conditionHeight);
             }
         }
         else {
-            drawTextMultiline('The attack missed ' + name + '!', 25, 245);
+            drawTextMultiline('The attack missed ' + name + '!', x + 15, y + 50);
         }
     }
     else if (this.action.inspect) {
-        drawTextMultiline(this.action.target.inspectText, 25, 245);
+        drawTextMultiline(this.action.target.inspectText, x + 15, y + 50);
     }
+};
+
+ActionScene.prototype.draw = function() {
+    CombatScene.prototype.draw.call(this);
+    this.drawMessageWindow(10, 335, 620, 135);
 };
 
 function VictoryScene() {
