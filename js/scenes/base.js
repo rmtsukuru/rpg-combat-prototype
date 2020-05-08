@@ -25,27 +25,29 @@ CombatScene.prototype.update = function() {
     Scene.prototype.update.call(this);
 };
 
+CombatScene.prototype.drawPartyMemberStatus = (data, x, y) => {
+    drawRect(x, y, 150, 135, 'white', true);
+    drawText(data.name, x + 7, y + 25);
+    drawText('HP: ' + data.health + '/' + data.maxHealth, x + 7, y + 50);
+    if (data.resourceMax) {
+        drawText(data.resourceName + ': ' + data.resource + '/' + data.resourceMax, x + 7, y + 75);
+    }
+    else {
+        drawText(data.resourceName + ': ' + data.resource, x + 7, y + 75);
+    }
+    drawText('EVA: ' + formatPercent(data.evasion), x + 7, y + 100);
+    if (SHOW_CONDITIONS && DEBUG) {
+        drawText(data.conditions.map(x => x.name.charAt(0)).join('').toUpperCase(), x + 7, y + 125);
+    }
+};
+
 CombatScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
     if (TRUE_HIT && DEBUG) {
         drawText('TRUE HIT', 545, 18, '#36f');
     }
     for (var i = 0; i < party.length; i++) {
-        drawRect(8 * (i + 1) + 150 * i, 335, 150, 135, 'white', true);
-        var data = party[i];
-        var x = 15 + 158 * i;
-        drawText(data.name, x, 360);
-        drawText('HP: ' + data.health + '/' + data.maxHealth, x, 385);
-        if (data.resourceMax) {
-            drawText(data.resourceName + ': ' + data.resource + '/' + data.resourceMax, x, 410);
-        }
-        else {
-            drawText(data.resourceName + ': ' + data.resource, x, 410);
-        }
-        drawText('EVA: ' + formatPercent(data.evasion), x, 435);
-        if (SHOW_CONDITIONS && DEBUG) {
-            drawText(data.conditions.map(x => x.name.charAt(0)).join('').toUpperCase(), x, 460);
-        }
+        this.drawPartyMemberStatus(party[i], 8 * (i + 1) + 150 * i, 335);
     }
     if (enemies.length > 1) {
         enemies.forEach(function(enemy, i) {
