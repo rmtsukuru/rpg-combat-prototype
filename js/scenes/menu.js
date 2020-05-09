@@ -211,7 +211,7 @@ MenuScene.prototype.update = function() {
 MenuScene.prototype.draw = function() {
     CombatScene.prototype.draw.call(this);
     if (party.includes(this.combatant)) {
-        this.drawPartyMemberStatus(this.combatant, 8, 335);
+        this.drawCombatantStatus(this.combatant, 8, 335);
         var alpha = 1 - Math.abs(2 * this.blinkTimer / MENU_BLINK_TIMER_FRAMES - 1);
         drawRect(8, 335, 150, 135, 'rgba(255, 0, 0, ' + 0.6 * alpha + ')');
     }

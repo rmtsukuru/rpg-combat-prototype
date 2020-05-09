@@ -187,7 +187,11 @@ ActionScene.prototype.drawMessageWindow = function(x, y, width, height) {
 
 ActionScene.prototype.draw = function() {
     CombatScene.prototype.draw.call(this);
-    this.drawMessageWindow(10, 335, 620, 135);
+    this.drawCombatantStatus(this.combatant, 10, 215);
+    if (this.action.target) {
+        this.drawCombatantStatus(this.action.target, 480, 215);
+    }
+    this.drawMessageWindow(10, 360, 620, 110);
 };
 
 function VictoryScene() {

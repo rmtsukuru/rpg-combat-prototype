@@ -8,8 +8,8 @@ function Combatant(data) {
     this.time = 0;
 }
 
-function buildCombatant(data) {
-    var combatant = new Combatant(data);
+function buildCombatant(data, isEnemy) {
+    var combatant = new Combatant({ ...data, isEnemy: !!isEnemy });
     if (combatantNames[combatant.name]) {
         if (typeof combatantNames[combatant.name] == 'object') {
             combatantNames[combatant.name].name += ' A';
@@ -175,4 +175,4 @@ var currentHeroes = [heroes.slayer, heroes.knight, heroes.charlatan, heroes.mage
 var currentEnemies = [monsters.skeleton, monsters.skeleton, monsters.bone_warden];
 
 var party = currentHeroes.map(x => buildCombatant(x));
-var enemies = currentEnemies.map(x => buildCombatant(x));
+var enemies = currentEnemies.map(x => buildCombatant(x, true));
