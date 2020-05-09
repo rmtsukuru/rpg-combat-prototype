@@ -52,8 +52,8 @@ CombatScene.prototype.drawQueueWindow = function(x, y, width, height) {
     for (var i = 0; i < queue.length; i++) {
         var data = queue[i];
         var color = queue[i].health > 0 ? 'white' : 'red';
-        drawText(data.name, x + 5, y + 25 * (i + 1), color);
-        drawText(data.time, x + 125, y + 25 * (i + 1), color);
+        drawText(data.name, x + 5, y - 5 + 25 * (i + 1), color);
+        drawText(data.time, x + 145, y - 5 + 25 * (i + 1), color);
     }
 };
 
@@ -62,7 +62,7 @@ CombatScene.prototype.draw = function() {
     if (TRUE_HIT && DEBUG) {
         drawText('TRUE HIT', 545, 18, '#36f');
     }
-    this.drawQueueWindow(480, 25, 150, 180);
+    this.drawQueueWindow(460, 25, 170, 180);
     drawFlash();
 };
 
