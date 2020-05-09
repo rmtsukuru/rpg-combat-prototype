@@ -6,11 +6,15 @@ function Combatant(data) {
     this.traits = (this.traits || []).map(x => buildTrait(x));
     this.conditions = [];
     this.time = 0;
+    if (!this.isEnemy) {
+        this.icon = this.name[0];
+    }
 }
 
 function buildCombatant(data, isEnemy) {
     var combatant = new Combatant({ ...data, isEnemy: !!isEnemy });
     if (combatantNames[combatant.name]) {
+        combatant.x += 2;
         if (typeof combatantNames[combatant.name] == 'object') {
             combatantNames[combatant.name].name += ' A';
             combatantNames[combatant.name] = 1;
@@ -27,6 +31,8 @@ function buildCombatant(data, isEnemy) {
 var heroes = {
     slayer: {
         name: 'SLAYER',
+        x: 15,
+        y: 9,
         health: 50,
         maxHealth: 50,
         resourceName: 'SOULS',
@@ -57,6 +63,8 @@ var heroes = {
     },
     knight: {
         name: 'KNIGHT',
+        x: 12,
+        y: 7,
         health: 80,
         maxHealth: 80,
         resourceName: 'FAVOR',
@@ -81,6 +89,8 @@ var heroes = {
     },
     charlatan: {
         name: 'CHARLATAN',
+        x: 18,
+        y: 11,
         health: 30,
         maxHealth: 30,
         resourceName: 'KARMA',
@@ -107,6 +117,8 @@ var heroes = {
     },
     mage: {
         name: 'MAGE',
+        x: 14,
+        y: 14,
         health: 20,
         maxHealth: 20,
         resourceName: 'ÆTHER',
@@ -139,6 +151,9 @@ var heroes = {
 var monsters = {
     skeleton: {
         name: 'SKELETON',
+        icon: 'B',
+        x: 12,
+        y: 5,
         health: 30,
         maxHealth: 30,
         accuracy: 0.8,
@@ -155,6 +170,9 @@ var monsters = {
     },
     bone_warden: {
         name: 'BONE WARDEN',
+        icon: 'W',
+        x: 16,
+        y: 7,
         health: 50,
         maxHealth: 50,
         accuracy: 0.7,

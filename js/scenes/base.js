@@ -57,12 +57,29 @@ CombatScene.prototype.drawQueueWindow = function(x, y, width, height) {
     }
 };
 
+CombatScene.prototype.drawCombatGrid = function(x, y) {
+    for (var i = 0; i < 25; i++) {
+        for (var j = 0; j < 18; j++) {
+            var tileEmpty = !party.concat(enemies).some(combatant => {
+                if (combatant.x == i && combatant.y == j) {
+                    drawText(combatant.icon, x + i * 10, y + j * 15);
+                    return true;
+                }
+            });
+            if (tileEmpty) {
+                drawText('.', x + i * 10, y + j * 15);
+            }
+        }
+    }
+};
+
 CombatScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
     if (TRUE_HIT && DEBUG) {
         drawText('TRUE HIT', 545, 18, '#36f');
     }
     this.drawQueueWindow(460, 25, 170, 180);
+    this.drawCombatGrid(175, 50);
     drawFlash();
 };
 

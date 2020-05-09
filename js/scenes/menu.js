@@ -216,6 +216,7 @@ MenuScene.prototype.draw = function() {
         drawRect(8, 335, 150, 135, 'rgba(255, 0, 0, ' + 0.6 * alpha + ')');
     }
     baseY = this.menu.length > 4 ? 195 : 230;
+    drawRect(20, baseY, this.menuWidth, 10 + 20 * this.menu.length, 'black');
     drawRect(20, baseY, this.menuWidth, 10 + 20 * this.menu.length, 'white', true);
     var self = this;
     this.menu.forEach(function(item, i) {
