@@ -62,7 +62,12 @@ CombatScene.prototype.drawCombatGrid = function(x, y) {
         for (var j = 0; j < 18; j++) {
             var tileEmpty = !party.concat(enemies).some(combatant => {
                 if (combatant.x == i && combatant.y == j) {
-                    drawText(combatant.icon, x + i * 10, y + j * 15);
+                    if (combatant == this.combatant) {
+                        drawText(combatant.icon, x + i * 10, y + j * 15, 'red');
+                    }
+                    else {
+                        drawText(combatant.icon, x + i * 10, y + j * 15);
+                    }
                     return true;
                 }
             });
