@@ -88,7 +88,37 @@ CombatScene.prototype.draw = function() {
     drawFlash();
 };
 
+function FieldScene() {
+    Scene.call(this);
+    this.x = 200;
+    this.y = 300;
+}
+
+FieldScene.prototype = Object.create(Scene.prototype);
+
+FieldScene.prototype.update = function() {
+    Scene.prototype.update.call(this);
+
+    if (keyState.up) {
+        this.y -= FIELD_SPEED;
+    }
+    if (keyState.down) {
+        this.y += FIELD_SPEED;
+    }
+    if (keyState.left) {
+        this.x -= FIELD_SPEED;
+    }
+    if (keyState.right) {
+        this.x += FIELD_SPEED;
+    }
+};
+
+FieldScene.prototype.draw = function() {
+    Scene.prototype.draw.call(this);
+    drawText('S', this.x, this.y, 'red');
+}
+
 function configureScenario() {
     configureItems();
-    scene = new QueueScene();
+    scene = COMBAT_TEST ? new QueueScene() : new FieldScene();
 }
