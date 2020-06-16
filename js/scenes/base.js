@@ -90,35 +90,29 @@ CombatScene.prototype.draw = function() {
 
 function FieldScene() {
     Scene.call(this);
-    this.x = 200;
-    this.y = 300;
+    this.x = 300;
+    this.y = 250;
 }
 
 FieldScene.prototype = Object.create(Scene.prototype);
 
-FieldScene.prototype.update = function() {
-    Scene.prototype.update.call(this);
-
-    if (keyState.up) {
-        this.y -= FIELD_SPEED;
+FieldScene.prototype.drawFieldGrid = function(x, y) {
+    for (var i = 0; i < FIELD_TILES.length; i++) {
+        for (var j = 0; j < FIELD_TILES[i].length; j++) {
+            const tileIndex = FIELD_TILES[i][j];
+            const tileIcon = tileIndex == 0 ? '.' : '#';
+            drawText(tileIcon, x + j * 10, y + i * 15);
+        }
     }
-    if (keyState.down) {
-        this.y += FIELD_SPEED;
-    }
-    if (keyState.left) {
-        this.x -= FIELD_SPEED;
-    }
-    if (keyState.right) {
-        this.x += FIELD_SPEED;
-    }
-};
+}
 
 FieldScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
+    this.drawFieldGrid(150, 100);
     drawText('S', this.x, this.y, 'red');
 }
 
 function configureScenario() {
     configureItems();
-    scene = COMBAT_TEST ? new QueueScene() : new FieldScene();
+    scene = COMBAT_TEST ? new QueueScene() : new ExplorationScene();
 }
