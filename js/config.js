@@ -10,6 +10,8 @@ const FLASH_TIMER_FRAMES = FPS / 10;
 const SHAKE_TIMER_FRAMES = FPS / 3;
 const SHAKE_WIDTH = 8;
 const FIELD_SPEED = 3;
+const TILE_WIDTH = 10;
+const TILE_HEIGHT = 15;
 
 const FIELD_TILES = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],

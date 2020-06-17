@@ -7,21 +7,25 @@ ExplorationScene.prototype = Object.create(FieldScene.prototype);
 ExplorationScene.prototype.update = function() {
     FieldScene.prototype.update.call(this);
 
-    // TODO use these
-    var xVelocity, yVelocity = 0;
+    this.xVelocity = this.yVelocity = 0;
 
     if (keyState.up) {
-        this.y -= FIELD_SPEED;
+        this.yVelocity -= FIELD_SPEED;
     }
     if (keyState.down) {
-        this.y += FIELD_SPEED;
+        this.yVelocity += FIELD_SPEED;
     }
     if (keyState.left) {
-        this.x -= FIELD_SPEED;
+        this.xVelocity -= FIELD_SPEED;
     }
     if (keyState.right) {
-        this.x += FIELD_SPEED;
+        this.xVelocity += FIELD_SPEED;
     }
+
+    handleTileCollision(this);
+
+    this.x += this.xVelocity;
+    this.y += this.yVelocity;
 }
 
 ExplorationScene.prototype.draw = function() {

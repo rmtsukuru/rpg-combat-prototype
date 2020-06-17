@@ -90,8 +90,8 @@ CombatScene.prototype.draw = function() {
 
 function FieldScene() {
     Scene.call(this);
-    this.x = 300;
-    this.y = 250;
+    this.x = 150;
+    this.y = 150;
 }
 
 FieldScene.prototype = Object.create(Scene.prototype);
@@ -109,7 +109,7 @@ FieldScene.prototype.drawFieldGrid = function(x, y) {
 FieldScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
     this.drawFieldGrid(150, 100);
-    drawText('S', this.x, this.y, 'red');
+    drawText('S', 150 + this.x, 100 + this.y, 'red');
 }
 
 function configureScenario() {
