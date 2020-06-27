@@ -100,7 +100,7 @@ FieldScene.prototype.drawFieldGrid = function(x, y) {
     for (var i = 0; i < tiles.length; i++) {
         for (var j = 0; j < tiles[i].length; j++) {
             const tileIndex = tiles[i][j];
-            const tileIcon = tileIndex == 0 ? '.' : '#';
+            const tileIcon = fetchTileIcon(tileIndex);
             drawText(tileIcon, x + j * 10, y + i * 15);
         }
     }

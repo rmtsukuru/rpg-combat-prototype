@@ -44,6 +44,10 @@ function isTilePassable(j, i) {
     return value == 0;
 }
 
+function fetchTileIcon(index) {
+    return index == 0 ? '.' : '#';
+}
+
 function tileIndex(x, vertical) {
     if (vertical) {
         return Math.floor(x / TILE_HEIGHT);
