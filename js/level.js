@@ -1,4 +1,40 @@
-var tiles = FIELD_TILES;
+function fetchTiles(mapId) {
+    tileWidth = mapData[mapId].tileWidth || FIELD_TILEMAP_WIDTH;
+    if (tileWidth < FIELD_TILEMAP_WIDTH) {
+        tileWidth = FIELD_TILEMAP_WIDTH;
+    }
+    tileHeight = mapData[mapId].tileHeight || FIELD_TILEMAP_HEIGHT;
+    if (tileHeight < FIELD_TILEMAP_HEIGHT) {
+        tileHeight = FIELD_TILEMAP_HEIGHT;
+    }
+    tiles = [];
+    for (var i = 0; i < tileHeight; i++) {
+        var row = [];
+        for (var j = 0; j < tileWidth; j++) {
+            row.push(0);
+        }
+        tiles.push(row);
+    }
+
+    var baseTiles = [];
+    for (var i = 0; i < tileWidth; i++) {
+        for (var j = 0; j < tileHeight; j++) {
+            if (i < 2 || i > tileWidth - 3 || j < 2 || j > tileHeight - 3) {
+                baseTiles.push([i, j, 1]);
+            }
+        }
+    }
+    baseTiles.forEach(function(data, i) {
+        tiles[data[1]][data[0]] = data[2];
+    });
+
+    mapData[mapId].tiles.forEach(function(data, i) {
+        tiles[data[1]][data[0]] = data[2];
+    });
+    return tiles;
+}
+
+var tiles = fetchTiles(STARTING_MAP_ID);
 
 function isTilePassable(j, i) {
     if (i < 0 || j < 0 || i >= tiles.length || j >= tiles[i].length) {

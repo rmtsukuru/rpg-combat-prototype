@@ -97,9 +97,9 @@ function FieldScene() {
 FieldScene.prototype = Object.create(Scene.prototype);
 
 FieldScene.prototype.drawFieldGrid = function(x, y) {
-    for (var i = 0; i < FIELD_TILES.length; i++) {
-        for (var j = 0; j < FIELD_TILES[i].length; j++) {
-            const tileIndex = FIELD_TILES[i][j];
+    for (var i = 0; i < tiles.length; i++) {
+        for (var j = 0; j < tiles[i].length; j++) {
+            const tileIndex = tiles[i][j];
             const tileIcon = tileIndex == 0 ? '.' : '#';
             drawText(tileIcon, x + j * 10, y + i * 15);
         }
