@@ -7,7 +7,7 @@ function fetchTiles(mapId) {
     if (tileHeight < FIELD_TILEMAP_HEIGHT) {
         tileHeight = FIELD_TILEMAP_HEIGHT;
     }
-    tiles = [];
+    var tiles = [];
     for (var i = 0; i < tileHeight; i++) {
         var row = [];
         for (var j = 0; j < tileWidth; j++) {
@@ -17,17 +17,22 @@ function fetchTiles(mapId) {
     }
 
     var baseTiles = [];
-    for (var i = 0; i < tileWidth; i++) {
-        for (var j = 0; j < tileHeight; j++) {
-            if (i < 2 || i > tileWidth - 3 || j < 2 || j > tileHeight - 3) {
-                baseTiles.push([i, j, 1]);
+    var template = mapData[mapId].template;
+    switch(template) {
+        case 'room':
+        default:
+            for (var i = 0; i < tileWidth; i++) {
+                for (var j = 0; j < tileHeight; j++) {
+                    if (i < 2 || i > tileWidth - 3 || j < 2 || j > tileHeight - 3) {
+                        baseTiles.push([i, j, 1]);
+                    }
+                }
             }
-        }
+            break;
     }
     baseTiles.forEach(function(data, i) {
         tiles[data[1]][data[0]] = data[2];
     });
-
     mapData[mapId].tiles.forEach(function(data, i) {
         tiles[data[1]][data[0]] = data[2];
     });

@@ -18,6 +18,7 @@ const STARTING_MAP_ID = 0;
 
 var mapData = {
     0: {
+        template: 'room',
         tiles: [
             [11, 8, 1],
             [12, 8, 1],
