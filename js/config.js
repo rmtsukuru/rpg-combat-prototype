@@ -15,6 +15,9 @@ const TILE_HEIGHT = 15;
 const FIELD_TILEMAP_WIDTH = 31;
 const FIELD_TILEMAP_HEIGHT = 18;
 const STARTING_MAP_ID = 0;
+const DEFAULT_MESSAGE_SPEED = 45;
+const ACTIVE_MESSAGE_SPEED = 60;
+const MESSAGE_LINE_LENGTH = 57;
 
 var mapData = {
     0: {
