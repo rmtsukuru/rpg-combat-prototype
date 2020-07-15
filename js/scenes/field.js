@@ -37,7 +37,8 @@ ExplorationScene.prototype.draw = function() {
 
 function MessageScene(message) {
     FieldScene.call(this);
-    this.message = message.match(new RegExp('.{1,' + MESSAGE_LINE_LENGTH + '}', 'g')).join('\n');
+    this.message = message.match(new RegExp('.{1,' + MESSAGE_LINE_LENGTH + '}', 'g'))
+        .join('\n').replace(/\n\s+/g, '\n');
     this.messageIndex = 0;
     this.messageTimer = 60 - DEFAULT_MESSAGE_SPEED;
 }
@@ -50,7 +51,9 @@ MessageScene.prototype.update = function() {
             this.messageTimer--;
         }
         else {
-            this.messageIndex++;
+            do {
+                this.messageIndex++;
+            } while(this.message[this.messageIndex].match(/\s/));
             const speed = (keyState.enter || keyState.z) ?
                 ACTIVE_MESSAGE_SPEED : DEFAULT_MESSAGE_SPEED;
             this.messageTimer = 60 - speed;
