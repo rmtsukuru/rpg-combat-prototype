@@ -200,9 +200,16 @@ function VictoryScene() {
 
 VictoryScene.prototype = Object.create(CombatScene.prototype);
 
+VictoryScene.prototype.update = function() {
+    if (triggerKeyState.enter || triggerKeyState.z) {
+        scene = new ExplorationScene();
+    }
+    CombatScene.prototype.update.call(this);
+};
+
 VictoryScene.prototype.draw = function() {
     CombatScene.prototype.draw.call(this);
-    drawText('You are victorious!', 240, 150);
+    drawText('You are victorious!', 240, 380);
 };
 
 function DeathScene() {

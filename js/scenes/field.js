@@ -23,6 +23,9 @@ ExplorationScene.prototype.update = function() {
     if (triggerKeyState.m) {
         scene = new MessageScene('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus auctor ut turpis ac dictum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Aliquam mattis vulputate mauris a pharetra.');
     }
+    else if (triggerKeyState.f) {
+        scene = new QueueScene();
+    }
 
     handleTileCollision(this);
 
