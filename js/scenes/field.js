@@ -57,7 +57,7 @@ MessageScene.prototype.update = function() {
         else {
             do {
                 this.messageIndex++;
-            } while(this.message[this.messageIndex].match(/\s/));
+            } while(this.message[this.messageIndex] && this.message[this.messageIndex].match(/\s/));
             const speed = (keyState.enter || keyState.z) ?
                 ACTIVE_MESSAGE_SPEED : DEFAULT_MESSAGE_SPEED;
             this.messageTimer = 60 - speed;
@@ -79,5 +79,5 @@ MessageScene.prototype.draw = function() {
     var y = 320;
     drawRect(x, y, 635, 158, '#000');
     drawRect(x, y, 635, 158, 'white', true);
-    drawTextMultiline(this.message.substring(0, this.messageIndex), x + 5, y + 15);
+    drawTextMultiline(this.message.substring(0, this.messageIndex), x + 5, y + 20);
 }
