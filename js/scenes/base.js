@@ -1,5 +1,9 @@
 var scene;
 
+const game = {
+    field: {},
+};
+
 function Scene() {
 }
 
@@ -90,8 +94,6 @@ CombatScene.prototype.draw = function() {
 
 function FieldScene() {
     Scene.call(this);
-    this.x = 150;
-    this.y = 150;
 }
 
 FieldScene.prototype = Object.create(Scene.prototype);
@@ -109,10 +111,14 @@ FieldScene.prototype.drawFieldGrid = function(x, y) {
 FieldScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
     this.drawFieldGrid(150, 100);
-    drawText('S', 150 + this.x, 100 + this.y, 'red');
+    drawText('S', 150 + game.field.position.x, 100 + game.field.position.y, 'red');
 }
 
 function configureScenario() {
     configureItems();
     scene = COMBAT_TEST ? new QueueScene() : new ExplorationScene();
+    game.field.position = {
+        x: 150,
+        y: 150,
+    };
 }

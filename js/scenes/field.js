@@ -5,19 +5,20 @@ function ExplorationScene() {
 ExplorationScene.prototype = Object.create(FieldScene.prototype);
 
 ExplorationScene.prototype.update = function() {
-    this.xVelocity = this.yVelocity = 0;
+    var position = game.field.position;
+    position.xVelocity = position.yVelocity = 0;
 
     if (keyState.up) {
-        this.yVelocity -= FIELD_SPEED;
+        position.yVelocity -= FIELD_SPEED;
     }
     if (keyState.down) {
-        this.yVelocity += FIELD_SPEED;
+        position.yVelocity += FIELD_SPEED;
     }
     if (keyState.left) {
-        this.xVelocity -= FIELD_SPEED;
+        position.xVelocity -= FIELD_SPEED;
     }
     if (keyState.right) {
-        this.xVelocity += FIELD_SPEED;
+        position.xVelocity += FIELD_SPEED;
     }
 
     if (triggerKeyState.m) {
@@ -27,10 +28,10 @@ ExplorationScene.prototype.update = function() {
         scene = new QueueScene();
     }
 
-    handleTileCollision(this);
+    handleTileCollision(position);
 
-    this.x += this.xVelocity;
-    this.y += this.yVelocity;
+    position.x += position.xVelocity;
+    position.y += position.yVelocity;
     FieldScene.prototype.update.call(this);
 }
 
