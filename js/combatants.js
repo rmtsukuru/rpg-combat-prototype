@@ -64,7 +64,7 @@ var heroes = {
     knight: {
         name: 'KNIGHT',
         x: 12,
-        y: 7,
+        y: 6,
         health: 80,
         maxHealth: 80,
         resourceName: 'FAVOR',

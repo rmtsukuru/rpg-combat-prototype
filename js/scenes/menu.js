@@ -94,6 +94,19 @@ MenuScene.prototype.calculateWidth = function() {
     this.menuWidth = maxWidth;
 };
 
+MenuScene.prototype.fetchTargets = function(actionData) {
+    if (actionData.target == 'self' || actionData.selfCondition) {
+        return [this.combatant];
+    }
+    let targets = [...enemies];
+    if (actionData.target == 'ally') {
+        targets = [...party];
+    }
+    const inRange = (target, action) =>
+        getGridDistance(this.combatant, target) <= (action.range || 1);
+    return targets.filter(x => inRange(x, actionData));
+};
+
 MenuScene.prototype.update = function() {
     if (this.blinkTimer <= 0) {
         this.blinkTimer = MENU_BLINK_TIMER_FRAMES;
@@ -117,7 +130,8 @@ MenuScene.prototype.update = function() {
         }
         else if (menuItem.action) {
             var cost = actionData[menuItem.action].cost || 0;
-            if ((cost > 0 && this.combatant.resource <= 0) || menuItem.quantity <= 0 || menuItem.durability <= 0 || menuItem.ammo <= 0) {
+            var potentialTargets = this.fetchTargets(actionData[menuItem.action]);
+            if ((cost > 0 && this.combatant.resource <= 0) || menuItem.quantity <= 0 || menuItem.durability <= 0 || menuItem.ammo <= 0 || potentialTargets.length <= 0) {
                 playSound('beep1', 0.5);
             }
             else {
@@ -152,12 +166,7 @@ MenuScene.prototype.update = function() {
                         this.item = menuItem.item;
                     }
                     this.parents.push(this.menu);
-                    if (actionData[this.action].target == 'ally') {
-                        this.menu = party;
-                    }
-                    else {
-                        this.menu = enemies;
-                    }
+                    this.menu = potentialTargets;
                     this.menuY = 0;
                     this.calculateWidth();
                 }
