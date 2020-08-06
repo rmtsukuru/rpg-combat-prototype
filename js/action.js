@@ -41,6 +41,7 @@ function Action(actor, target, stats, name) {
     this.inspect = stats.inspect;
     this.reload = stats.reload;
     this.equip = stats.equip;
+    this.move = stats.move;
 }
 
 Action.prototype.hit = function() {
@@ -129,6 +130,7 @@ function handleGambit(actor, target, stats) {
 }
 
 const actionData = {
+    move: { title: 'Move', move: true, time: c => c.getMoveTime() },
     sword: { title: 'Straightsword', text: 'You swing the sword.', damage: 12, damageType: 'laceration', hitChance: 0.05, time: 3 },
     knife: { title: 'Knife', text: 'You cut with the knife.', damage: 8, damageType: 'laceration', critChance: 0.1, targetCondition: 'bleed', conditionResistance: 'physical', time: 2 },
     hammer: { title: 'Warhammer', text: 'You pound with the hammer.', damage: 15, damageType: 'concussion', time: 12 },

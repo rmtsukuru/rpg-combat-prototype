@@ -11,6 +11,10 @@ function Combatant(data) {
     }
 }
 
+Combatant.prototype.getMoveTime = function() {
+    return Math.floor((30 - this.agility) / 3.5) + 1;
+};
+
 function buildCombatant(data, isEnemy) {
     var combatant = new Combatant({ ...data, isEnemy: !!isEnemy });
     if (combatantNames[combatant.name]) {
@@ -42,6 +46,7 @@ var heroes = {
         defenses: { laceration: 5 },
         evasion: 0.3,
         agility: 20,
+        speed: 8,
         critChance: 0.05,
         skillName: 'Tactics',
         magicName: 'Shamanism',
@@ -73,6 +78,7 @@ var heroes = {
         defenses: { concussion: 5, laceration: 10, penetration: 2 },
         evasion: 0.1,
         agility: 10,
+        speed: 6,
         critChance: 0.01,
         skillName: 'Chivalry',
         magicName: 'Theurgy',
@@ -99,6 +105,7 @@ var heroes = {
         defenses: { laceration: 2 },
         evasion: 0.3,
         agility: 25,
+        speed: 4,
         critChance: 0.08,
         skillName: 'Tricks',
         magicName: 'Fortune',
@@ -128,6 +135,7 @@ var heroes = {
         defenses: { concussion: 2, laceration: 3 },
         evasion: 0.2,
         agility: 8,
+        speed: 3,
         critChance: 0.06,
         skillName: 'Gloss',
         magicName: 'Arcana',
