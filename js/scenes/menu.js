@@ -122,11 +122,15 @@ MenuScene.prototype.fetchTileTarget = function() {
 
 MenuScene.prototype.handleTileSelection = function() {
     if (triggerKeyState.enter || triggerKeyState.z) {
-        if (this.action == 'move') {
+        const movableTiles = this.fetchMovableTiles();
+        if (this.action == 'move' && movableTiles.filter(({x, y}) => x == this.tileX && y == this.tileY)[0]) {
             this.combatant.x = this.tileX;
             this.combatant.y = this.tileY;
             this.combatant.time += this.combatant.getMoveTime();
             scene = new QueueScene();
+        }
+        else {
+            playSound('beep1', 0.5);
         }
     }
     else if (triggerKeyState.shift || triggerKeyState.x || triggerKeyState.esc) {
