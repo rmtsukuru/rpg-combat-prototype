@@ -11,7 +11,7 @@ function Action(actor, target, stats, name) {
     this.time = stats.time || 5;
     this.cost = stats.cost || 0;
     this.baseDamage = stats.damage || 0;
-    this.isAttack = (stats.damage > 0 || stats.stun) && (stats.targetCondition && stats.target != 'ally' && this.target != this.actor);
+    this.isAttack = (stats.damage > 0 || stats.stun) || (stats.targetCondition && stats.target != 'ally' && this.target != this.actor);
     if (this.baseDamage < 0) {
         this.damage = this.baseDamage;
         this.hitChance = 1;
@@ -21,14 +21,15 @@ function Action(actor, target, stats, name) {
         if (this.baseDamage > 0) {
             damageMod = this.actor.damageMod || 0;
             damageType = stats.damageType || 'pure';
-            defense = this.target.defenses[damageType] || 0;
+            defense = (this.target && this.target.defenses[damageType]) || 0;
             this.damage = Math.max(0, this.baseDamage + damageMod - defense);
         }
         else {
             this.damage = 0;
         }
         hitChanceMod = stats.hitChance || 0;
-        this.hitChance = this.actor.accuracy - this.target.evasion + hitChanceMod;
+        evasion = (this.target && this.target.evasion) || 0;
+        this.hitChance = this.actor.accuracy - evasion + hitChanceMod;
         critChanceMod = stats.critChance || 0;
         this.critChance = this.actor.critChance + critChanceMod;
     }

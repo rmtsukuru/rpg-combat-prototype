@@ -6,6 +6,12 @@ function Combatant(data) {
     this.traits = (this.traits || []).map(x => buildTrait(x));
     this.conditions = [];
     this.time = 0;
+    this.speed = data.speed || 5;
+    this.behavior = new Behavior(this, behaviorData[data.behavior] || behaviorData.dumb_brute);
+    // TODO refactor this to work for all combatants at some point
+    if (data.actions && this.isEnemy) {
+        this.actions = data.actions.map(action => buildAction(action, this));
+    }
     if (!this.isEnemy) {
         this.icon = this.name[0];
     }

@@ -29,10 +29,17 @@ function QueueScene() {
 QueueScene.prototype = Object.create(CombatScene.prototype);
 
 QueueScene.prototype.handleEnemy = function(enemy) {
-    var action = enemy.actions[Math.floor(enemy.actions.length * Math.random())];
-    var target = pickRandomTarget(party);
+    var { action, target } = enemy.behavior.fetchNextAction();
     var options = {};
-    scene = new ActionScene(enemy, target, action, options);
+    if (action == 'move') {
+        enemy.x = target.x;
+        enemy.y = target.y;
+        enemy.time += enemy.getMoveTime();
+        scene = new QueueScene();
+    }
+    else {
+        scene = new ActionScene(enemy, target, action, options);
+    }
 };
 
 QueueScene.prototype.update = function() {

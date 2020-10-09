@@ -43,3 +43,22 @@ function percentToHex(x, digits) {
 function getGridDistance(a, b) {
     return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
 }
+
+function fetchMovableTiles(combatant) {
+    const inRange = (x, y) =>
+        getGridDistance(combatant, { x, y }) <= combatant.speed;
+    const combatantPositions = party.concat(enemies).map(c => ({ x: c.x, y: c.y }));
+    var validTiles = [];
+    for (var i = 0; i < 25; i++) {
+        for (var j = 0; j < 18; j++) {
+            if (inRange(i, j)) {
+                validTiles.push({ x: i, y: j });
+            }
+        }
+    }
+    return validTiles.filter(tile => !combatantPositions.some(({x, y}) => x == tile.x && y == tile.y));
+}
+
+function getClosestTarget(combatant, targets) {
+    return targets.sort((a, b) => getGridDistance(combatant, a) - getGridDistance(combatant, b))[0];
+}

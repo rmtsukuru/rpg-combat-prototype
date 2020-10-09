@@ -166,18 +166,7 @@ MenuScene.prototype.handleTileSelection = function() {
 };
 
 MenuScene.prototype.fetchMovableTiles = function() {
-    const inRange = (x, y) =>
-        getGridDistance(this.combatant, { x, y }) <= this.combatant.speed;
-    const combatantPositions = party.concat(enemies).map(c => ({ x: c.x, y: c.y }));
-    var validTiles = [];
-    for (var i = 0; i < 25; i++) {
-        for (var j = 0; j < 18; j++) {
-            if (inRange(i, j)) {
-                validTiles.push({ x: i, y: j });
-            }
-        }
-    }
-    return validTiles.filter(tile => !combatantPositions.some(({x, y}) => x == tile.x && y == tile.y));
+    return fetchMovableTiles(this.combatant);
 };
 
 MenuScene.prototype.update = function() {
