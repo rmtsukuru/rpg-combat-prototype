@@ -21,10 +21,12 @@ Combatant.prototype.getMoveTime = function() {
     return Math.floor((30 - this.agility) / 3.5) + 1;
 };
 
-function buildCombatant(data, isEnemy) {
+function buildCombatant(name, position, isEnemy) {
+    var data = isEnemy ? monsters[name] : heroes[name];
+    data.x = position.x;
+    data.y = position.y;
     var combatant = new Combatant({ ...data, isEnemy: !!isEnemy });
     if (combatantNames[combatant.name]) {
-        combatant.x += 2;
         if (typeof combatantNames[combatant.name] == 'object') {
             combatantNames[combatant.name].name += ' A';
             combatantNames[combatant.name] = 1;
@@ -41,8 +43,6 @@ function buildCombatant(data, isEnemy) {
 var heroes = {
     slayer: {
         name: 'SLAYER',
-        x: 15,
-        y: 9,
         health: 50,
         maxHealth: 50,
         resourceName: 'SOULS',
@@ -74,8 +74,6 @@ var heroes = {
     },
     knight: {
         name: 'KNIGHT',
-        x: 12,
-        y: 6,
         health: 80,
         maxHealth: 80,
         resourceName: 'FAVOR',
@@ -101,8 +99,6 @@ var heroes = {
     },
     charlatan: {
         name: 'CHARLATAN',
-        x: 18,
-        y: 11,
         health: 30,
         maxHealth: 30,
         resourceName: 'KARMA',
@@ -130,8 +126,6 @@ var heroes = {
     },
     mage: {
         name: 'MAGE',
-        x: 14,
-        y: 14,
         health: 20,
         maxHealth: 20,
         resourceName: 'ÆTHER',
@@ -166,8 +160,6 @@ var monsters = {
     skeleton: {
         name: 'SKELETON',
         icon: 'B',
-        x: 12,
-        y: 5,
         health: 30,
         maxHealth: 30,
         accuracy: 0.8,
@@ -185,8 +177,6 @@ var monsters = {
     bone_warden: {
         name: 'BONE WARDEN',
         icon: 'W',
-        x: 16,
-        y: 7,
         health: 50,
         maxHealth: 50,
         accuracy: 0.7,
@@ -203,8 +193,8 @@ var monsters = {
     },
 };
 
-var currentHeroes = [heroes.slayer, heroes.knight, heroes.charlatan, heroes.mage];
-var currentEnemies = [monsters.skeleton, monsters.skeleton, monsters.bone_warden];
+var currentHeroes = [['slayer', {x: 15, y: 9}], ['knight', {x: 12, y: 6}], ['charlatan', {x: 18, y: 11}], ['mage', {x: 14, y: 14}]];
+var currentEnemies = [['skeleton', {x: 12, y: 5}], ['skeleton', {x: 14, y: 5}], ['bone_warden', {x: 16, y: 7}]];
 
-var party = currentHeroes.map(x => buildCombatant(x));
-var enemies = currentEnemies.map(x => buildCombatant(x, true));
+var party = currentHeroes.map(x => buildCombatant(x[0], x[1]));
+var enemies = currentEnemies.map(x => buildCombatant(x[0], x[1], true));
