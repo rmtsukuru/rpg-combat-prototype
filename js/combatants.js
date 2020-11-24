@@ -2,6 +2,10 @@ const combatantNames = {};
 
 function Combatant(data) {
     Object.assign(this, data);
+    if (data.class) {
+        this.class = buildClass(data.class);
+        Object.assign(this, this.class.data);
+    }
     this.damageMod = this.damageMod || 0;
     this.traits = (this.traits || []).map(x => buildTrait(x));
     this.conditions = [];
@@ -43,27 +47,15 @@ function buildCombatant(name, position, isEnemy) {
 var heroes = {
     slayer: {
         name: 'SLAYER',
+        class: 'slayer',
         health: 50,
         maxHealth: 50,
-        resourceName: 'SOULS',
-        resource: 1,
-        resourceMax: 3,
         accuracy: 0.85,
         defenses: { laceration: 5 },
         evasion: 0.3,
         agility: 20,
         speed: 8,
         critChance: 0.05,
-        skillName: 'Tactics',
-        magicName: 'Shamanism',
-        traits: [
-            'soul_harvest',
-        ],
-        skills: [
-            { action: 'inspect' },
-            { action: 'vengeful_roast', spell: true },
-            { action: 'spirit_binding', spell: true },
-        ],
         items: [
             { item: 'straight_sword', durability: 50, equipped: true },
             { item: 'pistol', ammo: 1, equipped: true },
@@ -74,24 +66,15 @@ var heroes = {
     },
     knight: {
         name: 'KNIGHT',
+        class: 'knight',
         health: 80,
         maxHealth: 80,
-        resourceName: 'FAVOR',
-        resource: 12,
         accuracy: 0.65,
         defenses: { concussion: 5, laceration: 10, penetration: 2 },
         evasion: 0.1,
         agility: 10,
         speed: 6,
         critChance: 0.01,
-        skillName: 'Chivalry',
-        magicName: 'Theurgy',
-        skills: [
-            { action: 'protect' },
-            { action: 'blessed_restoration', spell: true },
-            { action: 'renounce_evil', spell: true },
-            { action: 'smite', spell: true },
-        ],
         items: [
             { item: 'warhammer', durability: 80, equipped: true },
             { item: 'bandage', quantity: 5 },
@@ -99,25 +82,15 @@ var heroes = {
     },
     charlatan: {
         name: 'CHARLATAN',
+        class: 'charlatan',
         health: 30,
         maxHealth: 30,
-        resourceName: 'KARMA',
-        resource: 8,
         accuracy: 0.9,
         defenses: { laceration: 2 },
         evasion: 0.3,
         agility: 25,
         speed: 4,
         critChance: 0.08,
-        skillName: 'Tricks',
-        magicName: 'Fortune',
-        skills: [
-            { action: 'gambit' },
-            { action: 'dodge' },
-            { action: 'loaded_die', spell: true },
-            { action: 'four_winds', spell: true },
-            { action: 'red_dragon', spell: true },
-        ],
         items: [
             { item: 'knife', durability: 15, equipped: true },
             { item: 'venom_cask', quantity: 3 },
@@ -126,28 +99,15 @@ var heroes = {
     },
     mage: {
         name: 'MAGE',
+        class: 'mage',
         health: 20,
         maxHealth: 20,
-        resourceName: 'ÆTHER',
-        resource: 64,
-        resourceMax: 64,
         accuracy: 0.6,
         defenses: { concussion: 2, laceration: 3 },
         evasion: 0.2,
         agility: 8,
         speed: 3,
         critChance: 0.06,
-        skillName: 'Gloss',
-        magicName: 'Arcana',
-        skills: [
-            { action: 'fulmination' },
-            { action: 'combustion', spell: true },
-            { action: 'pestilence', spell: true },
-            { action: 'abjuration', spell: true },
-            { action: 'vim', spell: true },
-            { action: 'vigor', spell: true },
-            { action: 'psychic_abyss', spell: true },
-        ],
         items: [
             { item: 'staff', durability: 30, equipped: true },
             { item: 'healing_tincture', quantity: 3 },

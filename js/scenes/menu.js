@@ -73,11 +73,11 @@ MenuScene.prototype.generateMenu = function(combatant) {
                 return !skill.spell;
             })
         },
-        { title: combatant.magicName || 'Magic', submenu:
+        ...(combatant.prestige ? [{ title: combatant.magicName || 'Magic', submenu:
             combatant.skills.filter(function(skill) {
                 return skill.spell;
             })
-        },
+        }] : []),
         { title: 'Item', submenu:
             combatant.items.filter(function(item) {
                 return !item.equipped;
