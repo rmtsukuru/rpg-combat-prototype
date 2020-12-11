@@ -8,6 +8,10 @@ html.pulse, html.pulse body {
     animation: pulse-exploration 20s infinite linear;
 }
 
+html.pulse.social, html.pulse.social body {
+    animation: pulse-social 20s infinite linear;
+}
+
 html.pulse.combat, html.pulse.combat body {
     animation: pulse-combat 10s infinite linear;
 }
@@ -31,6 +35,28 @@ html.pulse.combat, html.pulse.combat body {
 
     88% {
         background-color: darkolivegreen;
+    }
+}
+
+@keyframes pulse-social {
+    0%, 100% {
+        background-color: darkred;
+    }
+
+    25% {
+        background-color: darkgoldenrod;
+    }
+
+    50% {
+        background-color: darkorange;
+    }
+
+    75% {
+        background-color: darksalmon;
+    }
+
+    88% {
+        background-color: darkmagenta;
     }
 }
 
