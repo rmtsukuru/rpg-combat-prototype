@@ -5,6 +5,14 @@ const game = {
 };
 
 function Scene() {
+    document.getElementsByTagName('html')[0].setAttribute('class', 'pulse');
+    if (this.backgroundClass()) {
+        document.getElementsByTagName('html')[0].setAttribute('class', 'pulse ' + this.backgroundClass());
+    }
+}
+
+Scene.prototype.backgroundClass = function() {
+    return undefined;
 }
 
 Scene.prototype.update = function() {
@@ -24,6 +32,10 @@ function CombatScene() {
 }
 
 CombatScene.prototype = Object.create(Scene.prototype);
+
+CombatScene.prototype.backgroundClass = function() {
+    return 'combat';
+}
 
 CombatScene.prototype.update = function() {
     Scene.prototype.update.call(this);

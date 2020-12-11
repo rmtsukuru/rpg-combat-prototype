@@ -4,11 +4,37 @@ html, body {
     background: #000;
 }
 
-html.pulse, body.pulse {
-    animation: pulse 10s infinite linear;
+html.pulse, html.pulse body {
+    animation: pulse-exploration 20s infinite linear;
 }
 
-@keyframes pulse {
+html.pulse.combat, html.pulse.combat body {
+    animation: pulse-combat 10s infinite linear;
+}
+
+@keyframes pulse-exploration {
+    0%, 100% {
+        background-color: darkcyan;
+    }
+
+    25% {
+        background-color: darkseagreen;
+    }
+
+    50% {
+        background-color: darkslateblue;
+    }
+
+    75% {
+        background-color: darkslategray;
+    }
+
+    88% {
+        background-color: darkolivegreen;
+    }
+}
+
+@keyframes pulse-combat {
     0%, 100% {
         background-color: red;
     }
