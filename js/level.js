@@ -1,3 +1,5 @@
+var tiles = [[]];
+
 function fetchTiles(mapId) {
     tileWidth = mapData[mapId].tileWidth || FIELD_TILEMAP_WIDTH;
     if (tileWidth < FIELD_TILEMAP_WIDTH) {
@@ -39,7 +41,16 @@ function fetchTiles(mapId) {
     return tiles;
 }
 
-var tiles = fetchTiles(STARTING_MAP_ID);
+function fetchCurrentMapTiles() {
+    tiles = fetchTiles(game.field.mapId);
+}
+
+function warpTo(mapId, tileX, tileY) {
+    game.field.mapId = mapId;
+    game.field.position.x = tileX * TILE_WIDTH;
+    game.field.position.y = tileY * TILE_HEIGHT;
+    fetchCurrentMapTiles();
+}
 
 function isTilePassable(j, i) {
     if (i < 0 || j < 0 || i >= tiles.length || j >= tiles[i].length) {

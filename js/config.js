@@ -28,5 +28,10 @@ var mapData = {
             [12, 9, 1],
         ],
     },
+    1: {
+        template: 'room',
+        tileHeight: 27,
+        tiles: [],
+    },
 };
 

@@ -13,6 +13,7 @@ var keys = {
     y: 89,
     m: 77,
     f: 70,
+    w: 87,
 };
 
 var keyState, triggerKeyState;

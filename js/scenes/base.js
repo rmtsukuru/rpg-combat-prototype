@@ -129,6 +129,8 @@ FieldScene.prototype.draw = function() {
 function configureScenario() {
     configureItems();
     scene = COMBAT_TEST ? new QueueScene() : new ExplorationScene();
+    game.field.mapId = STARTING_MAP_ID;
+    fetchCurrentMapTiles();
     game.field.position = {
         x: 150,
         y: 150,

@@ -27,6 +27,10 @@ ExplorationScene.prototype.update = function() {
     else if (triggerKeyState.f) {
         scene = new QueueScene();
     }
+    else if (triggerKeyState.w) {
+        const nextMap = game.field.mapId == 0 ? 1 : 0;
+        warpTo(nextMap, 5, 7);
+    }
 
     handleTileCollision(position);
 
