@@ -5,6 +5,49 @@ var scalingFactor;
 var flashTimer, flashColor;
 var shakeTimer, shakeXOffset;
 
+var images = {};
+
+function loadImage(filename) {
+    var image = {loaded: false};
+    image.data = document.createElement('img');
+    image.data.onload = function() {
+        image.loaded = true;
+    };
+    image.data.src = 'img/' + filename;
+    images[filename] = image;
+}
+
+function imageLoaded(filename) {
+    if (images[filename] && images[filename].loaded) {
+        return true;
+    }
+    if (!images[filename]) {
+        loadImage(filename);
+    }
+}
+
+function fetchImage(filename) {
+    if (imageLoaded(filename)) {
+        return images[filename].data;
+    }
+}
+
+function drawTiledImage(filename, x, y, sourceX, sourceY, sourceWidth, sourceHeight, width, height, filter) {
+    if (imageLoaded(filename)) {
+        var image = fetchImage(filename);
+        sourceWidth = sourceWidth || image.width;
+        sourceHeight = sourceHeight || image.height;
+        width = width || image.width;
+        height = height || image.height;
+        graphicsContext.filter = filter || 'none';
+        graphicsContext.drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, (x + shakeXOffset) * scalingFactor, y * scalingFactor, width * scalingFactor, height * scalingFactor);
+    }
+}
+
+function drawImage(filename, x, y) {
+    drawTiledImage(filename, x, y, 0, 0);
+}
+
 function drawArrow(x, y, width, height, color) {
     graphicsContext.fillColor = color;
     graphicsContext.beginPath();
