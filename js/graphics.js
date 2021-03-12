@@ -40,7 +40,7 @@ function drawTiledImage(filename, x, y, sourceX, sourceY, sourceWidth, sourceHei
         width = width || image.width;
         height = height || image.height;
         graphicsContext.filter = filter || 'none';
-        graphicsContext.drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, (x + shakeXOffset) * scalingFactor, y * scalingFactor, width * scalingFactor, height * scalingFactor);
+        graphicsContext.drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, Math.ceil((x + shakeXOffset) * scalingFactor), Math.ceil(y * scalingFactor), Math.ceil(width * scalingFactor), Math.ceil(height * scalingFactor));
     }
 }
 

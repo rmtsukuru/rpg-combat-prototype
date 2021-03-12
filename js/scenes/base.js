@@ -114,17 +114,17 @@ FieldScene.prototype.drawFieldGrid = function(x, y) {
     for (var i = 0; i < tiles.length; i++) {
         for (var j = 0; j < tiles[i].length; j++) {
             const tileIndex = tiles[i][j];
-            const tileIcon = fetchTileIcon(tileIndex);
-            drawText(tileIcon, x + j * 10, y + i * 15);
+            const tileSourceX = tileIndex == 1 ? 16 : 32;
+            drawTiledImage('main-sprites.png', x + j * 16, y + i * 16, tileSourceX, 0, 16, 16, 16, 16);
         }
     }
 }
 
 FieldScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
-    this.drawFieldGrid(150, 100);
+    this.drawFieldGrid(80, 100);
     // drawText('S', 150 + game.field.position.x, 100 + game.field.position.y, 'red');
-    drawTiledImage('main-sprites.png', 148 + game.field.position.x, 86 + game.field.position.y, 0, 0, 16, 16, 16, 16);
+    drawTiledImage('main-sprites.png', 80 + game.field.position.x, 100 + game.field.position.y, 0, 0, 16, 16, 16, 16);
 }
 
 function configureScenario() {
