@@ -4,6 +4,11 @@ function ExplorationScene() {
 
 ExplorationScene.prototype = Object.create(FieldScene.prototype);
 
+ExplorationScene.prototype.warp = function() {
+    const nextMap = game.field.mapId == 0 ? 1 : 0;
+    warpTo(nextMap, 5, 7);
+}
+
 ExplorationScene.prototype.update = function() {
     var position = game.field.position;
     position.xVelocity = position.yVelocity = 0;
@@ -28,14 +33,18 @@ ExplorationScene.prototype.update = function() {
         scene = new QueueScene();
     }
     else if (triggerKeyState.w) {
-        const nextMap = game.field.mapId == 0 ? 1 : 0;
-        warpTo(nextMap, 5, 7);
+        this.warp();
     }
 
     handleTileCollision(position);
 
     position.x += position.xVelocity;
     position.y += position.yVelocity;
+    const tileX = tileIndex(position.x);
+    const tileY = tileIndex(position.y);
+    if (tiles[tileY][tileX] == 5) {
+        this.warp();
+    }
     FieldScene.prototype.update.call(this);
 }
 

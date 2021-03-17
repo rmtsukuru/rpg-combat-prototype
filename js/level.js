@@ -57,7 +57,7 @@ function isTilePassable(j, i) {
         return false;
     }
     var value = tiles[i][j];
-    return value == 2 || value == 4;
+    return value == 2 || value == 4 || value == 5;
 }
 
 function fetchTileIcon(index) {
