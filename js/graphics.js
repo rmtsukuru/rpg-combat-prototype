@@ -40,7 +40,7 @@ function drawTiledImage(filename, x, y, sourceX, sourceY, sourceWidth, sourceHei
         width = width || image.width;
         height = height || image.height;
         graphicsContext.filter = filter || 'none';
-        graphicsContext.drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, Math.ceil((x + shakeXOffset) * scalingFactor), Math.ceil(y * scalingFactor), Math.ceil(width * scalingFactor), Math.ceil(height * scalingFactor));
+        graphicsContext.drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, Math.floor((x + shakeXOffset) * scalingFactor), Math.floor(y * scalingFactor), Math.ceil(width * scalingFactor), Math.ceil(height * scalingFactor));
     }
 }
 
@@ -66,7 +66,7 @@ function drawRect(x, y, width, height, color, outline) {
     }
     else {
         graphicsContext.fillStyle = color;
-        graphicsContext.fillRect((x + shakeXOffset) * scalingFactor, y * scalingFactor, width * scalingFactor, height * scalingFactor);
+        graphicsContext.fillRect(Math.floor((x + shakeXOffset) * scalingFactor), Math.floor(y * scalingFactor), Math.ceil(width * scalingFactor), Math.ceil(height * scalingFactor));
     }
 }
 

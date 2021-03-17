@@ -24,6 +24,7 @@ Scene.prototype.update = function() {
 };
 
 Scene.prototype.draw = function() {
+    graphicsContext.imageSmoothingEnabled = false;
     drawRect(0, 0, canvasWidth, canvasHeight, '#000');
 }
 
