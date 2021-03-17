@@ -9,7 +9,7 @@ const TRUE_HIT = true;
 const FLASH_TIMER_FRAMES = FPS / 10;
 const SHAKE_TIMER_FRAMES = FPS / 3;
 const SHAKE_WIDTH = 8;
-const FIELD_SPEED = 5;
+const FIELD_SPEED = 4;
 const TILE_WIDTH = 32;
 const TILE_HEIGHT = 32;
 const FIELD_TILEMAP_WIDTH = 20;
@@ -37,6 +37,7 @@ var mapData = {
             [10, 10, 4],
             [11, 9, 4],
             [11, 10, 4],
+            [9, 13, 5],
         ],
     },
 };

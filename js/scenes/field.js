@@ -12,18 +12,19 @@ ExplorationScene.prototype.warp = function() {
 ExplorationScene.prototype.update = function() {
     var position = game.field.position;
     position.xVelocity = position.yVelocity = 0;
+    const speed = keyState.w ? FIELD_SPEED / 2 : FIELD_SPEED;
 
     if (keyState.up) {
-        position.yVelocity -= FIELD_SPEED;
+        position.yVelocity -= speed;
     }
     if (keyState.down) {
-        position.yVelocity += FIELD_SPEED;
+        position.yVelocity += speed;
     }
     if (keyState.left) {
-        position.xVelocity -= FIELD_SPEED;
+        position.xVelocity -= speed;
     }
     if (keyState.right) {
-        position.xVelocity += FIELD_SPEED;
+        position.xVelocity += speed;
     }
 
     if (triggerKeyState.m) {
@@ -31,9 +32,6 @@ ExplorationScene.prototype.update = function() {
     }
     else if (triggerKeyState.f) {
         scene = new QueueScene();
-    }
-    else if (triggerKeyState.w) {
-        this.warp();
     }
 
     handleTileCollision(position);

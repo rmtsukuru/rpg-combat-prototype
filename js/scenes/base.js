@@ -134,7 +134,7 @@ function configureScenario() {
     game.field.mapId = STARTING_MAP_ID;
     fetchCurrentMapTiles();
     game.field.position = {
-        x: 150,
-        y: 150,
+        x: 160,
+        y: 152,
     };
 }
