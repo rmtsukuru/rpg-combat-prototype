@@ -9,11 +9,11 @@ const TRUE_HIT = true;
 const FLASH_TIMER_FRAMES = FPS / 10;
 const SHAKE_TIMER_FRAMES = FPS / 3;
 const SHAKE_WIDTH = 8;
-const FIELD_SPEED = 3;
-const TILE_WIDTH = 16;
-const TILE_HEIGHT = 16;
-const FIELD_TILEMAP_WIDTH = 40;
-const FIELD_TILEMAP_HEIGHT = 30;
+const FIELD_SPEED = 5;
+const TILE_WIDTH = 32;
+const TILE_HEIGHT = 32;
+const FIELD_TILEMAP_WIDTH = 20;
+const FIELD_TILEMAP_HEIGHT = 15;
 const STARTING_MAP_ID = 0;
 const DEFAULT_MESSAGE_SPEED = 45;
 const ACTIVE_MESSAGE_SPEED = 60;
@@ -23,13 +23,13 @@ var mapData = {
     0: {
         template: 'room',
         tiles: [
-            [11, 8, 3],
-            [12, 8, 3],
-            [12, 9, 3],
-            [18, 11, 4],
-            [18, 12, 4],
-            [19, 11, 4],
-            [19, 12, 4],
+            [7, 8, 3],
+            [8, 8, 3],
+            [8, 9, 3],
+            [13, 9, 4],
+            [13, 10, 4],
+            [14, 9, 4],
+            [14, 10, 4],
         ],
     },
     1: {
