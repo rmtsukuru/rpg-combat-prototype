@@ -123,9 +123,9 @@ FieldScene.prototype.drawFieldGrid = function(x, y) {
 
 FieldScene.prototype.draw = function() {
     Scene.prototype.draw.call(this);
-    this.drawFieldGrid(80, 100);
+    this.drawFieldGrid(0, 0);
     // drawText('S', 150 + game.field.position.x, 100 + game.field.position.y, 'red');
-    drawTiledImage('main-sprites.png', 80 + game.field.position.x, 100 + game.field.position.y, 0, 0, 16, 16, 16, 16);
+    drawTiledImage('main-sprites.png', game.field.position.x, game.field.position.y, 0, 0, 16, 16, 16, 16);
 }
 
 function configureScenario() {

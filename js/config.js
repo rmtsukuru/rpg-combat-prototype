@@ -12,8 +12,8 @@ const SHAKE_WIDTH = 8;
 const FIELD_SPEED = 3;
 const TILE_WIDTH = 16;
 const TILE_HEIGHT = 16;
-const FIELD_TILEMAP_WIDTH = 31;
-const FIELD_TILEMAP_HEIGHT = 18;
+const FIELD_TILEMAP_WIDTH = 40;
+const FIELD_TILEMAP_HEIGHT = 30;
 const STARTING_MAP_ID = 0;
 const DEFAULT_MESSAGE_SPEED = 45;
 const ACTIVE_MESSAGE_SPEED = 60;
@@ -34,7 +34,6 @@ var mapData = {
     },
     1: {
         template: 'room',
-        tileHeight: 27,
         tiles: [],
     },
 };
