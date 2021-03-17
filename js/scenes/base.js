@@ -114,7 +114,7 @@ FieldScene.prototype.drawFieldGrid = function(x, y) {
     for (var i = 0; i < tiles.length; i++) {
         for (var j = 0; j < tiles[i].length; j++) {
             const tileIndex = tiles[i][j];
-            const tileSourceX = tileIndex == 1 ? 16 : 32;
+            const tileSourceX = tileIndex * 16;
             drawTiledImage('main-sprites.png', x + j * 16, y + i * 16, tileSourceX, 0, 16, 16, 16, 16);
         }
     }

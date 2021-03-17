@@ -13,7 +13,7 @@ function fetchTiles(mapId) {
     for (var i = 0; i < tileHeight; i++) {
         var row = [];
         for (var j = 0; j < tileWidth; j++) {
-            row.push(0);
+            row.push(2);
         }
         tiles.push(row);
     }
@@ -57,7 +57,7 @@ function isTilePassable(j, i) {
         return false;
     }
     var value = tiles[i][j];
-    return value == 0;
+    return value == 2 || value == 4;
 }
 
 function fetchTileIcon(index) {
