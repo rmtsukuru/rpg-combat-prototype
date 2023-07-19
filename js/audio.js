@@ -1,4 +1,5 @@
 var audioFormat;
+var masterVolume;
 
 function setFormat() {
     var audio = new Audio();
@@ -12,6 +13,12 @@ function setFormat() {
 
 function configureAudio() {
     setFormat();
+    masterVolume = MASTER_VOLUME;
+    if (masterVolume > 1) {
+        masterVolume = 1;
+    } else if (masterVolume < 0) {
+        masterVolume = 0;
+    }
 }
 
 function playSound(filename, volume, loop) {
