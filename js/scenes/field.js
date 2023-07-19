@@ -60,6 +60,11 @@ function MessageScene(message) {
 
 MessageScene.prototype = Object.create(FieldScene.prototype);
 
+MessageScene.prototype.backgroundClass = function() {
+    // Turn this on to use different BG gradient for messages.
+    // return 'social';
+}
+
 MessageScene.prototype.update = function() {
     if (this.messageIndex < this.message.length) {
         if (this.messageTimer > 0) {
